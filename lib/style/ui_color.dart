@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
-import 'app_theme.dart';
 
 class UiColor{
   static const Color error = Color(0xFFDF1D1D);

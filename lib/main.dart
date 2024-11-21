@@ -4,7 +4,7 @@ import 'package:elibapp/features/auth/repo/user_state_repo.dart';
 import 'package:elibapp/features/sign_in/repo/sign_in_repo.dart';
 import 'package:elibapp/helper/nav/route_collector.dart';
 import 'package:elibapp/helper/nav/route_generator.dart';
-import 'package:elibapp/init_affairs.dart';
+import 'package:elibapp/init/init_affairs.dart';
 import 'package:elibapp/style/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,11 +26,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ToastificationWrapper(
-      child: MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider.value(value: getIt<UserStateRepo>()),
-          RepositoryProvider.value(value: getIt<SignInRepo>()),
-        ],
+      child: RepositoryProvider(
+        create: (context) => getIt<UserStateRepo>(),
         child: MultiBlocProvider(
           providers: [
             BlocProvider<ThemeBloc>(

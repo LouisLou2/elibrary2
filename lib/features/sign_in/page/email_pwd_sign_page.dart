@@ -70,7 +70,7 @@ class _SignInPageState extends State<SignInPage> {
 
 
   String? validateEmail(String? value){
-    if(value==null||value.isEmpty){
+    if(value==null || value.isEmpty){
       emailTip= AppStrs.pleaseEnterEmail;
     }else if(!FormatTool.isEmailValid(value)){
       emailTip= AppStrs.invalidEmail;
@@ -170,19 +170,25 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                       ),
                       const SizedBox(height: 170,),
-                      customFilledButton(
-                        context: context,
-                        text: AppStrs.signIn,
-                        onPressed: signInPressed,
-                        backgroundColor: CupertinoColors.systemBlue,
+                      Semantics(
+                        label: AppStrs.signIn,
+                        child: customFilledButton(
+                          context: context,
+                          text: AppStrs.signIn,
+                          onPressed: signInPressed,
+                          backgroundColor: CupertinoColors.systemBlue,
+                        ),
                       ),
                       const SizedBox(height: 20,),
-                      customFilledButton(
-                        context: context,
-                        text: AppStrs.useEmailCode,
-                        onPressed: ()=>context.read<SignInBloc>().add(SignInEvent.useEmailCode),
-                        backgroundColor: Theme.of(context).focusColor,
-                        textColor: CupertinoColors.systemBlue,
+                      Semantics(
+                        label: AppStrs.useEmailCode,
+                        child: customFilledButton(
+                          context: context,
+                          text: AppStrs.useEmailCode,
+                          onPressed: ()=>context.read<SignInBloc>().add(SignInEvent.useEmailCode),
+                          backgroundColor: Theme.of(context).focusColor,
+                          textColor: CupertinoColors.systemBlue,
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

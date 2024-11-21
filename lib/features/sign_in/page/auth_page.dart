@@ -1,6 +1,9 @@
 import 'package:animations/animations.dart';
+import 'package:elibapp/features/sign_in/repo/impl/sign_in_repo_impl.dart';
+import 'package:elibapp/features/sign_in/repo/sign_in_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import '../bloc/sign_in_bloc.dart';
 import '../bloc/sign_in_state.dart';
 import 'check_code_page.dart';
@@ -43,32 +46,35 @@ class _AuthPagesState extends State<AuthPages> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      body: BlocProvider(
-        create: (context) => SignInBloc(),
-        child: BlocBuilder<SignInBloc, SignInState>(
-          buildWhen: (previous, current){
-            // 这里应该是，二者的runtimeType不同
-            return previous.runtimeType != current.runtimeType;
-          },
-          builder: (context, state) {
-            return PageTransitionSwitcher(
-              transitionBuilder: (
+      body: RepositoryProvider.value(
+        value: GetIt.I<SignInRepo>(),
+        child: BlocProvider(
+          create: (context) => SignInBloc(),
+          child: BlocBuilder<SignInBloc, SignInState>(
+            buildWhen: (previous, current){
+              // 这里应该是，二者的runtimeType不同
+              return previous.runtimeType != current.runtimeType;
+            },
+            builder: (context, state) {
+              return PageTransitionSwitcher(
+                transitionBuilder: (
                   Widget child,
                   Animation<double> animation,
                   Animation<double> secondaryAnimation,
-                  ) {
-                return SharedAxisTransition(
-                  animation: animation,
-                  secondaryAnimation: secondaryAnimation,
-                  transitionType: SharedAxisTransitionType.horizontal,
-                  child: child,
-                );
-              },
-              child: getPageBySignInState(state),
-            );
-          },
+                ) {
+                  return SharedAxisTransition(
+                    animation: animation,
+                    secondaryAnimation: secondaryAnimation,
+                    transitionType: SharedAxisTransitionType.horizontal,
+                    child: child,
+                  );
+                },
+                child: getPageBySignInState(state),
+              );
+            },
+          ),
         ),
-      ),
+      )
     );
   }
 }

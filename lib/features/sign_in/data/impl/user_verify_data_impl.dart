@@ -5,17 +5,21 @@ import 'package:elibapp/entity/res.dart';
 import 'package:elibapp/entity/user_auth_params.dart';
 import 'package:elibapp/global_state/device_info.dart';
 import 'package:elibapp/helper/network/net_path_collector.dart';
+import 'package:elibapp/service/req/requester.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../../../common/http_method.dart';
 import '../../../../common/res_enum.dart';
 import '../../../../entity/resp.dart';
-import '../../../../helper/network/request_helper.dart';
 import '../user_verify_data.dart';
 
 class UserVerifyDataImpl implements UserVerifyData {
 
+  Requester requester = GetIt.I<Requester>();
+
   @override
   Future<Res<void>> sendEmailCode(String email) async {
-    Res<Resp?> res = await RequestHelper.standardRequestNoAuth(
+    Res<Resp?> res = await requester.standardRequestNoAuth(
       NetworkPathCollector.auth.sendCode,
       HttpMethod.POST,
       {
@@ -33,7 +37,7 @@ class UserVerifyDataImpl implements UserVerifyData {
 
   @override
   Future<Res<UserAuthParams>> verifyEmailCode(String email, String code) async{
-    Res<Resp?> res = await RequestHelper.standardRequestNoAuth(
+    Res<Resp?> res = await requester.standardRequestNoAuth(
       NetworkPathCollector.auth.loginPwd,
       HttpMethod.POST,
       {
@@ -53,7 +57,7 @@ class UserVerifyDataImpl implements UserVerifyData {
 
   @override
   Future<Res<UserAuthParams>> verifyEmailPwd(String email, String pwd) async {
-    Res<Resp?> res = await RequestHelper.standardRequestNoAuth(
+    Res<Resp?> res = await requester.standardRequestNoAuth(
       NetworkPathCollector.auth.loginCode,
       HttpMethod.POST,
       {

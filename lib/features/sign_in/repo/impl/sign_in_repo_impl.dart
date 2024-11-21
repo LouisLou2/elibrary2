@@ -2,8 +2,8 @@ import 'package:elibapp/config/business_basic_rule.dart';
 import 'package:elibapp/entity/res.dart';
 import 'package:elibapp/entity/user_auth_params.dart';
 import 'package:elibapp/features/auth/datasource/auth_data.dart';
+import 'package:elibapp/features/auth/repo/user_state_repo.dart';
 import 'package:elibapp/features/sign_in/data/user_verify_data.dart';
-import 'package:elibapp/global_state/global_user_state.dart';
 import 'package:get_it/get_it.dart';
 
 import '../sign_in_repo.dart';
@@ -11,6 +11,7 @@ import '../sign_in_repo.dart';
 class SignInRepoImpl implements SignInRepo {
   final UserVerifyData _ver = GetIt.I<UserVerifyData>();
   final AuthDataSource _auth = GetIt.I<AuthDataSource>();
+  final UserStateRepo _userStateRepo = GetIt.I<UserStateRepo>();
 
   @override
   String nowEmail = '';
@@ -45,7 +46,7 @@ class SignInRepoImpl implements SignInRepo {
     Res<UserAuthParams> res = await _ver.verifyEmailCode(email, code);
     if (!res.isSuccess) return res as Res<void>;
     UserAuthParams userAuthParams = res.data!;
-    GlobalUserState.user=userAuthParams;
+    _userStateRepo.user = userAuthParams;
     _auth.saveUserAuthParams(userAuthParams);
     return Res.success();
   }
@@ -55,7 +56,7 @@ class SignInRepoImpl implements SignInRepo {
     Res<UserAuthParams> res = await _ver.verifyEmailPwd(email, pwd);
     if (!res.isSuccess) return res as Res<void>;
     UserAuthParams userAuthParams = res.data!;
-    GlobalUserState.user=userAuthParams;
+    _userStateRepo.user = userAuthParams;
     _auth.saveUserAuthParams(userAuthParams);
     return Res.success();
   }

@@ -8,8 +8,8 @@ class GlobalExceptionHelper{
 
   static Res<T> getErrorResInfo<T>(Object e){
     // network part
-    if(e.runtimeType==DioException){
-      DioException dioE=e as DioException;
+    if(e.runtimeType == DioException){
+      DioException dioE = e as DioException;
       if(dioE.type == DioExceptionType.cancel){
         return Res.failed(ResCodeEnum.UserCancel);
       }

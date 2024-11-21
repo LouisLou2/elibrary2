@@ -56,11 +56,13 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           if(leftSec > 0) {
             emit(TypingEmailCode(leftSec));
             _startTimer();
+          }else{
+            _sendEmailCode(event.email);
           }
         } else {
           // 仍然需要时间
           if (leftSec > 0) {
-            ToastHelper.warn(title: '太频繁了，请等待${leftSec}秒');
+            ToastHelper.warn(title: '太频繁了，请等待$leftSec秒');
           } else {
             _sendEmailCode(event.email);
           }

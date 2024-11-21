@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:elibapp/global_state/global_user_state.dart';
 
 import '../../config/network_config.dart';
 
@@ -9,22 +8,20 @@ class RequestConfig {
   static Duration defaultTimeout = const Duration(milliseconds: Configs.CONNECT_TIMEOUT);
   static Duration longerTimeout = const Duration(milliseconds: Configs.CONNECT_TIMEOUT*2);
 
-  static String _authorizationToken()=> 'Bearer ${GlobalUserState.AT}';
-
-  // 请求与返回类型的枚举
-  static Options get formdata_json => Options(
-    headers:{
-      'Authorization': _authorizationToken(),
-    },
-    contentType: Headers.multipartFormDataContentType,
-    responseType: ResponseType.json,
-  );
-
-  static Options get  json_json => Options(
-    headers:{
-      'Authorization': _authorizationToken(),
-    },
-    contentType: Headers.jsonContentType,
-    responseType: ResponseType.json,
-  );
+  // // 请求与返回类型的枚举
+  // static Options get formdata_json => Options(
+  //   headers:{
+  //     'Authorization': _authorizationToken(),
+  //   },
+  //   contentType: Headers.multipartFormDataContentType,
+  //   responseType: ResponseType.json,
+  // );
+  //
+  // static Options get  json_json => Options(
+  //   headers:{
+  //     'Authorization': _authorizationToken(),
+  //   },
+  //   contentType: Headers.jsonContentType,
+  //   responseType: ResponseType.json,
+  // );
 }
