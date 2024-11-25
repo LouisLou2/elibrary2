@@ -1,6 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 sealed class AppTheme {
   // The defined light theme.
   static ThemeData light = FlexThemeData.light(
@@ -62,4 +63,12 @@ sealed class AppTheme {
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
   );
+
+  static SystemUiOverlayStyle getSystemUiOverlayStyle(ThemeMode themeMode, ThemeData themeData) {
+    return SystemUiOverlayStyle(
+      statusBarColor: themeMode == ThemeMode.dark ? themeData.scaffoldBackgroundColor : themeData.appBarTheme.backgroundColor,
+      statusBarIconBrightness: themeMode == ThemeMode.dark ? Brightness.light : Brightness.dark,
+      systemNavigationBarColor: themeMode == ThemeMode.dark ? themeData.scaffoldBackgroundColor : themeData.appBarTheme.backgroundColor,
+    );
+  }
 }

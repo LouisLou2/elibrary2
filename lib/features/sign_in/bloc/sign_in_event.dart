@@ -1,7 +1,8 @@
+import 'package:elibapp/entity/user/authed_user_with_data1.dart';
+
 sealed class SignInEvent{
   static const UsePwd usePwd = UsePwd();
   static const UseEmailCode useEmailCode = UseEmailCode();
-  static const VerifySuccess verifySuccess = VerifySuccess();
   static const SendCodeSuccess sendCodeSuccess = SendCodeSuccess();
   static const CountSecond countSecond = CountSecond();
 
@@ -50,5 +51,6 @@ class SendCodeSuccess extends SignInEvent{
 }
 
 class VerifySuccess extends SignInEvent{
-  const VerifySuccess();
+  final AuthedUserWithData1 data;
+  const VerifySuccess(this.data);
 }

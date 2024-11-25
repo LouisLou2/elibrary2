@@ -1,6 +1,6 @@
 import '../../../common/http_method.dart';
-import '../../../entity/res.dart';
-import '../../../entity/resp.dart';
+import '../../entity/struct/res.dart';
+import '../../../entity/struct/resp.dart';
 
 abstract class Requester {
   Future<Res<Resp?>> req(

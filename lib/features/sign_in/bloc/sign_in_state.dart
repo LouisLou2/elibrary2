@@ -1,6 +1,8 @@
 import 'package:elibapp/util/base_state.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../entity/user/authed_user_with_data1.dart';
+
 sealed class SignInState extends Equatable{
 
   // 直接使用static持久的对象，不每次都new instance的前提是，保证不会连续发出两个一样的状态
@@ -27,5 +29,5 @@ class TypingEmail extends SignInState{
 
 // 用户正在等待验证码并输入
 class TypingEmailCode extends SignInState{
-  const TypingEmailCode(int timeLef):super(timeLeft:timeLef);
+  const TypingEmailCode(int timeLef): super(timeLeft:timeLef);
 }

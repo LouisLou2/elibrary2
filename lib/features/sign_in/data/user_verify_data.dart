@@ -1,9 +1,10 @@
-import 'package:elibapp/entity/user_auth_params.dart';
+import 'package:elibapp/entity/req/home_data_req.dart';
+import 'package:elibapp/entity/user/authed_user_with_data.dart';
 
-import '../../../entity/res.dart';
+import '../../../entity/struct/res.dart';
 
 abstract class UserVerifyData {
-  Future<Res<UserAuthParams>> verifyEmailPwd(String email, String pwd);
+  Future<Res<AuthedUserWithData>> verifyEmailPwd(String email, String pwd, HomeDataReq homeDataReq);
   Future<Res<void>> sendEmailCode(String email);
-  Future<Res<UserAuthParams>> verifyEmailCode(String email, String code);
+  Future<Res<AuthedUserWithData>> verifyEmailCode(String email, String code, HomeDataReq homeDataReq);
 }

@@ -1,4 +1,7 @@
-import '../../../entity/res.dart';
+import 'package:elibapp/entity/user/authed_user_with_data.dart';
+
+import '../../../entity/struct/res.dart';
+import '../../../entity/user/authed_user_with_data1.dart';
 
 abstract class SignInRepo {
 
@@ -7,8 +10,8 @@ abstract class SignInRepo {
   void noteSendEmailCodeTime(String email);
   int get secLeft;
 
-  Future<Res<void>> verifyEmailPwdAndSaveUser(String email, String pwd);
+  Future<Res<AuthedUserWithData1>> verifyEmailPwd(String email, String pwd);
   Future<Res<void>> sendEmailCode(String email);
   Future<Res<void>> resendEmailCode();
-  Future<Res<void>> verifyEmailCodeAndSaveUser(String email, String code);
+  Future<Res<AuthedUserWithData1>> verifyEmailCode(String email, String code);
 }

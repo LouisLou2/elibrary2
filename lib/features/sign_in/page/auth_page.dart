@@ -1,4 +1,6 @@
 import 'package:animations/animations.dart';
+import 'package:elibapp/features/auth/bloc/auth_bloc.dart';
+import 'package:elibapp/features/auth/bloc/auth_event.dart';
 import 'package:elibapp/features/sign_in/repo/impl/sign_in_repo_impl.dart';
 import 'package:elibapp/features/sign_in/repo/sign_in_repo.dart';
 import 'package:flutter/material.dart';
@@ -58,10 +60,10 @@ class _AuthPagesState extends State<AuthPages> {
             builder: (context, state) {
               return PageTransitionSwitcher(
                 transitionBuilder: (
-                  Widget child,
-                  Animation<double> animation,
-                  Animation<double> secondaryAnimation,
-                ) {
+                    Widget child,
+                    Animation<double> animation,
+                    Animation<double> secondaryAnimation,
+                    ) {
                   return SharedAxisTransition(
                     animation: animation,
                     secondaryAnimation: secondaryAnimation,

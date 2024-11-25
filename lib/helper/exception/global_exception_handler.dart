@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:isar/isar.dart';
 
 import '../../common/res_enum.dart';
-import '../../entity/res.dart';
+import '../../entity/struct/res.dart';
 
 class GlobalExceptionHelper{
 

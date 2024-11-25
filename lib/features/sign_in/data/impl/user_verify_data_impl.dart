@@ -1,8 +1,7 @@
 import 'package:elibapp/common/contact_type.dart';
-import 'package:elibapp/entity/authed_user.dart';
-import 'package:elibapp/entity/res.dart';
+import 'package:elibapp/entity/struct/res.dart';
+import 'package:elibapp/features/global_aggreement/const/home_ui_strategy.dart';
 
-import 'package:elibapp/entity/user_auth_params.dart';
 import 'package:elibapp/global_state/device_info.dart';
 import 'package:elibapp/helper/network/net_path_collector.dart';
 import 'package:elibapp/service/req/requester.dart';
@@ -10,7 +9,9 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../common/http_method.dart';
 import '../../../../common/res_enum.dart';
-import '../../../../entity/resp.dart';
+import '../../../../entity/req/home_data_req.dart';
+import '../../../../entity/struct/resp.dart';
+import '../../../../entity/user/authed_user_with_data.dart';
 import '../user_verify_data.dart';
 
 class UserVerifyDataImpl implements UserVerifyData {
@@ -36,41 +37,48 @@ class UserVerifyDataImpl implements UserVerifyData {
   }
 
   @override
-  Future<Res<UserAuthParams>> verifyEmailCode(String email, String code) async{
+  Future<Res<AuthedUserWithData>> verifyEmailCode(String email, String code, HomeDataReq homeDataReq) async{
     Res<Resp?> res = await requester.standardRequestNoAuth(
       NetworkPathCollector.auth.loginPwd,
       HttpMethod.POST,
       {
+        ...{
         'email':email,
         'code':code,
-        'device_type':DeviceInfo.deviceType,
+        'device_type':DeviceInfo.deviceType
+        },
+        ...homeDataReq.toJson(),
       }
     );
-    if (!res.isSuccess) return res.to<UserAuthParams>();
+
+    if (!res.isSuccess) return res.to<AuthedUserWithData>();
     Resp resp = res.data!;
     if (resp.code == ResCodeEnum.Success) {
-      AuthedUser authedUser = AuthedUser.fromJson(resp.data);
-      return Res.successWithData(UserAuthParams.fromAuthedUser(authedUser));
+      AuthedUserWithData data = AuthedUserWithData.fromJson(resp.data);
+      return Res.successWithData(data);
     }
     return Res.failedMayWithMsg(resp.code, resp.message);
   }
 
   @override
-  Future<Res<UserAuthParams>> verifyEmailPwd(String email, String pwd) async {
+  Future<Res<AuthedUserWithData>> verifyEmailPwd(String email, String pwd, HomeDataReq homeDataReq) async {
     Res<Resp?> res = await requester.standardRequestNoAuth(
-      NetworkPathCollector.auth.loginCode,
+      NetworkPathCollector.auth.loginPwd,
       HttpMethod.POST,
-      {
-        'email':email,
-        'password':pwd,
-        'device_type':DeviceInfo.deviceType,
-      }
+        {
+          ...{
+            'email':email,
+            'password': pwd,
+            'device_type':DeviceInfo.deviceType
+          },
+          ...homeDataReq.toJson(),
+        }
     );
-    if (!res.isSuccess) return res.to<UserAuthParams>();
+    if (!res.isSuccess) return res.to<AuthedUserWithData>();
     Resp resp = res.data!;
     if (resp.code == ResCodeEnum.Success) {
-      AuthedUser authedUser = AuthedUser.fromJson(resp.data);
-      return Res.successWithData(UserAuthParams.fromAuthedUser(authedUser));
+      AuthedUserWithData data = AuthedUserWithData.fromJson(resp.data);
+      return Res.successWithData(data);
     }
     return Res.failedMayWithMsg(resp.code, resp.message);
   }

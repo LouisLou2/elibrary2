@@ -7,8 +7,8 @@ import 'package:elibapp/service/req/requester.dart';
 
 import '../../../common/http_method.dart';
 import '../../../common/res_enum.dart';
-import '../../../entity/res.dart';
-import '../../../entity/resp.dart';
+import '../../entity/struct/res.dart';
+import '../../../entity/struct/resp.dart';
 import '../../helper/exception/global_exception_handler.dart';
 import '../../helper/network/net_manager.dart';
 
@@ -21,7 +21,7 @@ class ReqProxy extends Requester{
   final String Function() _getAT;
 
   // 这个函数会自动获取并更新at，返回结果是否成功，如果成功，_getAT返回的就是新的at
-  final Future<ResCodeEnum> Function() _atRetriver;
+  final Future<bool> Function() _atRetriver;
 
   ReqProxy(
     this._getAT,
@@ -44,7 +44,8 @@ class ReqProxy extends Requester{
             'Authorization': 'Bearer ${_getAT()}'
           }
         ),
-        data: data
+        data: method==HttpMethod.GET ? null: data,
+        queryParameters: method==HttpMethod.GET ? data: null
       );
       if (resp.statusCode == HttpStatusCode.OK.value) {
         return Res.successWithData(Resp.fromJson(resp.data));
@@ -59,15 +60,15 @@ class ReqProxy extends Requester{
           // 说明需要刷新token
           _isRefreshingAT = true;
           _completer = Completer();
-          ResCodeEnum resCode = await _atRetriver();
-          if (resCode.isSuccess) {
+          bool success = await _atRetriver();
+          if (success) {
             _isRefreshingAT = false;
             _completer!.complete();
             return req(path, method, data);
           } else {
             _isRefreshingAT = false;
             _completer!.complete();
-            return Res.failed(resCode);
+            return Res.failed(ResCodeEnum.UnAuthorized);
           }
         }
       } else {

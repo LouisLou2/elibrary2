@@ -1,18 +1,19 @@
-import 'package:dio/dio.dart';
 import 'package:elibapp/base_manager/db_manager.dart';
-import 'package:elibapp/entity/res.dart';
-import 'package:elibapp/entity/user_auth_params.dart';
+import 'package:elibapp/entity/struct/res.dart';
 import 'package:elibapp/features/auth/datasource/auth_data.dart';
+import 'package:elibapp/helper/network/net_path_collector.dart';
+import 'package:elibapp/service/req/requester.dart';
+import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
 import '../../../common/http_method.dart';
-import '../../../common/http_status_code.dart';
-import '../../../common/res_enum.dart';
-import '../../../entity/resp.dart';
+import '../../../entity/struct/resp.dart';
+import '../../../entity/user/user_auth_params.dart';
 import '../../../helper/exception/global_exception_handler.dart';
-import '../../../helper/network/net_manager.dart';
 
 class AuthDataImpl implements AuthDataSource{
+
+  final Requester _requester = GetIt.I<Requester>();
 
   @override
   UserAuthParams? get userAuthParams {
@@ -29,25 +30,28 @@ class AuthDataImpl implements AuthDataSource{
   }
 
   @override
-  Future<Res<String>> getAccessToken() async{
+  Future<Res<String>> getAccessToken(String rt) async{
     try{
-      Response response = await NetManager.normalDio.request(
-        'dontKnow',
-        options: Options(
-          method: HttpMethod.GET.value,
-        ),
-        data: {
-          'dontKnow':'dontKnow'
+      Res<Resp?> res = await _requester.standardRequestNoAuth(
+        NetworkPathCollector.auth.retrieveAt,
+        HttpMethod.GET,
+        {
+          'rt':rt,
         }
       );
-      if (response.statusCode == HttpStatusCode.OK.value) {
-        Resp resp = Resp.fromJson(response.data);
-        return Res.successWithData(resp.data as String);
-      } else {
-        return Res.failed(ResCodeEnum.ServerError);
-      }
+      if(!res.isSuccess) return res.to<String>();
+      return Res.successWithData(res.data!.data! as String);
     } catch(e){
       return GlobalExceptionHelper.getErrorResInfo(e);
     }
+  }
+
+  @override
+  void clearPersistedUser(int userId) {
+    DBManager.db.writeTxn(
+      () async {
+        await DBManager.db.userAuthParams.deleteByUserId(userId);
+      }
+    );
   }
 }

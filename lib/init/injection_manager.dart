@@ -1,4 +1,7 @@
-import 'package:elibapp/features/auth/repo/user_state_repo.dart';
+import 'package:elibapp/features/auth/export/auth_export_api.dart';
+import 'package:elibapp/features/chart/chart_feature.dart';
+import 'package:elibapp/features/home/home_feature.dart';
+import 'package:elibapp/features/viewing_history/viewing_history_feature.dart';
 import 'package:get_it/get_it.dart';
 
 import '../features/auth/auth_feature.dart';
@@ -11,14 +14,17 @@ class InjectionManager{
     AuthFeature.inject();
     _injectRequester();
     SignInFeature.inject();
+    ViewingHistoryFeature.inject();
+    ChartFeature.inject();
+    HomeFeature.inject();
   }
 
   // 此函数必须在AuthFeature.inject();之后调用
   static void _injectRequester(){
-    UserStateRepo repo = GetIt.I.get<UserStateRepo>();
+    AuthExportApi authExportApi = GetIt.I<AuthExportApi>();
     GetIt.I.registerLazySingleton<Requester>(() => ReqProxy(
-      repo.getUserAt,
-      repo.retriveAndSetAt
+      authExportApi.getCurrentUserAt,
+      authExportApi.retrieveSetAtAndReactToResult,
     ));
   }
 }

@@ -1,22 +1,30 @@
 
 import 'package:elibapp/common/res_enum.dart';
-import 'package:elibapp/entity/res.dart';
-import 'package:elibapp/entity/user_auth_params.dart';
+import 'package:elibapp/entity/struct/res.dart';
 import 'package:elibapp/features/auth/datasource/auth_data.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../entity/user/user_auth_params.dart';
 import '../user_state_repo.dart';
 
 class UserStateRepoImpl extends UserStateRepo{
-  AuthDataSource auth = GetIt.I<AuthDataSource>();
+
+  final AuthDataSource _auth = GetIt.I<AuthDataSource>();
   UserAuthParams? userAuthParams;
 
   @override
   bool get isLogin => userAuthParams != null;
 
   @override
-  set user(UserAuthParams userAuthParams) {
+  int get userId {
+    assert (userAuthParams != null);
+    return userAuthParams!.userId;
+  }
+
+  @override
+  void setAndPersistUser(UserAuthParams userAuthParams) {
     this.userAuthParams = userAuthParams;
+    _auth.saveUserAuthParams(userAuthParams); // async
   }
 
   @override
@@ -25,21 +33,21 @@ class UserStateRepoImpl extends UserStateRepo{
     return userAuthParams!.at;
   }
 
-  // @override
-  // void setUserAt(String at) {
-  //   assert (userAuthParams != null);
-  //   userAuthParams!.at = at;
-  // }
-
   @override
-  Future<ResCodeEnum> retriveAndSetAt() async {
+  Future<bool> retrieveAndSetAt() async {
     assert (userAuthParams != null);
-    Res<String> res = await auth.getAccessToken();
+    Res<String> res = await _auth.getAccessToken(userAuthParams!.at);
     if (res.isSuccess){
       userAuthParams!.at = res.data!;
-      auth.saveUserAuthParams(userAuthParams!); // async
+      _auth.saveUserAuthParams(userAuthParams!); // async
+      return true;
     }
-    return res.code;
+    return false;
   }
 
+  @override
+  void clearUser() {
+    _auth.clearPersistedUser(userAuthParams!.userId); // async
+    userAuthParams = null;
+  }
 }

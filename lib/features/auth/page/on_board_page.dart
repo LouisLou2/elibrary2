@@ -1,6 +1,6 @@
 import 'package:cupertino_onboarding/cupertino_onboarding.dart';
 import 'package:dio/dio.dart';
-import 'package:elibapp/entity/authed_user.dart';
+import 'package:elibapp/entity/user/authed_user.dart';
 import 'package:elibapp/features/theme/bloc/theme_bloc.dart';
 import 'package:elibapp/features/theme/bloc/theme_event.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/app_strings.dart';
 import '../../../config/app_properties.dart';
-import '../../../entity/resp.dart';
+import '../../../entity/struct/resp.dart';
 class OnBoardPage extends StatefulWidget {
 
   const OnBoardPage({super.key});

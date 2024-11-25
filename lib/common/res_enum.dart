@@ -29,7 +29,7 @@ enum ResCodeEnum {
   PasswordIncorrect(102, "password not correct", ToastificationType.error),
   PasswordUnset(103, "password unset", ToastificationType.error),
   VerifyCodeIncorrect(104, "verify code incorrect or expired", ToastificationType.error),
-
+  UnAuthorized(105, "unauthorized",ToastificationType.error),
   // Bookshelf
   ShelfIsFull(201, "shelf has reached its max capacity", ToastificationType.warning),
 

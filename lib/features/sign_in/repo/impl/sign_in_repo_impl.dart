@@ -1,17 +1,16 @@
 import 'package:elibapp/config/business_basic_rule.dart';
-import 'package:elibapp/entity/res.dart';
-import 'package:elibapp/entity/user_auth_params.dart';
-import 'package:elibapp/features/auth/datasource/auth_data.dart';
-import 'package:elibapp/features/auth/repo/user_state_repo.dart';
+import 'package:elibapp/entity/struct/res.dart';
+import 'package:elibapp/entity/user/authed_user_with_data.dart';
+import 'package:elibapp/features/global_aggreement/const/home_ui_strategy.dart';
 import 'package:elibapp/features/sign_in/data/user_verify_data.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../entity/user/authed_user_with_data1.dart';
 import '../sign_in_repo.dart';
 
 class SignInRepoImpl implements SignInRepo {
   final UserVerifyData _ver = GetIt.I<UserVerifyData>();
-  final AuthDataSource _auth = GetIt.I<AuthDataSource>();
-  final UserStateRepo _userStateRepo = GetIt.I<UserStateRepo>();
+  //final AuthDataSource _auth = GetIt.I<AuthDataSource>();
 
   @override
   String nowEmail = '';
@@ -21,7 +20,7 @@ class SignInRepoImpl implements SignInRepo {
   @override
   void noteSendEmailCodeTime(String email) {
     _secLeft = DateTime.now().millisecondsSinceEpoch~/1000;
-    nowEmail=email;
+    nowEmail = email;
   }
 
   @override
@@ -42,23 +41,19 @@ class SignInRepoImpl implements SignInRepo {
   }
 
   @override
-  Future<Res<void>> verifyEmailCodeAndSaveUser(String email, String code) async{
-    Res<UserAuthParams> res = await _ver.verifyEmailCode(email, code);
-    if (!res.isSuccess) return res as Res<void>;
-    UserAuthParams userAuthParams = res.data!;
-    _userStateRepo.user = userAuthParams;
-    _auth.saveUserAuthParams(userAuthParams);
-    return Res.success();
+  Future<Res<AuthedUserWithData1>> verifyEmailCode(String email, String code) async{
+    Res<AuthedUserWithData> res = await _ver.verifyEmailCode(email, code, HomeUiStrategy.defaultHomeDataReq);
+    if (!res.isSuccess) return res.to<AuthedUserWithData1>();
+    int userId = res.data!.user.user.userId;
+    return Res.successWithData(AuthedUserWithData1.from(res.data!,userId));
   }
 
   @override
-  Future<Res<void>> verifyEmailPwdAndSaveUser(String email, String pwd) async{
-    Res<UserAuthParams> res = await _ver.verifyEmailPwd(email, pwd);
-    if (!res.isSuccess) return res as Res<void>;
-    UserAuthParams userAuthParams = res.data!;
-    _userStateRepo.user = userAuthParams;
-    _auth.saveUserAuthParams(userAuthParams);
-    return Res.success();
+  Future<Res<AuthedUserWithData1>> verifyEmailPwd(String email, String pwd) async{
+    Res<AuthedUserWithData> res = await _ver.verifyEmailPwd(email, pwd, HomeUiStrategy.defaultHomeDataReq);
+    if (!res.isSuccess) return res.to<AuthedUserWithData1>();
+    int userId = res.data!.user.user.userId;
+    return Res.successWithData(AuthedUserWithData1.from(res.data!,userId));
   }
   
 }

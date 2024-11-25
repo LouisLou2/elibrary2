@@ -26,29 +26,29 @@ class ImageInfoBox extends StatelessWidget {
             child: image,
           ),
           Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Column(
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: fontSize,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: -1,
-                    ),
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -1,
                   ),
-                  if(subTitle!=null)
-                    Text(
-                      subTitle!,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: fontSize!=null?fontSize!*0.8:null,
-                      ),
-                    ),
-                ],
-              )
+                ),
+                if(subTitle!=null)
+                Text(
+                  subTitle!,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: fontSize!=null?fontSize!*0.8:null,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

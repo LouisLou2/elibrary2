@@ -36,7 +36,7 @@ void setRouteCollection() {
 void detectUserLocal(){
   final userAuthParams = getIt<AuthDataSource>().userAuthParams;
   if (userAuthParams != null) {
-    AuthBloc.initialState = AuthState.userDataLoaded;
+    AuthBloc.initialState = AuthState.userLoadedLocal;
   } else {
     AuthBloc.initialState = AuthState.userLoggedOut;
   }

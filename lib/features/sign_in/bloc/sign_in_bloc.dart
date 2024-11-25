@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:elibapp/config/business_basic_rule.dart';
+import 'package:elibapp/entity/user/authed_user_with_data1.dart';
+import 'package:elibapp/features/auth/bloc/auth_bloc.dart';
+import 'package:elibapp/features/auth/bloc/auth_event.dart';
 import 'package:elibapp/features/sign_in/bloc/sign_in_event.dart';
 import 'package:elibapp/features/sign_in/bloc/sign_in_state.dart';
 import 'package:elibapp/features/sign_in/repo/sign_in_repo.dart';
@@ -9,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../entity/res.dart';
+import '../../../entity/struct/res.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
   final SignInRepo _repo = GetIt.I<SignInRepo>();
@@ -93,7 +96,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       // 将timer取消
       _timer?.cancel();
       // 需要转到下一个页面
-      print ('@@@@@@@@@@@@@转到下一个页面');
+      GetIt.I<AuthBloc>().add(LoginEvent(event.data));
     });
 
   }
@@ -107,7 +110,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   void _verifyEmailPwd(String email, String pwd) async {
     // 立刻给出loading状态
     EasyLoading.show();
-    Res<void> res = await _repo.verifyEmailPwdAndSaveUser(email, pwd);
+    Res<AuthedUserWithData1> res = await _repo.verifyEmailPwd(email, pwd);
     // 隐藏loading
     EasyLoading.dismiss();
     // 如果失败，给出toast
@@ -116,12 +119,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       return;
     }
     // 成功，发出事件
-    add(SignInEvent.verifySuccess);
+    add(VerifySuccess(res.data!));
   }
 
   void _verifyEmailCode(String code) async {
     EasyLoading.show();
-    Res<void> res = await _repo.verifyEmailCodeAndSaveUser(_repo.nowEmail, code);
+    Res<AuthedUserWithData1> res = await _repo.verifyEmailCode(_repo.nowEmail, code);
     EasyLoading.dismiss();
     // 如果失败，给出toast
     if (!res.isSuccess) {
@@ -129,7 +132,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       return;
     }
     // 成功，发出事件
-    add(SignInEvent.verifySuccess);
+    add(VerifySuccess(res.data!));
   }
 
   void _sendEmailCode(String? email) async {
