@@ -18,6 +18,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
     /*----------------事件处理-------------------------*/
     on<ReqRefreshEvent>((event, emit) {
+      print('HomePageBloc: ReqRefreshEvent');
       // 说明本地数据已经加载完毕，现在应该请求网络数据
       emit(HomePageState.homePageLoading);
       refresh();
@@ -43,6 +44,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   }
 
   Future<void> refresh() async {
+    print('HomePageBloc: refresh');
     ResCodeEnum resCode = await _homePageRepo.retrieveAndSaveHomeData(HomeUiStrategy.defaultHomeDataReq);
     if (resCode == ResCodeEnum.Success) {
       add(HomePageEvent.refreshReqOverSuccess);

@@ -3,7 +3,6 @@ import 'package:elibapp/entity/book/book_brief_reco.dart';
 import 'package:elibapp/entity/req/home_data_req.dart';
 
 import 'package:elibapp/entity/struct/res.dart';
-import 'package:elibapp/features/auth/repo/user_state_repo.dart';
 import 'package:elibapp/helper/network/net_path_collector.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
@@ -16,14 +15,14 @@ import '../../../../service/req/requester.dart';
 import '../home_page_data.dart';
 
 class HomePageDataImpl implements HomePageData {
-  Requester requester = GetIt.I<Requester>();
+  final Requester _requester = GetIt.I<Requester>();
 
   @override
   Future<Res<List<BookBriefReco>>> getBookBriefReco(int pageNum, int pageSize, int userId) async {
-    Res<Resp?> res = await requester.req(
-      NetworkPathCollector.bookReco.getRecommend,
-      HttpMethod.GET,
-      {
+    Res<Resp?> res = await _requester.req(
+      path: NetworkPathCollector.bookReco.getRecommend,
+      method: HttpMethod.GET,
+      data:{
         'pageNum': pageNum,
         'pageSize': pageSize,
       }
@@ -32,7 +31,7 @@ class HomePageDataImpl implements HomePageData {
     Resp resp = res.data!;
     if (resp.code == ResCodeEnum.Success) {
       List<BookBriefReco> lis = (resp.data as List<dynamic>).map((e) => BookBriefReco.fromJson(e)).toList();
-      BookBriefReco.setUserIdAndOrderList(lis, userId);
+      BookBriefReco.setUserIdAndOrderList(lis, userId, 0); // 注意，这里故意设置为0，因为每次的推荐覆盖之前的推荐
       return Res.successWithData(lis);
     }else {
       return Res.failedMayWithMsg(resp.code, resp.message);
@@ -68,10 +67,10 @@ class HomePageDataImpl implements HomePageData {
 
   @override
   Future<Res<UserHomeData>> getHomePageData(HomeDataReq params,int userId) async {
-    Res<Resp?> res = await requester.req(
-      NetworkPathCollector.aggregated.getHomeData,
-      HttpMethod.POST,
-      params.toJson(),
+    Res<Resp?> res = await _requester.req(
+      path: NetworkPathCollector.aggregated.getHomeData,
+      method: HttpMethod.POST,
+      data: params.toJson(),
     );
     if (!res.isSuccess) return res.to<UserHomeData>();
     Resp resp = res.data!;

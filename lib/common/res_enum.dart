@@ -46,7 +46,12 @@ enum ResCodeEnum {
   ReserveFailed(405, "失败，预约人数过多，系统繁忙", ToastificationType.warning),
 
   // Other
-  CancelWillCauseOverdue(501, "取消预约将导致超时次数+1", ToastificationType.warning);
+  CancelWillCauseOverdue(501, "取消预约将导致超时次数+1", ToastificationType.warning),
+
+
+
+  /*------------------客户端的一些错误定义-----------------------------*/
+  ServiceRefused(5001, "服务拒绝", ToastificationType.warning);
 
   final int code;
   final String msg;

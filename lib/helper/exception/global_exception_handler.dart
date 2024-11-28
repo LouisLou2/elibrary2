@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:elibapp/common/http_status_code.dart';
 import 'package:isar/isar.dart';
 
 import '../../common/res_enum.dart';
@@ -18,6 +19,9 @@ class GlobalExceptionHelper{
       }
       else if(dioE.type == DioExceptionType.connectionError){
         return Res.failed(ResCodeEnum.ConnectionError);
+      }
+      else if (dioE.type == DioExceptionType.badResponse && dioE.response?.statusCode == HttpStatusCode.UNAUTHORIZED.value){
+        return Res.failed(ResCodeEnum.UnAuthorized);
       }
       return Res.failed(ResCodeEnum.UnknownNetworkError);
     }

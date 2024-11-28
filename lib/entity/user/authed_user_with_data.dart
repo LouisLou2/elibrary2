@@ -1,9 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import '../aggregation/user_home_data.dart';
-import '../book/book_brief_hr.dart';
-import '../book/book_brief_reco.dart';
-import '../book/book_brief_tb.dart';
-import '../book/book_viewing_history.dart';
 import 'authed_user.dart'; // 假设 AuthedUser 类已存在
 
 part '../../generated/user/authed_user_with_data.g.dart'; // 生成代码的位置

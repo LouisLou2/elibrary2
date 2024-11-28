@@ -6,10 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   ThemeBloc(super.initialState){
+    print('@@@@@@@@ThemeBloc Constructor');
     on<ToggleThemeEvent>((event, emit) {
-      if (kDebugMode) {
-        print('[ThemeBloc on]@@@@@@@@@@@@@@@@@@event: $event');
-      }
+      print('[ThemeBloc on]@@@@@@@@@@@@@@@@@@event: $event');
       emit(state is LightThemeState ? ThemeState.dark : ThemeState.light);
     });
   }

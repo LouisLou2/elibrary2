@@ -32,6 +32,9 @@ class BookBriefTB extends BookBriefAbs{
   @JsonKey(name: 'cover_m_url')
   String coverMUrl;
 
+  @JsonKey(name: "cover_dom_color")
+  int coverDomColor;
+
   int rating;
 
   @JsonKey(name: 'has_ebook')
@@ -44,6 +47,7 @@ class BookBriefTB extends BookBriefAbs{
     required this.publisherName,
     required this.coverSUrl,
     required this.coverMUrl,
+    required this.coverDomColor,
     required this.rating,
     required this.hasEbook,
   });
@@ -55,4 +59,13 @@ class BookBriefTB extends BookBriefAbs{
   factory BookBriefTB.fromJson(Map<String, dynamic> json) => _$BookBriefTBFromJson(json);
 
   Map<String, dynamic> toJson() => _$BookBriefTBToJson(this);
+
+  static void setOrderForList(List<BookBriefTB> list, int from) {
+    assert(from>=0);
+    for (var i = 0; i < list.length; i++) {
+      list[i].order = from + i;
+    }
+  }
+
+  String get authorNamesStr => authorNames.join(' / ');
 }

@@ -1,14 +1,13 @@
 import 'dart:async';
-
-import 'package:elibapp/features/home/widget/reco_books_pane_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/widget/flip/flip_card.dart';
 import '../../../shared/widget/flip/flip_card_controllers.dart';
 import '../../../shared/widget/flip/flip_side.dart';
+import 'RecoBooksPaneController2.dart';
 
 class RecoBooksPane extends StatefulWidget {
-  final RecoBooksPaneController controller;
+  final RecoBooksPaneController2 controller;
   const RecoBooksPane({super.key, required this.controller});
   @override
   State<RecoBooksPane> createState() => RecoBooksPaneState();
@@ -45,7 +44,7 @@ class RecoBooksPaneState extends State<RecoBooksPane> {
     _cards = List.generate(
       _crowdRecoBooks.length,
         (index) => FlipCard(
-        animationDuration: const Duration(milliseconds: 2000),
+        animationDuration: const Duration(milliseconds: 300),
         rotateSide: RotateSide.left,
         axis: FlipAxis.vertical,
         controller: _cardControllers[index],
@@ -56,9 +55,9 @@ class RecoBooksPaneState extends State<RecoBooksPane> {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
-        crossAxisSpacing: 10,
+        crossAxisSpacing: 20,
         mainAxisSpacing: 10,
-        childAspectRatio: 0.7,
+        childAspectRatio: 0.75,
       ),
       itemCount: _crowdRecoBooks.length,
       itemBuilder: (context, index) => _cards[index],
@@ -101,7 +100,7 @@ class RecoBooksPaneState extends State<RecoBooksPane> {
       _cards = List.generate(
         _crowdRecoBooks.length,
             (index) => FlipCard(
-          animationDuration: const Duration(milliseconds: 2000),
+          animationDuration: const Duration(milliseconds: 300),
           rotateSide: RotateSide.left,
           axis: FlipAxis.vertical,
           controller: _cardControllers[index],
@@ -131,7 +130,7 @@ class RecoBooksPaneState extends State<RecoBooksPane> {
   @override
   Widget build(BuildContext context) {
     return FlipCard(
-      animationDuration: const Duration(milliseconds: 2000),
+      animationDuration: const Duration(milliseconds: 300),
       rotateSide: RotateSide.left,
       axis: FlipAxis.vertical,
       controller: _wholePaneFlipController,

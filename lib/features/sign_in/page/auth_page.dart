@@ -1,7 +1,4 @@
 import 'package:animations/animations.dart';
-import 'package:elibapp/features/auth/bloc/auth_bloc.dart';
-import 'package:elibapp/features/auth/bloc/auth_event.dart';
-import 'package:elibapp/features/sign_in/repo/impl/sign_in_repo_impl.dart';
 import 'package:elibapp/features/sign_in/repo/sign_in_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

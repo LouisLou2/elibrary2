@@ -1,7 +1,5 @@
 
 import '../../../entity/user/authed_user_with_data1.dart';
-import '../../../entity/user/user_auth_params.dart';
-
 sealed class AuthEvent {
   const AuthEvent();
   static const LogoutEvent logout = LogoutEvent();

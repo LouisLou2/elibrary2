@@ -1,4 +1,3 @@
-import 'package:elibapp/entity/book/book_viewing_history.dart';
 import 'package:elibapp/features/viewing_history/data/viewing_history_data.dart';
 import 'package:get_it/get_it.dart';
 

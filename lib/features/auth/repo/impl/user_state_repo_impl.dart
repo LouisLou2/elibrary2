@@ -1,5 +1,3 @@
-
-import 'package:elibapp/common/res_enum.dart';
 import 'package:elibapp/entity/struct/res.dart';
 import 'package:elibapp/features/auth/datasource/auth_data.dart';
 import 'package:get_it/get_it.dart';
@@ -22,9 +20,14 @@ class UserStateRepoImpl extends UserStateRepo{
   }
 
   @override
-  void setAndPersistUser(UserAuthParams userAuthParams) {
-    this.userAuthParams = userAuthParams;
-    _auth.saveUserAuthParams(userAuthParams); // async
+  void setAndPersistUser(UserAuthParams params) {
+    userAuthParams = params;
+    _auth.saveUserAuthParams(params); // async
+  }
+
+  @override
+  void setUser(UserAuthParams params) {
+    userAuthParams = params;
   }
 
   @override

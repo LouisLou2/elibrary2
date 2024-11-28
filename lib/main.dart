@@ -23,14 +23,18 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('@@@@@@@@@@app build');
     return ToastificationWrapper(
       child: BlocProvider(
-        create: (context) => ThemeBloc(const DarkThemeState()),
+        create: (context) => ThemeBloc(const LightThemeState()),
+        lazy: false,
         child: BlocBuilder<ThemeBloc, ThemeState>(
           buildWhen: (previous, current) {
+            print('@@@@@@@@@ThemeBloc buildWhen: $previous, $current');
             return previous != current;
           },
           builder: (context, state) {
+            print('@@@@@@@@@ThemeState: $state');
             ThemeMode mode = state.getThemeMode();
             SystemChrome.setSystemUIOverlayStyle(
               AppTheme.getSystemUiOverlayStyle(mode, mode == ThemeMode.dark? AppTheme.dark : AppTheme.light),
@@ -45,6 +49,7 @@ class App extends StatelessWidget {
               theme: AppTheme.light,
               // navigation
               routes: RouteCollector.routes,
+              initialRoute: null,
               navigatorKey: NavigationHelper.key,
               onGenerateRoute: RouteGenerator.generateRoute,
               navigatorObservers: [NavigationHelper.observer],
@@ -52,6 +57,7 @@ class App extends StatelessWidget {
               home: const EntrancePage(),
               // ui tools:
               builder: (context, child) {
+                print('@@@@@@@@@MaterialApp builder');
                 TransitionBuilder loadingWrapper = EasyLoading.init();
                 var toastProv = ToastificationConfigProvider(
                   config: const ToastificationConfig(

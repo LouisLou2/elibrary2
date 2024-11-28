@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 // 直接使用static持久的对象，不每次都new instance的前提是，保证不会连续发出两个一样的状态
-sealed class ThemeState {
+sealed class ThemeState extends Equatable{
   static const LightThemeState light = LightThemeState();
   static const DarkThemeState dark = DarkThemeState();
 
@@ -12,10 +13,7 @@ sealed class ThemeState {
   bool get isLight => _isLight;
   //==, 仅仅使用isLight来判断是否相等
   @override
-  bool operator == (Object other) => identical(this, other) || other is ThemeState && other._isLight == _isLight;
-  //hashCode
-  @override
-  int get hashCode => _isLight.hashCode;
+  List<Object> get props => [_isLight];
 
   ThemeMode getThemeMode() {
     return _isLight ? ThemeMode.light : ThemeMode.dark;

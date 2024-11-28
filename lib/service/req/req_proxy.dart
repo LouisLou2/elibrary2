@@ -29,12 +29,14 @@ class ReqProxy extends Requester{
     enableProxy = true;
   }
 
-  Future<Res<Resp?>> req(
-    String path,
-    HttpMethod method,
-    Map<String,dynamic> data
-  ) async {
+  Future<Res<Resp?>> req({
+    required String path,
+    required HttpMethod method,
+    required Map<String,dynamic> data,
+    int tryTimes = 1
+  }) async {
     assert (enableProxy);
+    Res<Resp?> result;
     try {
       Response resp = await NetManager.normalDio.request(
         path,
@@ -49,33 +51,45 @@ class ReqProxy extends Requester{
       );
       if (resp.statusCode == HttpStatusCode.OK.value) {
         return Res.successWithData(Resp.fromJson(resp.data));
-      } else if (resp.statusCode == HttpStatusCode.UNAUTHORIZED.value){
-        // 这里如果是401，需要刷新token
-        // 如果正在刷新,就等待
-        if (_isRefreshingAT) {
-          assert (_completer != null);
-          await _completer!.future;
-          return req(path, method, data);
-        } else {
-          // 说明需要刷新token
-          _isRefreshingAT = true;
-          _completer = Completer();
-          bool success = await _atRetriver();
-          if (success) {
-            _isRefreshingAT = false;
-            _completer!.complete();
-            return req(path, method, data);
-          } else {
-            _isRefreshingAT = false;
-            _completer!.complete();
-            return Res.failed(ResCodeEnum.UnAuthorized);
-          }
-        }
       } else {
         return Res.failed(ResCodeEnum.ServerError);
       }
     } catch(e){
-      return GlobalExceptionHelper.getErrorResInfo(e);
+      result =  GlobalExceptionHelper.getErrorResInfo(e);
+      if (result.code != ResCodeEnum.UnAuthorized || tryTimes > 1) {
+        return result;
+      }
+    }
+    // 这里如果是401，需要刷新token
+    // 如果正在刷新,就等待
+    if (_isRefreshingAT) {
+      assert (_completer != null);
+      await _completer!.future;
+      return req(
+          path: path,
+          method:method,
+          data: data,
+          tryTimes: tryTimes+1
+      );
+    } else {
+      // 说明需要刷新token
+      _isRefreshingAT = true;
+      _completer = Completer();
+      bool success = await _atRetriver();
+      if (success) {
+        _isRefreshingAT = false;
+        _completer!.complete();
+        return req(
+            path: path,
+            method:method,
+            data: data,
+            tryTimes: tryTimes+1
+        );
+      } else {
+        _isRefreshingAT = false;
+        _completer!.complete();
+        return Res.failed(ResCodeEnum.UnAuthorized);
+      }
     }
   }
 
@@ -87,7 +101,8 @@ class ReqProxy extends Requester{
         options: Options(
           method: method.value,
         ),
-        data: data
+        data: method==HttpMethod.GET ? null: data,
+        queryParameters: method==HttpMethod.GET ? data: null,
       );
       if (resp.statusCode == HttpStatusCode.OK.value) {
         return Res.successWithData(Resp.fromJson(resp.data));

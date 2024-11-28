@@ -1,5 +1,3 @@
-import 'package:elibapp/entity/user/authed_user_with_data.dart';
-
 import '../../../entity/struct/res.dart';
 import '../../../entity/user/authed_user_with_data1.dart';
 

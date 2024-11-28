@@ -16,6 +16,8 @@ Widget getCustomCachedImage({
     placeholder: (context, url) => const Center(
       child: CircularProgressIndicator(),
     ),
+    fadeInDuration: const Duration(milliseconds: 150),
+    fadeOutDuration: const Duration(milliseconds: 150),
     errorWidget: (context, url, error) => const Icon(Icons.error),
   );
 }

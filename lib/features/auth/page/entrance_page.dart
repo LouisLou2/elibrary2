@@ -1,7 +1,6 @@
 import 'package:elibapp/features/auth/repo/user_state_repo.dart';
+import 'package:elibapp/features/chart/page/chart_page.dart';
 import 'package:elibapp/features/home/page/home_page.dart';
-import 'package:elibapp/helper/network/net_path_collector.dart';
-import 'package:elibapp/shared/page/error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -17,6 +16,7 @@ class EntrancePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('@@@@@@@@@@@@entrance page build');
     return RepositoryProvider.value(
       value: GetIt.I<UserStateRepo>(),
       child: BlocProvider.value(
@@ -26,6 +26,7 @@ class EntrancePage extends StatelessWidget {
             return previous != current;
           },
           builder: (context, state) {
+            print('@@@@@@@@@@@@auh bloc builder: $state');
             if (state == AuthState.userLoggedOut){
               return const AuthPages();
             }
@@ -35,7 +36,7 @@ class EntrancePage extends StatelessWidget {
               create: (context) => HomePageBloc(
                 state is UserLoadedLocal ? HomePageState.homePageRefreshedLocal : HomePageInit((state as UserLoggedInNet).userHomeData),
               ),
-              child: const HomePage(),
+              child: const ChartPage(),
             );
             // return const ErrorPage();
           }

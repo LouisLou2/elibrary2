@@ -35,6 +35,9 @@ class BookBriefReco extends BookBriefAbs{
   @JsonKey(name: 'cover_m_url')
   String coverMUrl;
 
+  @JsonKey(name: "cover_dom_color")
+  int coverDomColor;
+
   int rating;
 
   @JsonKey(name: 'has_ebook')
@@ -47,6 +50,7 @@ class BookBriefReco extends BookBriefAbs{
     required this.publisherName,
     required this.coverSUrl,
     required this.coverMUrl,
+    required this.coverDomColor,
     required this.rating,
     required this.hasEbook,
   });
@@ -56,9 +60,11 @@ class BookBriefReco extends BookBriefAbs{
     this.order = order;
   }
 
-  static void setUserIdAndOrderList(List<BookBriefReco> list, int userId) {
-    for (int i=0; i<list.length; i++) {
-      list[i].setUserIdAndOrder(userId, i);
+  static void setUserIdAndOrderList(List<BookBriefReco> list, int userId, int from) {
+    assert(from>=0);
+    for (var i = 0; i < list.length; i++) {
+      list[i].order = from + i;
+      list[i].userId = userId;
     }
   }
 

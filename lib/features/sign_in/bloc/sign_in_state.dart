@@ -1,7 +1,4 @@
-import 'package:elibapp/util/base_state.dart';
 import 'package:equatable/equatable.dart';
-
-import '../../../entity/user/authed_user_with_data1.dart';
 
 sealed class SignInState extends Equatable{
 

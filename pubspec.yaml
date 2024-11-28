@@ -55,6 +55,7 @@ dependencies:
   cached_network_image: ^3.4.1
   card_swiper: ^3.0.1
   pull_to_refresh_flutter3: ^2.0.2
+  flutter_svg: ^2.0.16
 
 
 dev_dependencies:

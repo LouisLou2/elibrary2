@@ -1,6 +1,5 @@
 import 'package:elibapp/common/contact_type.dart';
 import 'package:elibapp/entity/struct/res.dart';
-import 'package:elibapp/features/global_aggreement/const/home_ui_strategy.dart';
 
 import 'package:elibapp/global_state/device_info.dart';
 import 'package:elibapp/helper/network/net_path_collector.dart';

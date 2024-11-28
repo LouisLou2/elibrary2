@@ -37,6 +37,18 @@ class BookRecoPath{
   }
 }
 
+class BookChartPath{
+  late final String base;
+  late final String trendingBooks;
+  late final String highRatingBooks;
+
+  BookChartPath(){
+    base = "/book_chart";
+    trendingBooks = "$base/trending";
+    highRatingBooks = "$base/high_rating";
+  }
+}
+
 
 class NetworkPathCollector {
   static const String host = Configs.HOST;// server host
@@ -45,4 +57,5 @@ class NetworkPathCollector {
   static AuthPath auth = AuthPath();
   static BookRecoPath bookReco = BookRecoPath();
   static AggregatedPath aggregated = AggregatedPath();
+  static BookChartPath bookChart = BookChartPath();
 }

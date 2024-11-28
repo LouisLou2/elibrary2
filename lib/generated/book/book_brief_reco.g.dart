@@ -22,48 +22,53 @@ const BookBriefRecoSchema = CollectionSchema(
       name: r'authorNames',
       type: IsarType.stringList,
     ),
-    r'coverMUrl': PropertySchema(
+    r'coverDomColor': PropertySchema(
       id: 1,
+      name: r'coverDomColor',
+      type: IsarType.long,
+    ),
+    r'coverMUrl': PropertySchema(
+      id: 2,
       name: r'coverMUrl',
       type: IsarType.string,
     ),
     r'coverSUrl': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'coverSUrl',
       type: IsarType.string,
     ),
     r'hasEbook': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'hasEbook',
       type: IsarType.bool,
     ),
     r'isbn': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'isbn',
       type: IsarType.string,
     ),
     r'order': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'order',
       type: IsarType.long,
     ),
     r'publisherName': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'publisherName',
       type: IsarType.string,
     ),
     r'rating': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'rating',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'title',
       type: IsarType.string,
     ),
     r'userId': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'userId',
       type: IsarType.long,
     )
@@ -129,15 +134,16 @@ void _bookBriefRecoSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeStringList(offsets[0], object.authorNames);
-  writer.writeString(offsets[1], object.coverMUrl);
-  writer.writeString(offsets[2], object.coverSUrl);
-  writer.writeBool(offsets[3], object.hasEbook);
-  writer.writeString(offsets[4], object.isbn);
-  writer.writeLong(offsets[5], object.order);
-  writer.writeString(offsets[6], object.publisherName);
-  writer.writeLong(offsets[7], object.rating);
-  writer.writeString(offsets[8], object.title);
-  writer.writeLong(offsets[9], object.userId);
+  writer.writeLong(offsets[1], object.coverDomColor);
+  writer.writeString(offsets[2], object.coverMUrl);
+  writer.writeString(offsets[3], object.coverSUrl);
+  writer.writeBool(offsets[4], object.hasEbook);
+  writer.writeString(offsets[5], object.isbn);
+  writer.writeLong(offsets[6], object.order);
+  writer.writeString(offsets[7], object.publisherName);
+  writer.writeLong(offsets[8], object.rating);
+  writer.writeString(offsets[9], object.title);
+  writer.writeLong(offsets[10], object.userId);
 }
 
 BookBriefReco _bookBriefRecoDeserialize(
@@ -148,17 +154,18 @@ BookBriefReco _bookBriefRecoDeserialize(
 ) {
   final object = BookBriefReco(
     authorNames: reader.readStringList(offsets[0]) ?? [],
-    coverMUrl: reader.readString(offsets[1]),
-    coverSUrl: reader.readString(offsets[2]),
-    hasEbook: reader.readBool(offsets[3]),
-    isbn: reader.readString(offsets[4]),
-    publisherName: reader.readString(offsets[6]),
-    rating: reader.readLong(offsets[7]),
-    title: reader.readString(offsets[8]),
+    coverDomColor: reader.readLong(offsets[1]),
+    coverMUrl: reader.readString(offsets[2]),
+    coverSUrl: reader.readString(offsets[3]),
+    hasEbook: reader.readBool(offsets[4]),
+    isbn: reader.readString(offsets[5]),
+    publisherName: reader.readString(offsets[7]),
+    rating: reader.readLong(offsets[8]),
+    title: reader.readString(offsets[9]),
   );
   object.id = id;
-  object.order = reader.readLong(offsets[5]);
-  object.userId = reader.readLong(offsets[9]);
+  object.order = reader.readLong(offsets[6]);
+  object.userId = reader.readLong(offsets[10]);
   return object;
 }
 
@@ -172,22 +179,24 @@ P _bookBriefRecoDeserializeProp<P>(
     case 0:
       return (reader.readStringList(offset) ?? []) as P;
     case 1:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readBool(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 5:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readString(offset)) as P;
-    case 7:
       return (reader.readLong(offset)) as P;
-    case 8:
+    case 7:
       return (reader.readString(offset)) as P;
+    case 8:
+      return (reader.readLong(offset)) as P;
     case 9:
+      return (reader.readString(offset)) as P;
+    case 10:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -796,6 +805,62 @@ extension BookBriefRecoQueryFilter
         upper,
         includeUpper,
       );
+    });
+  }
+
+  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+      coverDomColorEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'coverDomColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+      coverDomColorGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'coverDomColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+      coverDomColorLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'coverDomColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+      coverDomColorBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'coverDomColor',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
     });
   }
 
@@ -1719,6 +1784,20 @@ extension BookBriefRecoQueryLinks
 
 extension BookBriefRecoQuerySortBy
     on QueryBuilder<BookBriefReco, BookBriefReco, QSortBy> {
+  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
+      sortByCoverDomColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coverDomColor', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
+      sortByCoverDomColorDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coverDomColor', Sort.desc);
+    });
+  }
+
   QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByCoverMUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverMUrl', Sort.asc);
@@ -1835,6 +1914,20 @@ extension BookBriefRecoQuerySortBy
 
 extension BookBriefRecoQuerySortThenBy
     on QueryBuilder<BookBriefReco, BookBriefReco, QSortThenBy> {
+  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
+      thenByCoverDomColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coverDomColor', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
+      thenByCoverDomColorDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coverDomColor', Sort.desc);
+    });
+  }
+
   QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByCoverMUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverMUrl', Sort.asc);
@@ -1970,6 +2063,13 @@ extension BookBriefRecoQueryWhereDistinct
     });
   }
 
+  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct>
+      distinctByCoverDomColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'coverDomColor');
+    });
+  }
+
   QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> distinctByCoverMUrl(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -2046,6 +2146,12 @@ extension BookBriefRecoQueryProperty
     });
   }
 
+  QueryBuilder<BookBriefReco, int, QQueryOperations> coverDomColorProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'coverDomColor');
+    });
+  }
+
   QueryBuilder<BookBriefReco, String, QQueryOperations> coverMUrlProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'coverMUrl');
@@ -2116,6 +2222,7 @@ BookBriefReco _$BookBriefRecoFromJson(Map<String, dynamic> json) =>
       publisherName: json['publisher_name'] as String,
       coverSUrl: json['cover_s_url'] as String,
       coverMUrl: json['cover_m_url'] as String,
+      coverDomColor: (json['cover_dom_color'] as num).toInt(),
       rating: (json['rating'] as num).toInt(),
       hasEbook: json['has_ebook'] as bool,
     );
@@ -2130,6 +2237,7 @@ Map<String, dynamic> _$BookBriefRecoToJson(BookBriefReco instance) =>
       'publisher_name': instance.publisherName,
       'cover_s_url': instance.coverSUrl,
       'cover_m_url': instance.coverMUrl,
+      'cover_dom_color': instance.coverDomColor,
       'rating': instance.rating,
       'has_ebook': instance.hasEbook,
     };

@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-
 import '../../config/network_config.dart';
 
 class RequestConfig {

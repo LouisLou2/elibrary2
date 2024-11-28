@@ -1,6 +1,5 @@
 import 'package:elibapp/features/sign_in/bloc/sign_in_bloc.dart';
 import 'package:elibapp/features/sign_in/repo/sign_in_repo.dart';
-import 'package:elibapp/style/widget_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

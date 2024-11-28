@@ -23,13 +23,14 @@ class HomePageRepoImpl implements HomePageRepo {
   final ViewingHistoryExportApi _viewingHistoryExportApi = GetIt.I.get<ViewingHistoryExportApi>();
   final ChartExportApi _chartExportApi = GetIt.I.get<ChartExportApi>();
 
-  int pageNum = 0;
+  int pageNum = 1;
   int pageSize = HomeUiStrategy.recoBooksReqNum;
 
 
   @override
   Future<List<BookBriefReco>> retriveNewRecoAndSave() async {
     Res<List<BookBriefReco>> res = await _homePageData.getBookBriefReco(pageNum, pageSize, _authExportApi.getCurrentUserId());
+    ++pageNum;
     if (!res.isSuccess) return [];
     _data.recoBooks = res.data!;
     _homePageData.refreshBookBriefReco(_data.recoBooks);

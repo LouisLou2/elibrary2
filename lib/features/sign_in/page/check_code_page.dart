@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../shared/widget/info_display/headline2.dart';
 import '../../../style/ui_size.dart';
 import '../../../util/format_tool.dart';
-import '../bloc/sign_in_event.dart';
 import '../bloc/sign_in_state.dart';
 
 class EnterVeriCodePage extends StatefulWidget{

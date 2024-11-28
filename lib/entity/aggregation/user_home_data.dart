@@ -34,15 +34,9 @@ class UserHomeData {
   });
 
   void setUserIdAndOrder(int userId) {
-    for (var i = 0; i < recoBooks.length; i++) {
-      recoBooks[i].setUserIdAndOrder(userId, i);
-    }
-    for (var i = 0; i < trendingBooks.length; i++) {
-      trendingBooks[i].setOrder(i);
-    }
-    for (var i = 0; i < highlyRatedBooks.length; i++) {
-      highlyRatedBooks[i].setOrder(i);
-    }
+    BookBriefReco.setUserIdAndOrderList(recoBooks, userId, 0);
+    BookBriefTB.setOrderForList(trendingBooks, 0);
+    BookBriefHR.setOrderForList(highlyRatedBooks, 0);
   }
 
   factory UserHomeData.fromJson(Map<String, dynamic> json) =>

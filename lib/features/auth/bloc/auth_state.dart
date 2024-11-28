@@ -1,9 +1,9 @@
 import 'package:elibapp/entity/aggregation/user_home_data.dart';
+import 'package:elibapp/entity/user/user_auth_params.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class AuthState extends Equatable{
   static const UserLoggedOut userLoggedOut = UserLoggedOut();
-  static const UserLoadedLocal userLoadedLocal = UserLoadedLocal();
 
   const AuthState();
 
@@ -18,7 +18,8 @@ class UserLoggedOut extends AuthState {
 }
 
 class UserLoadedLocal extends AuthState {
-  const UserLoadedLocal();
+  final UserAuthParams user;
+  const UserLoadedLocal(this.user);
 }
 
 // 与服务器验证通过，用户登录成功

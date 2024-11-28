@@ -1,6 +1,4 @@
-import 'package:elibapp/entity/book/book_brief_abs.dart';
 import 'package:elibapp/features/chart/data/chart_data.dart';
-import 'package:elibapp/features/chart/data/impl/tb_chart_data_impl.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../entity/book/book_brief_hr.dart';

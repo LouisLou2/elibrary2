@@ -1,6 +1,7 @@
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:elibapp/entity/book/book_viewing_history.dart';
+import 'package:elibapp/features/global_aggreement/const/const_shared_widget.dart';
 import 'package:elibapp/features/home/bloc/home_page_bloc.dart';
 import 'package:elibapp/features/home/bloc/home_page_event.dart';
 import 'package:elibapp/features/global_aggreement/const/home_ui_strategy.dart';
@@ -20,13 +21,14 @@ import '../../../shared/widget/Image_card_with_info.dart';
 import '../../../shared/widget/box_groov.dart';
 import '../../../shared/widget/card_layout.dart';
 import '../../../shared/widget/custom_image_card.dart';
+import '../../../shared/widget/forward_title.dart';
 import '../../../shared/widget/info_display/headline2.dart';
 import '../../../shared/widget/spec/image_widget.dart';
 import '../../../shared/widget/spec/text_widget.dart';
 import '../../../style/ui_size.dart';
 import '../../../util/format_tool.dart';
 import '../bloc/home_page_state.dart';
-import '../widget/reco_books_pane_controller.dart';
+import '../widget/RecoBooksPaneController2.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({super.key,});
@@ -36,7 +38,7 @@ class HomePage extends StatefulWidget{
 
 class _HomePageState extends State<HomePage>{
 
-  late RecoBooksPaneController controller;
+  late RecoBooksPaneController2 controller;
   final RefreshController refreshController = RefreshController();
 
   Future? _future;
@@ -57,7 +59,7 @@ class _HomePageState extends State<HomePage>{
     for (int i = 0; i < recoBooks.length -1; i++){
       res.add(
         InkWell(
-          onTap: () => print('tapped'),
+          onTap: (){},
           child: getCustomCachedImage(url: recoBooks[i].coverSUrl),
         )
       );
@@ -65,7 +67,7 @@ class _HomePageState extends State<HomePage>{
     res.add(
       DetailBookRecoCard(
         book: recoBooks.last,
-        onTap: ()=> print('tapped'),
+        onTap: (){},
       )
     );
     return res;
@@ -74,10 +76,18 @@ class _HomePageState extends State<HomePage>{
   void initBookRecoPaneController(){
     List<BookBriefReco> recoBooks = GetIt.I<HomePageRepo>().getCurrentReco();
     assert( recoBooks.length == HomeUiStrategy.recoBooksReqNum);
-    controller = RecoBooksPaneController(
+    controller = RecoBooksPaneController2(
       fromRecoBooks(recoBooks),
       getNewRecoBookCards,
     );
+  }
+
+  void prepareRefreshForLocalInit(){
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(const Duration(seconds: 1),(){
+        context.read<HomePageBloc>().add(HomePageEvent.reqRefresh);
+      });
+    });
   }
 
 
@@ -97,6 +107,8 @@ class _HomePageState extends State<HomePage>{
           value: GetIt.I<HomePageRepo>(),
           child: BlocListener<HomePageBloc, HomePageState>(
             listener: (context, state){
+              print('BlocListener: $state');
+              // initail state is 不会被触发listener
               assert(state is HomePageRefresh || state is HomePageRefresh || state is HomePageError || state is HomePageLoading);
               if (state is HomePageRefresh){
                 refreshController.refreshCompleted();
@@ -107,21 +119,16 @@ class _HomePageState extends State<HomePage>{
                 return;
               }
               if (state is HomePageLoading){
-                refreshController.requestLoading();
+                refreshController.requestRefresh(needMove: true, needCallback: false);
                 return;
               }
             },
             child: SmartRefresher(
               enablePullDown: true,
-              header: const ClassicHeader(
-                refreshingText: '正在刷新',
-                releaseText: '释放刷新',
-                completeText: '刷新完成',
-                idleText: '下拉刷新',
-              ),
-              footer: const ClassicFooter(),
+              header: ConstSharedWidget.classicRefreshHeader,
+              footer: ConstSharedWidget.classicRefreshFooter,
               controller: refreshController,
-              onRefresh: () async {
+              onRefresh: () {
                 context.read<HomePageBloc>().add(HomePageEvent.reqRefresh);
               },
               child: SingleChildScrollView(
@@ -131,6 +138,12 @@ class _HomePageState extends State<HomePage>{
                     return current is HomePageRefresh;
                   }, // 只有刷新完成时才会重绘
                   builder: (context, state) {
+
+                    // 当界面被渲染完成，加一个postFrameCallback
+                    if (state is HomePageRefreshLocal){
+                      prepareRefreshForLocalInit();
+                    }
+
                     // 获取重绘需要的资料
                     HomePageRepo repo = context.read<HomePageRepo>();
                     List<BookViewingHistory> viewingHistory = repo.getCurrentViewed();
@@ -172,25 +185,41 @@ class _HomePageState extends State<HomePage>{
                         ),
                         const SizedBox(height: UiSize.mediumGap,),
                         buildViewingHistory(viewingHistory),
-                        const SizedBox(height: 20,),
-                        Text(
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
-                          AppStrs.recomend,
+                        const SizedBox(height: UiSize.largeGap,),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15),
+                              child: ForwardTitle(
+                                title: AppStrs.recomend,
+                                onTap: ()=> print('tapped'),
+                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
+                              ),
+                            )
+                          ],
                         ),
+                        const SizedBox(height: UiSize.mediumGap,),
                         SizedBox(
                           width: MediaQuery.sizeOf(context).width,
-                          height: 700,
-                          child: GestureDetector(
-                            onTap: () {
-                              print('tapped: $canFlip');
-                              if (canFlip){
-                                canFlip = false;
-                                _future = controller.flip();
-                                _future!.then((value) => canFlip = true);
-                              }
-                            },
+                          height: MediaQuery.sizeOf(context).width * 0.78,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: RecoBooksPane(controller: controller),
                           ),
+                        ),
+                        ElevatedButton(
+                          child: Text(
+                            "换一批",
+                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),
+                          ),
+                          onPressed: () {
+                            print('tapped: $canFlip');
+                            if (canFlip){
+                              canFlip = false;
+                              _future = controller.flip();
+                              _future!.then((value) => canFlip = true);
+                            }
+                          },
                         ),
                         const SizedBox(height: 20,),
                         ...buildTrendingChartSection(tbBooks),
@@ -201,10 +230,8 @@ class _HomePageState extends State<HomePage>{
                         Padding(
                           padding: const EdgeInsets.only(left:10),
                           child: BoxGroove(
-                            title: Text(
-                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
-                              AppStrs.activity,
-                            ),
+                            title: AppStrs.activity,
+                            titleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
                             titleOnTap: ()=>print('tt'),
                             widgets:List.generate(5,
                                   (index) => CardLayout(
@@ -287,10 +314,8 @@ class _HomePageState extends State<HomePage>{
     return Padding(
       padding: const EdgeInsets.only(left:10),
       child: BoxGroove(
-        title: Text(
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
-          AppStrs.recentlyViewed,
-        ),
+        title: AppStrs.recentlyViewed,
+        titleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
         titleOnTap: ()=> print('tt'),
         widgets: List.generate(
           viewingHistory.length,
@@ -314,10 +339,8 @@ class _HomePageState extends State<HomePage>{
     Widget groove = Padding(
       padding: const EdgeInsets.only(left:14),
       child: BoxGroove(
-        title: Text(
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
-          "图书趋势榜"
-        ),
+        title: "图书趋势榜",
+        titleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
         titleOnTap: ()=> print('tt'),
         widgets:List.generate(
           books.length,
@@ -350,10 +373,8 @@ class _HomePageState extends State<HomePage>{
     Widget groove = Padding(
       padding: const EdgeInsets.only(left:14),
       child: BoxGroove(
-        title: Text(
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
-            "图书趋势榜"
-        ),
+        title: "高分图书榜",
+        titleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
         titleOnTap: ()=> print('tt'),
         widgets:List.generate(
           books.length,
