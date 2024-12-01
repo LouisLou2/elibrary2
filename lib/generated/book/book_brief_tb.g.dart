@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../../entity/book/book_brief_reco.dart';
+part of '../../entity/book/book_brief_tb.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,13 +9,13 @@ part of '../../entity/book/book_brief_reco.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetBookBriefRecoCollection on Isar {
-  IsarCollection<BookBriefReco> get bookBriefRecos => this.collection();
+extension GetBookBriefTBCollection on Isar {
+  IsarCollection<BookBriefTB> get bookBriefTBs => this.collection();
 }
 
-const BookBriefRecoSchema = CollectionSchema(
-  name: r'BookBriefReco',
-  id: -5848685747334466622,
+const BookBriefTBSchema = CollectionSchema(
+  name: r'BookBriefTB',
+  id: -8704735278485934595,
   properties: {
     r'authorNames': PropertySchema(
       id: 0,
@@ -76,32 +76,22 @@ const BookBriefRecoSchema = CollectionSchema(
       id: 11,
       name: r'title',
       type: IsarType.string,
-    ),
-    r'userId': PropertySchema(
-      id: 12,
-      name: r'userId',
-      type: IsarType.long,
     )
   },
-  estimateSize: _bookBriefRecoEstimateSize,
-  serialize: _bookBriefRecoSerialize,
-  deserialize: _bookBriefRecoDeserialize,
-  deserializeProp: _bookBriefRecoDeserializeProp,
+  estimateSize: _bookBriefTBEstimateSize,
+  serialize: _bookBriefTBSerialize,
+  deserialize: _bookBriefTBDeserialize,
+  deserializeProp: _bookBriefTBDeserializeProp,
   idName: r'id',
   indexes: {
-    r'order_userId': IndexSchema(
-      id: 8734891273568143071,
-      name: r'order_userId',
+    r'order': IndexSchema(
+      id: 5897270977454184057,
+      name: r'order',
       unique: true,
       replace: true,
       properties: [
         IndexPropertySchema(
           name: r'order',
-          type: IndexType.value,
-          caseSensitive: false,
-        ),
-        IndexPropertySchema(
-          name: r'userId',
           type: IndexType.value,
           caseSensitive: false,
         )
@@ -110,14 +100,14 @@ const BookBriefRecoSchema = CollectionSchema(
   },
   links: {},
   embeddedSchemas: {},
-  getId: _bookBriefRecoGetId,
-  getLinks: _bookBriefRecoGetLinks,
-  attach: _bookBriefRecoAttach,
+  getId: _bookBriefTBGetId,
+  getLinks: _bookBriefTBGetLinks,
+  attach: _bookBriefTBAttach,
   version: '3.1.0+1',
 );
 
-int _bookBriefRecoEstimateSize(
-  BookBriefReco object,
+int _bookBriefTBEstimateSize(
+  BookBriefTB object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -139,8 +129,8 @@ int _bookBriefRecoEstimateSize(
   return bytesCount;
 }
 
-void _bookBriefRecoSerialize(
-  BookBriefReco object,
+void _bookBriefTBSerialize(
+  BookBriefTB object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -157,16 +147,15 @@ void _bookBriefRecoSerialize(
   writer.writeLong(offsets[9], object.rating);
   writer.writeString(offsets[10], object.shortDesc);
   writer.writeString(offsets[11], object.title);
-  writer.writeLong(offsets[12], object.userId);
 }
 
-BookBriefReco _bookBriefRecoDeserialize(
+BookBriefTB _bookBriefTBDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = BookBriefReco(
+  final object = BookBriefTB(
     authorNames: reader.readStringList(offsets[0]) ?? [],
     coverDomColor: reader.readLong(offsets[2]),
     coverMUrl: reader.readString(offsets[3]),
@@ -180,11 +169,10 @@ BookBriefReco _bookBriefRecoDeserialize(
   );
   object.id = id;
   object.order = reader.readLong(offsets[7]);
-  object.userId = reader.readLong(offsets[12]);
   return object;
 }
 
-P _bookBriefRecoDeserializeProp<P>(
+P _bookBriefTBDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -215,134 +203,99 @@ P _bookBriefRecoDeserializeProp<P>(
       return (reader.readString(offset)) as P;
     case 11:
       return (reader.readString(offset)) as P;
-    case 12:
-      return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-Id _bookBriefRecoGetId(BookBriefReco object) {
+Id _bookBriefTBGetId(BookBriefTB object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _bookBriefRecoGetLinks(BookBriefReco object) {
+List<IsarLinkBase<dynamic>> _bookBriefTBGetLinks(BookBriefTB object) {
   return [];
 }
 
-void _bookBriefRecoAttach(
-    IsarCollection<dynamic> col, Id id, BookBriefReco object) {
+void _bookBriefTBAttach(
+    IsarCollection<dynamic> col, Id id, BookBriefTB object) {
   object.id = id;
 }
 
-extension BookBriefRecoByIndex on IsarCollection<BookBriefReco> {
-  Future<BookBriefReco?> getByOrderUserId(int order, int userId) {
-    return getByIndex(r'order_userId', [order, userId]);
+extension BookBriefTBByIndex on IsarCollection<BookBriefTB> {
+  Future<BookBriefTB?> getByOrder(int order) {
+    return getByIndex(r'order', [order]);
   }
 
-  BookBriefReco? getByOrderUserIdSync(int order, int userId) {
-    return getByIndexSync(r'order_userId', [order, userId]);
+  BookBriefTB? getByOrderSync(int order) {
+    return getByIndexSync(r'order', [order]);
   }
 
-  Future<bool> deleteByOrderUserId(int order, int userId) {
-    return deleteByIndex(r'order_userId', [order, userId]);
+  Future<bool> deleteByOrder(int order) {
+    return deleteByIndex(r'order', [order]);
   }
 
-  bool deleteByOrderUserIdSync(int order, int userId) {
-    return deleteByIndexSync(r'order_userId', [order, userId]);
+  bool deleteByOrderSync(int order) {
+    return deleteByIndexSync(r'order', [order]);
   }
 
-  Future<List<BookBriefReco?>> getAllByOrderUserId(
-      List<int> orderValues, List<int> userIdValues) {
-    final len = orderValues.length;
-    assert(userIdValues.length == len,
-        'All index values must have the same length');
-    final values = <List<dynamic>>[];
-    for (var i = 0; i < len; i++) {
-      values.add([orderValues[i], userIdValues[i]]);
-    }
-
-    return getAllByIndex(r'order_userId', values);
+  Future<List<BookBriefTB?>> getAllByOrder(List<int> orderValues) {
+    final values = orderValues.map((e) => [e]).toList();
+    return getAllByIndex(r'order', values);
   }
 
-  List<BookBriefReco?> getAllByOrderUserIdSync(
-      List<int> orderValues, List<int> userIdValues) {
-    final len = orderValues.length;
-    assert(userIdValues.length == len,
-        'All index values must have the same length');
-    final values = <List<dynamic>>[];
-    for (var i = 0; i < len; i++) {
-      values.add([orderValues[i], userIdValues[i]]);
-    }
-
-    return getAllByIndexSync(r'order_userId', values);
+  List<BookBriefTB?> getAllByOrderSync(List<int> orderValues) {
+    final values = orderValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'order', values);
   }
 
-  Future<int> deleteAllByOrderUserId(
-      List<int> orderValues, List<int> userIdValues) {
-    final len = orderValues.length;
-    assert(userIdValues.length == len,
-        'All index values must have the same length');
-    final values = <List<dynamic>>[];
-    for (var i = 0; i < len; i++) {
-      values.add([orderValues[i], userIdValues[i]]);
-    }
-
-    return deleteAllByIndex(r'order_userId', values);
+  Future<int> deleteAllByOrder(List<int> orderValues) {
+    final values = orderValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'order', values);
   }
 
-  int deleteAllByOrderUserIdSync(
-      List<int> orderValues, List<int> userIdValues) {
-    final len = orderValues.length;
-    assert(userIdValues.length == len,
-        'All index values must have the same length');
-    final values = <List<dynamic>>[];
-    for (var i = 0; i < len; i++) {
-      values.add([orderValues[i], userIdValues[i]]);
-    }
-
-    return deleteAllByIndexSync(r'order_userId', values);
+  int deleteAllByOrderSync(List<int> orderValues) {
+    final values = orderValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'order', values);
   }
 
-  Future<Id> putByOrderUserId(BookBriefReco object) {
-    return putByIndex(r'order_userId', object);
+  Future<Id> putByOrder(BookBriefTB object) {
+    return putByIndex(r'order', object);
   }
 
-  Id putByOrderUserIdSync(BookBriefReco object, {bool saveLinks = true}) {
-    return putByIndexSync(r'order_userId', object, saveLinks: saveLinks);
+  Id putByOrderSync(BookBriefTB object, {bool saveLinks = true}) {
+    return putByIndexSync(r'order', object, saveLinks: saveLinks);
   }
 
-  Future<List<Id>> putAllByOrderUserId(List<BookBriefReco> objects) {
-    return putAllByIndex(r'order_userId', objects);
+  Future<List<Id>> putAllByOrder(List<BookBriefTB> objects) {
+    return putAllByIndex(r'order', objects);
   }
 
-  List<Id> putAllByOrderUserIdSync(List<BookBriefReco> objects,
+  List<Id> putAllByOrderSync(List<BookBriefTB> objects,
       {bool saveLinks = true}) {
-    return putAllByIndexSync(r'order_userId', objects, saveLinks: saveLinks);
+    return putAllByIndexSync(r'order', objects, saveLinks: saveLinks);
   }
 }
 
-extension BookBriefRecoQueryWhereSort
-    on QueryBuilder<BookBriefReco, BookBriefReco, QWhere> {
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhere> anyId() {
+extension BookBriefTBQueryWhereSort
+    on QueryBuilder<BookBriefTB, BookBriefTB, QWhere> {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhere> anyOrderUserId() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhere> anyOrder() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'order_userId'),
+        const IndexWhereClause.any(indexName: r'order'),
       );
     });
   }
 }
 
-extension BookBriefRecoQueryWhere
-    on QueryBuilder<BookBriefReco, BookBriefReco, QWhereClause> {
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause> idEqualTo(
-      Id id) {
+extension BookBriefTBQueryWhere
+    on QueryBuilder<BookBriefTB, BookBriefTB, QWhereClause> {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -351,7 +304,7 @@ extension BookBriefRecoQueryWhere
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause> idNotEqualTo(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhereClause> idNotEqualTo(
       Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
@@ -374,8 +327,7 @@ extension BookBriefRecoQueryWhere
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause> idGreaterThan(
-      Id id,
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhereClause> idGreaterThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -384,8 +336,7 @@ extension BookBriefRecoQueryWhere
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause> idLessThan(
-      Id id,
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -394,7 +345,7 @@ extension BookBriefRecoQueryWhere
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause> idBetween(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -410,29 +361,29 @@ extension BookBriefRecoQueryWhere
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause>
-      orderEqualToAnyUserId(int order) {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhereClause> orderEqualTo(
+      int order) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'order_userId',
+        indexName: r'order',
         value: [order],
       ));
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause>
-      orderNotEqualToAnyUserId(int order) {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhereClause> orderNotEqualTo(
+      int order) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'order_userId',
+              indexName: r'order',
               lower: [],
               upper: [order],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'order_userId',
+              indexName: r'order',
               lower: [order],
               includeLower: false,
               upper: [],
@@ -440,13 +391,13 @@ extension BookBriefRecoQueryWhere
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'order_userId',
+              indexName: r'order',
               lower: [order],
               includeLower: false,
               upper: [],
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'order_userId',
+              indexName: r'order',
               lower: [],
               upper: [order],
               includeUpper: false,
@@ -455,14 +406,13 @@ extension BookBriefRecoQueryWhere
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause>
-      orderGreaterThanAnyUserId(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhereClause> orderGreaterThan(
     int order, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'order_userId',
+        indexName: r'order',
         lower: [order],
         includeLower: include,
         upper: [],
@@ -470,14 +420,13 @@ extension BookBriefRecoQueryWhere
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause>
-      orderLessThanAnyUserId(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhereClause> orderLessThan(
     int order, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'order_userId',
+        indexName: r'order',
         lower: [],
         upper: [order],
         includeUpper: include,
@@ -485,8 +434,7 @@ extension BookBriefRecoQueryWhere
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause>
-      orderBetweenAnyUserId(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterWhereClause> orderBetween(
     int lowerOrder,
     int upperOrder, {
     bool includeLower = true,
@@ -494,7 +442,7 @@ extension BookBriefRecoQueryWhere
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'order_userId',
+        indexName: r'order',
         lower: [lowerOrder],
         includeLower: includeLower,
         upper: [upperOrder],
@@ -502,107 +450,11 @@ extension BookBriefRecoQueryWhere
       ));
     });
   }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause>
-      orderUserIdEqualTo(int order, int userId) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'order_userId',
-        value: [order, userId],
-      ));
-    });
-  }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause>
-      orderEqualToUserIdNotEqualTo(int order, int userId) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'order_userId',
-              lower: [order],
-              upper: [order, userId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'order_userId',
-              lower: [order, userId],
-              includeLower: false,
-              upper: [order],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'order_userId',
-              lower: [order, userId],
-              includeLower: false,
-              upper: [order],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'order_userId',
-              lower: [order],
-              upper: [order, userId],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause>
-      orderEqualToUserIdGreaterThan(
-    int order,
-    int userId, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'order_userId',
-        lower: [order, userId],
-        includeLower: include,
-        upper: [order],
-      ));
-    });
-  }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause>
-      orderEqualToUserIdLessThan(
-    int order,
-    int userId, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'order_userId',
-        lower: [order],
-        upper: [order, userId],
-        includeUpper: include,
-      ));
-    });
-  }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterWhereClause>
-      orderEqualToUserIdBetween(
-    int order,
-    int lowerUserId,
-    int upperUserId, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'order_userId',
-        lower: [order, lowerUserId],
-        includeLower: includeLower,
-        upper: [order, upperUserId],
-        includeUpper: includeUpper,
-      ));
-    });
-  }
 }
 
-extension BookBriefRecoQueryFilter
-    on QueryBuilder<BookBriefReco, BookBriefReco, QFilterCondition> {
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+extension BookBriefTBQueryFilter
+    on QueryBuilder<BookBriefTB, BookBriefTB, QFilterCondition> {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesElementEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -616,7 +468,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesElementGreaterThan(
     String value, {
     bool include = false,
@@ -632,7 +484,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesElementLessThan(
     String value, {
     bool include = false,
@@ -648,7 +500,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesElementBetween(
     String lower,
     String upper, {
@@ -668,7 +520,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesElementStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -682,7 +534,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesElementEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -696,7 +548,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesElementContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -707,7 +559,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesElementMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -718,7 +570,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesElementIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -728,7 +580,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesElementIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -738,7 +590,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -751,7 +603,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -764,7 +616,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -777,7 +629,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesLengthLessThan(
     int length, {
     bool include = false,
@@ -793,7 +645,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesLengthGreaterThan(
     int length, {
     bool include = false,
@@ -809,7 +661,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesLengthBetween(
     int lower,
     int upper, {
@@ -827,7 +679,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesStrEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -841,7 +693,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesStrGreaterThan(
     String value, {
     bool include = false,
@@ -857,7 +709,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesStrLessThan(
     String value, {
     bool include = false,
@@ -873,7 +725,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesStrBetween(
     String lower,
     String upper, {
@@ -893,7 +745,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesStrStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -907,7 +759,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesStrEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -921,7 +773,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesStrContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -932,7 +784,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesStrMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -943,7 +795,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesStrIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -953,7 +805,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       authorNamesStrIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -963,7 +815,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverDomColorEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -973,7 +825,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverDomColorGreaterThan(
     int value, {
     bool include = false,
@@ -987,7 +839,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverDomColorLessThan(
     int value, {
     bool include = false,
@@ -1001,7 +853,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverDomColorBetween(
     int lower,
     int upper, {
@@ -1019,7 +871,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverMUrlEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1033,7 +885,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverMUrlGreaterThan(
     String value, {
     bool include = false,
@@ -1049,7 +901,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverMUrlLessThan(
     String value, {
     bool include = false,
@@ -1065,7 +917,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverMUrlBetween(
     String lower,
     String upper, {
@@ -1085,7 +937,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverMUrlStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1099,7 +951,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverMUrlEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -1113,7 +965,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverMUrlContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -1124,7 +976,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverMUrlMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -1135,7 +987,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverMUrlIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1145,7 +997,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverMUrlIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1155,7 +1007,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverSUrlEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1169,7 +1021,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverSUrlGreaterThan(
     String value, {
     bool include = false,
@@ -1185,7 +1037,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverSUrlLessThan(
     String value, {
     bool include = false,
@@ -1201,7 +1053,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverSUrlBetween(
     String lower,
     String upper, {
@@ -1221,7 +1073,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverSUrlStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1235,7 +1087,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverSUrlEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -1249,7 +1101,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverSUrlContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -1260,7 +1112,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverSUrlMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -1271,7 +1123,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverSUrlIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1281,7 +1133,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       coverSUrlIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1291,8 +1143,8 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      hasEbookEqualTo(bool value) {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> hasEbookEqualTo(
+      bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'hasEbook',
@@ -1301,7 +1153,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition> idEqualTo(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> idEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1311,8 +1163,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      idGreaterThan(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> idGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -1325,7 +1176,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition> idLessThan(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> idLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -1338,7 +1189,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition> idBetween(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -1355,7 +1206,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition> isbnEqualTo(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> isbnEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1368,8 +1219,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      isbnGreaterThan(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> isbnGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1384,8 +1234,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      isbnLessThan(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> isbnLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1400,7 +1249,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition> isbnBetween(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> isbnBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1419,8 +1268,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      isbnStartsWith(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> isbnStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1433,8 +1281,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      isbnEndsWith(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> isbnEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1447,8 +1294,9 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      isbnContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> isbnContains(
+      String value,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'isbn',
@@ -1458,7 +1306,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition> isbnMatches(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> isbnMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1470,8 +1318,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      isbnIsEmpty() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> isbnIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isbn',
@@ -1480,7 +1327,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       isbnIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1490,8 +1337,8 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      orderEqualTo(int value) {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> orderEqualTo(
+      int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'order',
@@ -1500,7 +1347,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       orderGreaterThan(
     int value, {
     bool include = false,
@@ -1514,8 +1361,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      orderLessThan(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> orderLessThan(
     int value, {
     bool include = false,
   }) {
@@ -1528,8 +1374,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      orderBetween(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> orderBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1546,7 +1391,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       publisherNameEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1560,7 +1405,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       publisherNameGreaterThan(
     String value, {
     bool include = false,
@@ -1576,7 +1421,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       publisherNameLessThan(
     String value, {
     bool include = false,
@@ -1592,7 +1437,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       publisherNameBetween(
     String lower,
     String upper, {
@@ -1612,7 +1457,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       publisherNameStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1626,7 +1471,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       publisherNameEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -1640,7 +1485,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       publisherNameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -1651,7 +1496,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       publisherNameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -1662,7 +1507,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       publisherNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1672,7 +1517,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       publisherNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1682,8 +1527,8 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      ratingEqualTo(int value) {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> ratingEqualTo(
+      int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'rating',
@@ -1692,7 +1537,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       ratingGreaterThan(
     int value, {
     bool include = false,
@@ -1706,8 +1551,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      ratingLessThan(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> ratingLessThan(
     int value, {
     bool include = false,
   }) {
@@ -1720,8 +1564,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      ratingBetween(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> ratingBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1738,7 +1581,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       shortDescEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1752,7 +1595,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       shortDescGreaterThan(
     String value, {
     bool include = false,
@@ -1768,7 +1611,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       shortDescLessThan(
     String value, {
     bool include = false,
@@ -1784,7 +1627,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       shortDescBetween(
     String lower,
     String upper, {
@@ -1804,7 +1647,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       shortDescStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1818,7 +1661,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       shortDescEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -1832,7 +1675,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       shortDescContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -1843,7 +1686,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       shortDescMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -1854,7 +1697,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       shortDescIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1864,7 +1707,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       shortDescIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1874,8 +1717,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      titleEqualTo(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1888,7 +1730,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       titleGreaterThan(
     String value, {
     bool include = false,
@@ -1904,8 +1746,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      titleLessThan(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> titleLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1920,8 +1761,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      titleBetween(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> titleBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1940,8 +1780,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      titleStartsWith(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> titleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1954,8 +1793,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      titleEndsWith(
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> titleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1968,8 +1806,9 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      titleContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> titleContains(
+      String value,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'title',
@@ -1979,8 +1818,9 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      titleMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> titleMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'title',
@@ -1990,8 +1830,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      titleIsEmpty() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition> titleIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'title',
@@ -2000,7 +1839,7 @@ extension BookBriefRecoQueryFilter
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterFilterCondition>
       titleIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -2009,454 +1848,358 @@ extension BookBriefRecoQueryFilter
       ));
     });
   }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      userIdEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'userId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      userIdGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'userId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      userIdLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'userId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterFilterCondition>
-      userIdBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'userId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
 }
 
-extension BookBriefRecoQueryObject
-    on QueryBuilder<BookBriefReco, BookBriefReco, QFilterCondition> {}
+extension BookBriefTBQueryObject
+    on QueryBuilder<BookBriefTB, BookBriefTB, QFilterCondition> {}
 
-extension BookBriefRecoQueryLinks
-    on QueryBuilder<BookBriefReco, BookBriefReco, QFilterCondition> {}
+extension BookBriefTBQueryLinks
+    on QueryBuilder<BookBriefTB, BookBriefTB, QFilterCondition> {}
 
-extension BookBriefRecoQuerySortBy
-    on QueryBuilder<BookBriefReco, BookBriefReco, QSortBy> {
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      sortByAuthorNamesStr() {
+extension BookBriefTBQuerySortBy
+    on QueryBuilder<BookBriefTB, BookBriefTB, QSortBy> {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByAuthorNamesStr() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'authorNamesStr', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy>
       sortByAuthorNamesStrDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'authorNamesStr', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      sortByCoverDomColor() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByCoverDomColor() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverDomColor', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy>
       sortByCoverDomColorDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverDomColor', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByCoverMUrl() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByCoverMUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverMUrl', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      sortByCoverMUrlDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByCoverMUrlDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverMUrl', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByCoverSUrl() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByCoverSUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverSUrl', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      sortByCoverSUrlDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByCoverSUrlDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverSUrl', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByHasEbook() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByHasEbook() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hasEbook', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      sortByHasEbookDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByHasEbookDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hasEbook', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByIsbn() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByIsbn() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isbn', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByIsbnDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByIsbnDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isbn', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByOrder() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByOrder() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'order', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByOrderDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByOrderDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'order', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      sortByPublisherName() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByPublisherName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'publisherName', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy>
       sortByPublisherNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'publisherName', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByRating() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByRating() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'rating', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByRatingDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByRatingDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'rating', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByShortDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByShortDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'shortDesc', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      sortByShortDescDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByShortDescDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'shortDesc', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByTitle() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByTitleDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> sortByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByUserId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'userId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> sortByUserIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'userId', Sort.desc);
-    });
-  }
 }
 
-extension BookBriefRecoQuerySortThenBy
-    on QueryBuilder<BookBriefReco, BookBriefReco, QSortThenBy> {
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      thenByAuthorNamesStr() {
+extension BookBriefTBQuerySortThenBy
+    on QueryBuilder<BookBriefTB, BookBriefTB, QSortThenBy> {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByAuthorNamesStr() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'authorNamesStr', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy>
       thenByAuthorNamesStrDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'authorNamesStr', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      thenByCoverDomColor() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByCoverDomColor() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverDomColor', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy>
       thenByCoverDomColorDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverDomColor', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByCoverMUrl() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByCoverMUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverMUrl', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      thenByCoverMUrlDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByCoverMUrlDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverMUrl', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByCoverSUrl() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByCoverSUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverSUrl', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      thenByCoverSUrlDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByCoverSUrlDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverSUrl', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByHasEbook() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByHasEbook() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hasEbook', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      thenByHasEbookDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByHasEbookDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hasEbook', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenById() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByIsbn() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByIsbn() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isbn', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByIsbnDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByIsbnDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isbn', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByOrder() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByOrder() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'order', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByOrderDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByOrderDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'order', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      thenByPublisherName() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByPublisherName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'publisherName', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy>
       thenByPublisherNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'publisherName', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByRating() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByRating() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'rating', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByRatingDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByRatingDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'rating', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByShortDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByShortDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'shortDesc', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy>
-      thenByShortDescDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByShortDescDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'shortDesc', Sort.desc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByTitle() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByTitleDesc() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QAfterSortBy> thenByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByUserId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'userId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QAfterSortBy> thenByUserIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'userId', Sort.desc);
-    });
-  }
 }
 
-extension BookBriefRecoQueryWhereDistinct
-    on QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> {
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct>
-      distinctByAuthorNames() {
+extension BookBriefTBQueryWhereDistinct
+    on QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> {
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByAuthorNames() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'authorNames');
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct>
-      distinctByAuthorNamesStr({bool caseSensitive = true}) {
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByAuthorNamesStr(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'authorNamesStr',
           caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct>
-      distinctByCoverDomColor() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByCoverDomColor() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'coverDomColor');
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> distinctByCoverMUrl(
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByCoverMUrl(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'coverMUrl', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> distinctByCoverSUrl(
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByCoverSUrl(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'coverSUrl', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> distinctByHasEbook() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByHasEbook() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'hasEbook');
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> distinctByIsbn(
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByIsbn(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isbn', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> distinctByOrder() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByOrder() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'order');
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> distinctByPublisherName(
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByPublisherName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'publisherName',
@@ -2464,119 +2207,105 @@ extension BookBriefRecoQueryWhereDistinct
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> distinctByRating() {
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByRating() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'rating');
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> distinctByShortDesc(
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByShortDesc(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'shortDesc', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> distinctByTitle(
+  QueryBuilder<BookBriefTB, BookBriefTB, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
     });
   }
-
-  QueryBuilder<BookBriefReco, BookBriefReco, QDistinct> distinctByUserId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'userId');
-    });
-  }
 }
 
-extension BookBriefRecoQueryProperty
-    on QueryBuilder<BookBriefReco, BookBriefReco, QQueryProperty> {
-  QueryBuilder<BookBriefReco, int, QQueryOperations> idProperty() {
+extension BookBriefTBQueryProperty
+    on QueryBuilder<BookBriefTB, BookBriefTB, QQueryProperty> {
+  QueryBuilder<BookBriefTB, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<BookBriefReco, List<String>, QQueryOperations>
+  QueryBuilder<BookBriefTB, List<String>, QQueryOperations>
       authorNamesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'authorNames');
     });
   }
 
-  QueryBuilder<BookBriefReco, String, QQueryOperations>
-      authorNamesStrProperty() {
+  QueryBuilder<BookBriefTB, String, QQueryOperations> authorNamesStrProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'authorNamesStr');
     });
   }
 
-  QueryBuilder<BookBriefReco, int, QQueryOperations> coverDomColorProperty() {
+  QueryBuilder<BookBriefTB, int, QQueryOperations> coverDomColorProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'coverDomColor');
     });
   }
 
-  QueryBuilder<BookBriefReco, String, QQueryOperations> coverMUrlProperty() {
+  QueryBuilder<BookBriefTB, String, QQueryOperations> coverMUrlProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'coverMUrl');
     });
   }
 
-  QueryBuilder<BookBriefReco, String, QQueryOperations> coverSUrlProperty() {
+  QueryBuilder<BookBriefTB, String, QQueryOperations> coverSUrlProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'coverSUrl');
     });
   }
 
-  QueryBuilder<BookBriefReco, bool, QQueryOperations> hasEbookProperty() {
+  QueryBuilder<BookBriefTB, bool, QQueryOperations> hasEbookProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'hasEbook');
     });
   }
 
-  QueryBuilder<BookBriefReco, String, QQueryOperations> isbnProperty() {
+  QueryBuilder<BookBriefTB, String, QQueryOperations> isbnProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isbn');
     });
   }
 
-  QueryBuilder<BookBriefReco, int, QQueryOperations> orderProperty() {
+  QueryBuilder<BookBriefTB, int, QQueryOperations> orderProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'order');
     });
   }
 
-  QueryBuilder<BookBriefReco, String, QQueryOperations>
-      publisherNameProperty() {
+  QueryBuilder<BookBriefTB, String, QQueryOperations> publisherNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'publisherName');
     });
   }
 
-  QueryBuilder<BookBriefReco, int, QQueryOperations> ratingProperty() {
+  QueryBuilder<BookBriefTB, int, QQueryOperations> ratingProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'rating');
     });
   }
 
-  QueryBuilder<BookBriefReco, String, QQueryOperations> shortDescProperty() {
+  QueryBuilder<BookBriefTB, String, QQueryOperations> shortDescProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'shortDesc');
     });
   }
 
-  QueryBuilder<BookBriefReco, String, QQueryOperations> titleProperty() {
+  QueryBuilder<BookBriefTB, String, QQueryOperations> titleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'title');
-    });
-  }
-
-  QueryBuilder<BookBriefReco, int, QQueryOperations> userIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'userId');
     });
   }
 }
@@ -2585,8 +2314,7 @@ extension BookBriefRecoQueryProperty
 // JsonSerializableGenerator
 // **************************************************************************
 
-BookBriefReco _$BookBriefRecoFromJson(Map<String, dynamic> json) =>
-    BookBriefReco(
+BookBriefTB _$BookBriefTBFromJson(Map<String, dynamic> json) => BookBriefTB(
       isbn: json['isbn'] as String,
       title: json['title'] as String,
       shortDesc: json['short_desc'] as String,
@@ -2601,7 +2329,7 @@ BookBriefReco _$BookBriefRecoFromJson(Map<String, dynamic> json) =>
       hasEbook: json['has_ebook'] as bool,
     );
 
-Map<String, dynamic> _$BookBriefRecoToJson(BookBriefReco instance) =>
+Map<String, dynamic> _$BookBriefTBToJson(BookBriefTB instance) =>
     <String, dynamic>{
       'isbn': instance.isbn,
       'title': instance.title,
@@ -2613,6 +2341,5 @@ Map<String, dynamic> _$BookBriefRecoToJson(BookBriefReco instance) =>
       'cover_dom_color': instance.coverDomColor,
       'rating': instance.rating,
       'has_ebook': instance.hasEbook,
-      'userId': instance.userId,
       'order': instance.order,
     };

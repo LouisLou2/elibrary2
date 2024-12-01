@@ -35,7 +35,7 @@ class HeadLine2 extends StatelessWidget {
         style: TextStyle(
           color:color,
           fontSize: size,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           fontStyle: isItalic ? FontStyle.italic : FontStyle.normal,
         ),
       ),

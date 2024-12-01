@@ -1,4 +1,4 @@
-import 'package:elibapp/style/widget_detail.dart';
+import 'package:elibapp/style/ui_size.dart';
 import 'package:flutter/material.dart';
 
 class CardLayout extends StatelessWidget {
@@ -26,7 +26,7 @@ class CardLayout extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(WidgetDetail.defBorderR),
+        borderRadius: BorderRadius.circular(UiSize.border.normalBorderR),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

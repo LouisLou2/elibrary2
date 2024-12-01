@@ -1,20 +1,30 @@
 import 'package:elibapp/entity/book/book_brief_reco.dart';
 import 'package:elibapp/shared/widget/spec/image_widget.dart';
+import 'package:elibapp/style/ui_color.dart';
+import 'package:elibapp/style/ui_size.dart';
 import 'package:flutter/material.dart';
 
 class DetailBookRecoCard extends StatelessWidget{
   final BookBriefReco book;
   final VoidCallback onTap;
-  const DetailBookRecoCard({super.key, required this.book, required this.onTap});
+  final Color? backColor;
+  const DetailBookRecoCard({
+    super.key,
+    required this.book,
+    required this.onTap,
+    this.backColor,
+  });
 
-  List<Widget> _getAuthors(){
+  List<Widget> _getAuthors(Color color){
     List<Widget> authors = [];
     for (String author in book.authorNames){
       authors.add(
         Text(
           author,
-          style: const TextStyle(
-            fontSize: 15,
+          style: TextStyle(
+            fontSize: 13,
+            color: color,
+            fontWeight: FontWeight.w500,
           ),
         ),
       );
@@ -24,18 +34,27 @@ class DetailBookRecoCard extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    Color domColor = Color(book.coverDomColor);
+    Color backColorDown = domColor.withOpacity(0.5);
+    Color backColorUpper = domColor.withOpacity(0.15);
+
+    Color foreColorDom = UiColor.bwChooseUsingRGB(domColor);
+    Color backgColor = backColor ?? Theme.of(context).colorScheme.surface;
+    Color foreColorDown = UiColor.bwChooseUsingARGB(backColorDown,backgColor);
+    Color foreColorUpper = UiColor.bwChooseUsingARGB(backColorUpper,backgColor);
+
     return InkWell(
       onTap: onTap,
       child: Ink(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(UiSize.border.smallBorderR),
         ),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(UiSize.border.smallBorderR),
             border: Border.all(
-              color: Color(book.coverDomColor),
+              color: Theme.of(context).dividerColor,
               width: 0.5,
             ),
           ),
@@ -45,19 +64,28 @@ class DetailBookRecoCard extends StatelessWidget{
                 child: Container(
                   padding: const EdgeInsets.only(left: 20, top: 30, right: 20),
                   decoration: BoxDecoration(
-                    color: Color(book.coverDomColor).withOpacity(0.15),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
+                    color: backColorUpper,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(UiSize.border.smallBorderR),
+                      topRight: Radius.circular(UiSize.border.smallBorderR),
                     ),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      getCustomCachedImage(
-                        url: book.coverMUrl,
-                        width: 115,
-                        height: 165,
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(UiSize.border.smallBorderR),
+                          border: Border.all(
+                            color: Theme.of(context).dividerColor,
+                            width: 1,
+                          ),
+                        ),
+                        child: getCustomCachedImage(
+                          url: book.coverMUrl,
+                          width: 115,
+                          height: 165,
+                        ),
                       ),
                       const SizedBox(width: 20),
                       Expanded(
@@ -70,16 +98,17 @@ class DetailBookRecoCard extends StatelessWidget{
                               children: [
                                 Text(
                                   book.title,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 19,
                                     fontWeight: FontWeight.bold,
+                                    color: foreColorUpper,
                                   ),
                                   maxLines: 3,
                                   softWrap: true,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 5),
-                                ..._getAuthors(),
+                                ..._getAuthors(foreColorUpper),
                               ]
                             ),
                             Padding(
@@ -100,8 +129,11 @@ class DetailBookRecoCard extends StatelessWidget{
                                     fontSize: 13,
                                   ),
                                 ),
-                                child: const Text(
+                                child: Text(
                                   '查看详情',
+                                  style: TextStyle(
+                                    color: foreColorDom,
+                                  ),
                                 ),
                               ),
                             ),
@@ -115,16 +147,17 @@ class DetailBookRecoCard extends StatelessWidget{
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
                 decoration: BoxDecoration(
-                  color: Color(book.coverDomColor).withOpacity(0.4),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
+                  color: backColorDown,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(UiSize.border.smallBorderR),
+                    bottomRight: Radius.circular(UiSize.border.smallBorderR),
                   ),
                 ),
-                child: const Text(
-                  '即时翻译文本&完整的文档文件。为个人和团队提供准确的翻译和语言服务。',
+                child: Text(
+                  book.shortDesc,
                   style: TextStyle(
                     fontSize: 16,
+                    color: foreColorDown,
                   ),
                 ),
               ),

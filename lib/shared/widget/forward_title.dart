@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ForwardTitle extends StatelessWidget {
   final String title;
-  final TextStyle? style;
+  final double size;
   final VoidCallback onTap;
   final Color? color;
 
@@ -11,7 +11,7 @@ class ForwardTitle extends StatelessWidget {
     required this.title,
     required this.onTap,
     this.color,
-    this.style,
+    this.size = 20,
   });
 
   @override
@@ -21,7 +21,11 @@ class ForwardTitle extends StatelessWidget {
       children: [
         Text(
           title,
-          style: style,
+          style: TextStyle(
+            color: color,
+            fontSize: size,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const Icon(
           Icons.arrow_forward_ios_rounded,

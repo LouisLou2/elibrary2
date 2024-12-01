@@ -23,4 +23,23 @@ class UiColor{
         return warning;
     }
   }
+
+  static Color argbToRgb(Color color, Color back){
+    double alpha = color.alpha / 255;
+    return Color.fromARGB(
+      255,
+      (color.red * alpha + back.red * (1 - alpha)).round(),
+      (color.green * alpha + back.green * (1 - alpha)).round(),
+      (color.blue * alpha + back.blue * (1 - alpha)).round(),
+    );
+  }
+
+  static Color bwChooseUsingRGB(Color color){
+    return color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+  }
+
+  static Color bwChooseUsingARGB(Color color, Color back){
+    color = argbToRgb(color, back);
+    return color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+  }
 }

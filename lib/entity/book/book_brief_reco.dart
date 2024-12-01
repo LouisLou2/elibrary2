@@ -20,39 +20,18 @@ class BookBriefReco extends BookBriefAbs{
   @Index(composite: [CompositeIndex('userId')], unique: true, replace: true)
   late int order;
 
-  String isbn;
-  String title;
-
-  @JsonKey(name: 'author_names')
-  List<String> authorNames;
-
-  @JsonKey(name: 'publisher_name')
-  String publisherName;
-
-  @JsonKey(name: 'cover_s_url')
-  String coverSUrl;
-
-  @JsonKey(name: 'cover_m_url')
-  String coverMUrl;
-
-  @JsonKey(name: "cover_dom_color")
-  int coverDomColor;
-
-  int rating;
-
-  @JsonKey(name: 'has_ebook')
-  bool hasEbook;
 
   BookBriefReco({
-    required this.isbn,
-    required this.title,
-    required this.authorNames,
-    required this.publisherName,
-    required this.coverSUrl,
-    required this.coverMUrl,
-    required this.coverDomColor,
-    required this.rating,
-    required this.hasEbook,
+    required super.isbn,
+    required super.title,
+    required super.shortDesc,
+    required super.authorNames,
+    required super.publisherName,
+    required super.coverSUrl,
+    required super.coverMUrl,
+    required super.coverDomColor,
+    required super.rating,
+    required super.hasEbook,
   });
 
   void setUserIdAndOrder(int userId, int order) {

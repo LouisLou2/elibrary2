@@ -107,7 +107,7 @@ class _SignInPageState extends State<SignInPage> {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
-              const SizedBox(height: UiSize.hugeGap,),
+              SizedBox(height: UiSize.gap.hugeGap,),
               Form(
                 key: _formKey,
                 child: Padding(

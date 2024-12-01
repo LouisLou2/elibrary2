@@ -48,6 +48,8 @@ enum ResCodeEnum {
   // Other
   CancelWillCauseOverdue(501, "取消预约将导致超时次数+1", ToastificationType.warning),
 
+  // Resource
+  ResourceNotFound(601, "resource not found", ToastificationType.warning),
 
 
   /*------------------客户端的一些错误定义-----------------------------*/

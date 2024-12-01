@@ -23,33 +23,38 @@ const BookViewingHistorySchema = CollectionSchema(
       name: r'authorNames',
       type: IsarType.stringList,
     ),
-    r'coverMUrl': PropertySchema(
+    r'coverDomColor': PropertySchema(
       id: 1,
+      name: r'coverDomColor',
+      type: IsarType.long,
+    ),
+    r'coverMUrl': PropertySchema(
+      id: 2,
       name: r'coverMUrl',
       type: IsarType.string,
     ),
     r'isbn': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'isbn',
       type: IsarType.string,
     ),
     r'publisherName': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'publisherName',
       type: IsarType.string,
     ),
     r'title': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'title',
       type: IsarType.string,
     ),
     r'userId': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'userId',
       type: IsarType.long,
     ),
     r'viewingTime': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'viewingTime',
       type: IsarType.dateTime,
     )
@@ -145,12 +150,13 @@ void _bookViewingHistorySerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeStringList(offsets[0], object.authorNames);
-  writer.writeString(offsets[1], object.coverMUrl);
-  writer.writeString(offsets[2], object.isbn);
-  writer.writeString(offsets[3], object.publisherName);
-  writer.writeString(offsets[4], object.title);
-  writer.writeLong(offsets[5], object.userId);
-  writer.writeDateTime(offsets[6], object.viewingTime);
+  writer.writeLong(offsets[1], object.coverDomColor);
+  writer.writeString(offsets[2], object.coverMUrl);
+  writer.writeString(offsets[3], object.isbn);
+  writer.writeString(offsets[4], object.publisherName);
+  writer.writeString(offsets[5], object.title);
+  writer.writeLong(offsets[6], object.userId);
+  writer.writeDateTime(offsets[7], object.viewingTime);
 }
 
 BookViewingHistory _bookViewingHistoryDeserialize(
@@ -161,12 +167,13 @@ BookViewingHistory _bookViewingHistoryDeserialize(
 ) {
   final object = BookViewingHistory(
     authorNames: reader.readStringList(offsets[0]) ?? [],
-    coverMUrl: reader.readString(offsets[1]),
-    isbn: reader.readString(offsets[2]),
-    publisherName: reader.readString(offsets[3]),
-    title: reader.readString(offsets[4]),
-    userId: reader.readLong(offsets[5]),
-    viewingTime: reader.readDateTime(offsets[6]),
+    coverDomColor: reader.readLong(offsets[1]),
+    coverMUrl: reader.readString(offsets[2]),
+    isbn: reader.readString(offsets[3]),
+    publisherName: reader.readString(offsets[4]),
+    title: reader.readString(offsets[5]),
+    userId: reader.readLong(offsets[6]),
+    viewingTime: reader.readDateTime(offsets[7]),
   );
   object.id = id;
   return object;
@@ -182,7 +189,7 @@ P _bookViewingHistoryDeserializeProp<P>(
     case 0:
       return (reader.readStringList(offset) ?? []) as P;
     case 1:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
@@ -190,8 +197,10 @@ P _bookViewingHistoryDeserializeProp<P>(
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 6:
+      return (reader.readLong(offset)) as P;
+    case 7:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1045,6 +1054,62 @@ extension BookViewingHistoryQueryFilter
   }
 
   QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      coverDomColorEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'coverDomColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      coverDomColorGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'coverDomColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      coverDomColorLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'coverDomColor',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      coverDomColorBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'coverDomColor',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
       coverMUrlEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1766,6 +1831,20 @@ extension BookViewingHistoryQueryLinks
 extension BookViewingHistoryQuerySortBy
     on QueryBuilder<BookViewingHistory, BookViewingHistory, QSortBy> {
   QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
+      sortByCoverDomColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coverDomColor', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
+      sortByCoverDomColorDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coverDomColor', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
       sortByCoverMUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverMUrl', Sort.asc);
@@ -1852,6 +1931,20 @@ extension BookViewingHistoryQuerySortBy
 
 extension BookViewingHistoryQuerySortThenBy
     on QueryBuilder<BookViewingHistory, BookViewingHistory, QSortThenBy> {
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
+      thenByCoverDomColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coverDomColor', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
+      thenByCoverDomColorDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coverDomColor', Sort.desc);
+    });
+  }
+
   QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
       thenByCoverMUrl() {
     return QueryBuilder.apply(this, (query) {
@@ -1961,6 +2054,13 @@ extension BookViewingHistoryQueryWhereDistinct
   }
 
   QueryBuilder<BookViewingHistory, BookViewingHistory, QDistinct>
+      distinctByCoverDomColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'coverDomColor');
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QDistinct>
       distinctByCoverMUrl({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'coverMUrl', caseSensitive: caseSensitive);
@@ -2019,6 +2119,13 @@ extension BookViewingHistoryQueryProperty
     });
   }
 
+  QueryBuilder<BookViewingHistory, int, QQueryOperations>
+      coverDomColorProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'coverDomColor');
+    });
+  }
+
   QueryBuilder<BookViewingHistory, String, QQueryOperations>
       coverMUrlProperty() {
     return QueryBuilder.apply(this, (query) {
@@ -2074,6 +2181,7 @@ BookViewingHistory _$BookViewingHistoryFromJson(Map<String, dynamic> json) =>
       publisherName: json['publisher_name'] as String,
       viewingTime: DateTime.parse(json['viewing_time'] as String),
       coverMUrl: json['cover_m_url'] as String,
+      coverDomColor: (json['cover_dom_color'] as num).toInt(),
     );
 
 Map<String, dynamic> _$BookViewingHistoryToJson(BookViewingHistory instance) =>
@@ -2085,4 +2193,5 @@ Map<String, dynamic> _$BookViewingHistoryToJson(BookViewingHistory instance) =>
       'publisher_name': instance.publisherName,
       'viewing_time': instance.viewingTime.toIso8601String(),
       'cover_m_url': instance.coverMUrl,
+      'cover_dom_color': instance.coverDomColor,
     };

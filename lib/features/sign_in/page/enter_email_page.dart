@@ -98,7 +98,7 @@ class _EnterEmailPageState extends State<EnterEmailPage> {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-                const SizedBox(height: UiSize.hugeGap,),
+                SizedBox(height: UiSize.gap.hugeGap,),
                 Form(
                   key:_formKey,
                   child: Padding(
@@ -126,7 +126,7 @@ class _EnterEmailPageState extends State<EnterEmailPage> {
                           controller: idenController,
                           validator: validateEmail,
                         ),
-                        const SizedBox(height: UiSize.largeGap,),
+                        SizedBox(height: UiSize.gap.largeGap,),
                         customFilledButton(
                           context: context,
                           text: AppStrs.sendCode,

@@ -1,5 +1,3 @@
-
-import 'package:card_swiper/card_swiper.dart';
 import 'package:elibapp/entity/book/book_viewing_history.dart';
 import 'package:elibapp/features/global_aggreement/const/const_shared_widget.dart';
 import 'package:elibapp/features/home/bloc/home_page_bloc.dart';
@@ -8,6 +6,8 @@ import 'package:elibapp/features/global_aggreement/const/home_ui_strategy.dart';
 import 'package:elibapp/features/home/repo/home_page_repo.dart';
 import 'package:elibapp/features/home/widget/detail_book_reco_card.dart';
 import 'package:elibapp/features/home/widget/reco_books_pane.dart';
+import 'package:elibapp/shared/widget/custom_filled_button.dart';
+import 'package:elibapp/shared/widget/image_with_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -17,14 +17,11 @@ import '../../../common/app_strings.dart';
 import '../../../entity/book/book_brief_hr.dart';
 import '../../../entity/book/book_brief_reco.dart';
 import '../../../entity/book/book_brief_tb.dart';
-import '../../../shared/widget/Image_card_with_info.dart';
 import '../../../shared/widget/box_groov.dart';
-import '../../../shared/widget/card_layout.dart';
-import '../../../shared/widget/custom_image_card.dart';
 import '../../../shared/widget/forward_title.dart';
+import '../../../shared/widget/image_card_with_info.dart';
 import '../../../shared/widget/info_display/headline2.dart';
 import '../../../shared/widget/spec/image_widget.dart';
-import '../../../shared/widget/spec/text_widget.dart';
 import '../../../style/ui_size.dart';
 import '../../../util/format_tool.dart';
 import '../bloc/home_page_state.dart';
@@ -51,16 +48,28 @@ class _HomePageState extends State<HomePage>{
       return [];
     }
     assert (res.length == HomeUiStrategy.recoBooksReqNum);
-    return fromRecoBooks(res);
+    return fromRecoBooks(res, context);
   }
 
-  List<Widget> fromRecoBooks(List<BookBriefReco> recoBooks){
+  List<Widget> fromRecoBooks(List<BookBriefReco> recoBooks, BuildContext aContext){
     List<Widget> res = [];
     for (int i = 0; i < recoBooks.length -1; i++){
       res.add(
         InkWell(
           onTap: (){},
-          child: getCustomCachedImage(url: recoBooks[i].coverSUrl),
+          child: Card(
+            elevation: 0,
+            surfaceTintColor: Colors.transparent,
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: Theme.of(aContext).dividerColor,
+                width: 0.5,
+              ),
+              borderRadius: BorderRadius.circular(UiSize.border.tinyBorderR),
+            ),
+            child: getCustomCachedImage(url: recoBooks[i].coverSUrl),
+          ),
         )
       );
     }
@@ -73,19 +82,19 @@ class _HomePageState extends State<HomePage>{
     return res;
   }
 
-  void initBookRecoPaneController(){
+  void initBookRecoPaneController(BuildContext aContext){
     List<BookBriefReco> recoBooks = GetIt.I<HomePageRepo>().getCurrentReco();
     assert( recoBooks.length == HomeUiStrategy.recoBooksReqNum);
     controller = RecoBooksPaneController2(
-      fromRecoBooks(recoBooks),
+      fromRecoBooks(recoBooks,aContext),
       getNewRecoBookCards,
     );
   }
 
-  void prepareRefreshForLocalInit(){
+  void prepareRefreshForLocalInit(BuildContext aContext){
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Future.delayed(const Duration(seconds: 1),(){
-        context.read<HomePageBloc>().add(HomePageEvent.reqRefresh);
+        aContext.read<HomePageBloc>().add(HomePageEvent.reqRefresh);
       });
     });
   }
@@ -94,22 +103,22 @@ class _HomePageState extends State<HomePage>{
   @override
   void initState() {
     super.initState();
-    initBookRecoPaneController();
   }
 
 
   @override
   Widget build(BuildContext context){
+
+    initBookRecoPaneController(context);
+
     return Scaffold(
       appBar: null,
       body: SafeArea(
         child: RepositoryProvider.value(
           value: GetIt.I<HomePageRepo>(),
           child: BlocListener<HomePageBloc, HomePageState>(
+            listenWhen: (previous, current) => current is HomePageRefresh || current is HomePageError || current is HomePageLoading,
             listener: (context, state){
-              print('BlocListener: $state');
-              // initail state is 不会被触发listener
-              assert(state is HomePageRefresh || state is HomePageRefresh || state is HomePageError || state is HomePageLoading);
               if (state is HomePageRefresh){
                 refreshController.refreshCompleted();
                 return;
@@ -124,6 +133,7 @@ class _HomePageState extends State<HomePage>{
               }
             },
             child: SmartRefresher(
+              physics: const BouncingScrollPhysics(),
               enablePullDown: true,
               header: ConstSharedWidget.classicRefreshHeader,
               footer: ConstSharedWidget.classicRefreshFooter,
@@ -132,16 +142,14 @@ class _HomePageState extends State<HomePage>{
                 context.read<HomePageBloc>().add(HomePageEvent.reqRefresh);
               },
               child: SingleChildScrollView(
-                child: BlocBuilder<HomePageBloc, HomePageState>(
-                  buildWhen: (previous, current){
-                    // 在首次创建时，buildWhen并不会被考虑
-                    return current is HomePageRefresh;
-                  }, // 只有刷新完成时才会重绘
+                child: BlocConsumer<HomePageBloc, HomePageState>(
+                  listenWhen: (previous, current) => current is HomePageRefreshLocal,
+                  buildWhen: (previous, current) => current is HomePageRefresh, // 只有刷新完成时才会重绘
+                  listener: (context, state) => prepareRefreshForLocalInit(context),
                   builder: (context, state) {
 
-                    // 当界面被渲染完成，加一个postFrameCallback
                     if (state is HomePageRefreshLocal){
-                      prepareRefreshForLocalInit();
+                      prepareRefreshForLocalInit(context);
                     }
 
                     // 获取重绘需要的资料
@@ -149,7 +157,6 @@ class _HomePageState extends State<HomePage>{
                     List<BookViewingHistory> viewingHistory = repo.getCurrentViewed();
                     List<BookBriefTB> tbBooks = repo.getCurrentTB();
                     List<BookBriefHR> hrBooks = repo.getCurrentHR();
-
                     return Column(
                       children:[
                         Row(
@@ -177,28 +184,22 @@ class _HomePageState extends State<HomePage>{
                             size: 37,
                           ),
                         ),
-                        const Divider(
-                          height: 6,
-                          thickness: 1,
-                          indent: 14,
-                          endIndent: 14,
-                        ),
-                        const SizedBox(height: UiSize.mediumGap,),
+                        const Divider(height: 6, thickness: 1, indent: 14, endIndent: 14,),
+                        SizedBox(height: UiSize.gap.mediumGap,),
                         buildViewingHistory(viewingHistory),
-                        const SizedBox(height: UiSize.largeGap,),
+                        SizedBox(height: UiSize.gap.largeGap,),
                         Row(
                           children: [
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 15),
                               child: ForwardTitle(
                                 title: AppStrs.recomend,
-                                onTap: ()=> print('tapped'),
-                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
+                                onTap: (){},
                               ),
                             )
                           ],
                         ),
-                        const SizedBox(height: UiSize.mediumGap,),
+                        SizedBox(height: UiSize.gap.mediumGap,),
                         SizedBox(
                           width: MediaQuery.sizeOf(context).width,
                           height: MediaQuery.sizeOf(context).width * 0.78,
@@ -207,94 +208,34 @@ class _HomePageState extends State<HomePage>{
                             child: RecoBooksPane(controller: controller),
                           ),
                         ),
-                        ElevatedButton(
-                          child: Text(
-                            "换一批",
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),
-                          ),
-                          onPressed: () {
-                            print('tapped: $canFlip');
-                            if (canFlip){
-                              canFlip = false;
-                              _future = controller.flip();
-                              _future!.then((value) => canFlip = true);
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 20,),
-                        ...buildTrendingChartSection(tbBooks),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ...buildHighRatingChartSection(hrBooks),
-                        Padding(
-                          padding: const EdgeInsets.only(left:10),
-                          child: BoxGroove(
-                            title: AppStrs.activity,
-                            titleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
-                            titleOnTap: ()=>print('tt'),
-                            widgets:List.generate(5,
-                                  (index) => CardLayout(
-                                image: Image.network(
-                                  'https://img1.baidu.com/it/u=3715471658,3948653362&fm=253&fmt=auto&app=120&f=JPEG?w=390&h=520',
-                                  fit: BoxFit.cover,
-                                  width: 320,
-                                  height: 160,
-                                ),
-                                title: '校本部图书馆读书会',
-                                subTitle: '2024.5.1-2024.5.5',
-                                fontSize: 18,
-                                action: FilledButton(
-                                  onPressed: ()=>print('查看详情'),
-                                  child: const Text(
-                                    '查看详情',
-                                  ),
+                        SizedBox(height: UiSize.gap.mediumGap,),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                child: customFilledButton(
+                                  context: context,
+                                  text: '换一批',
+                                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                                  textColor: Theme.of(context).colorScheme.tertiary,
+                                  onPressed: () {
+                                    print('tapped: $canFlip');
+                                    if (canFlip){
+                                      canFlip = false;
+                                      _future = controller.flip();
+                                      _future!.then((value) => canFlip = true);
+                                    }
+                                  },
                                 ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 20),
-                          child: GestureDetector(
-                            onTap: null,
-                            child: Row(
-                              children: [
-                                SpecTextWidget.mediumTitle(
-                                  text: '看点新鲜',
-                                  context: context,
-                                ),
-                                const Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  color: Colors.grey,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 380,
-                          child: Swiper(
-                            itemBuilder: (BuildContext context, int index) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: getCustomCachedImage(
-                                  url: 'https://m.media-amazon.com/images/I/61KQ4EoU3IS._SL1360_.jpg',
-                                ),
-                              );
-                            },
-                            itemCount: 3,
-                            itemWidth: 290.0,
-                            layout: SwiperLayout.STACK,
-                          ),
-                        ),
+                        const SizedBox(height: 20,),
+                        ...buildTrendingChartSection(tbBooks),
+                        const SizedBox(height: 20,),
+                        ...buildHighRatingChartSection(hrBooks),
                         const SizedBox(
                           height: 80,
                         ),
@@ -316,19 +257,19 @@ class _HomePageState extends State<HomePage>{
       child: BoxGroove(
         title: AppStrs.recentlyViewed,
         titleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
-        titleOnTap: ()=> print('tt'),
+        titleOnTap: (){},
         widgets: List.generate(
           viewingHistory.length,
-          (index) => CustomImageCard(
-            surfaceColor: Colors.white,
+          (i) => ImageWithNameCard(
             onTap: ()=> {},
             image: getCustomCachedImage(
-              url: viewingHistory[index].coverMUrl,
+              url: viewingHistory[i].coverMUrl,
               width: 140,
-              height: 180,
+              height: 198,
             ),
-            fontSize: 16,
-            text: viewingHistory[index].title,
+            nameBarColor: Color(viewingHistory[i].coverDomColor),
+            fontSize: 11,
+            text: viewingHistory[i].title,
           ),
         ),
       ),
@@ -341,32 +282,41 @@ class _HomePageState extends State<HomePage>{
       child: BoxGroove(
         title: "图书趋势榜",
         titleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
-        titleOnTap: ()=> print('tt'),
+        titleOnTap: (){},
         widgets:List.generate(
           books.length,
           (i) => ImageInfoBox(
             image: getCustomCachedImage(
               url: books[i].coverSUrl,
-              width: 140,
-              height: 180,
+              width: 110,
+              height: 155,
             ),
-            title: FormatTool.trimText(books[i].title,maxLength: 15),
-            fontSize: 16,
-            onTap: (){
-
-            },
+            title: books[i].title,
+            fontSize: 12,
+            maxWidth: 110,
+            onTap: (){},
           ),
         ),
       ),
     );
-    Widget button = ElevatedButton(
-      onPressed: (){},
-      child: Text(
-        "查看更多",
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),
-      ),
+    Widget button = Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: customFilledButton(
+              context: context,
+              text: '查看更多',
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+              textColor: Theme.of(context).colorScheme.tertiary,
+              onPressed: () {},
+            ),
+          ),
+        ),
+      ],
     );
-    return [groove,button];
+    Widget gap = SizedBox(height: UiSize.gap.mediumGap);
+    return [groove, gap, button];
   }
 
   List<Widget> buildHighRatingChartSection(List<BookBriefHR> books){
@@ -375,31 +325,40 @@ class _HomePageState extends State<HomePage>{
       child: BoxGroove(
         title: "高分图书榜",
         titleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
-        titleOnTap: ()=> print('tt'),
+        titleOnTap: () {},
         widgets:List.generate(
           books.length,
-              (i) => ImageInfoBox(
+           (i) => ImageInfoBox(
             image: getCustomCachedImage(
               url: books[i].coverSUrl,
-              width: 140,
-              height: 180,
+              width: 110,
+              height: 155,
             ),
             title: FormatTool.trimText(books[i].title,maxLength: 15),
             fontSize: 16,
-            onTap: (){
-
-            },
+            maxWidth: 110,
+            onTap: (){},
           ),
         ),
       ),
     );
-    Widget button = ElevatedButton(
-      onPressed: (){},
-      child: Text(
-        "查看更多",
-        style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),
-      ),
+    Widget button = Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: customFilledButton(
+              context: context,
+              text: '查看更多',
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+              textColor: Theme.of(context).colorScheme.tertiary,
+              onPressed: () {},
+            ),
+          ),
+        ),
+      ],
     );
-    return [groove,button];
+    Widget gap = SizedBox(height: UiSize.gap.mediumGap);
+    return [groove, gap, button];
   }
 }

@@ -60,13 +60,13 @@ class _EnterVeriCodePageState extends State<EnterVeriCodePage> with WidgetsBindi
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: UiSize.largeGap),
+              SizedBox(height: UiSize.gap.largeGap),
               HeadLine2(
                 title: '请输入验证码',
                 size: 30,
                 subTitle: '验证码已发送到 ${context.read<SignInRepo>().nowEmail}',
               ),
-              const SizedBox(height: UiSize.mediumGap),
+              SizedBox(height: UiSize.gap.mediumGap),
               _getCodeInput(context),
               GestureDetector(
                 onTap: (){
@@ -75,7 +75,7 @@ class _EnterVeriCodePageState extends State<EnterVeriCodePage> with WidgetsBindi
                 },
                 child: _getCodeBoxes(context),
               ),
-              const SizedBox(height: UiSize.smallGap),
+              SizedBox(height: UiSize.gap.smallGap),
               BlocBuilder<SignInBloc,SignInState>(
                 builder: (context,state){
                   return state.timeLeft > 0 ?

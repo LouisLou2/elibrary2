@@ -30,8 +30,8 @@ class RecoBooksPaneController2 {
     _iter = _queue.iterator;
   }
 
-
   void defineState(RecoBooksPaneState state){
+    print("@@@@@@@@@@@@@@@@@defineState");
     _state = state;
   }
 

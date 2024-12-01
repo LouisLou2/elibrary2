@@ -31,6 +31,9 @@ class BookViewingHistory {
   @JsonKey(name: 'cover_m_url')
   String coverMUrl;
 
+  @JsonKey(name: 'cover_dom_color')
+  int coverDomColor;
+
   BookViewingHistory({
     required this.userId,
     required this.isbn,
@@ -39,6 +42,7 @@ class BookViewingHistory {
     required this.publisherName,
     required this.viewingTime,
     required this.coverMUrl,
+    required this.coverDomColor,
   });
 
   factory BookViewingHistory.fromJson(Map<String, dynamic> json) =>

@@ -26,7 +26,6 @@ class BoxGroove extends StatelessWidget{
             child: ForwardTitle(
               title: title!,
               onTap: titleOnTap!,
-              style: titleStyle,
             ),
           ),
         ),
@@ -34,6 +33,7 @@ class BoxGroove extends StatelessWidget{
           padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 0),
           scrollDirection: Axis.horizontal,
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: widgets,
           ),
