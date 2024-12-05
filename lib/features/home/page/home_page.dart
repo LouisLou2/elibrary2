@@ -1,4 +1,5 @@
 import 'package:elibapp/entity/book/book_viewing_history.dart';
+import 'package:elibapp/features/chart/const/chart_type.dart';
 import 'package:elibapp/features/global_aggreement/const/const_shared_widget.dart';
 import 'package:elibapp/features/home/bloc/home_page_bloc.dart';
 import 'package:elibapp/features/home/bloc/home_page_event.dart';
@@ -6,6 +7,7 @@ import 'package:elibapp/features/global_aggreement/const/home_ui_strategy.dart';
 import 'package:elibapp/features/home/repo/home_page_repo.dart';
 import 'package:elibapp/features/home/widget/detail_book_reco_card.dart';
 import 'package:elibapp/features/home/widget/reco_books_pane.dart';
+import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:elibapp/shared/widget/custom_filled_button.dart';
 import 'package:elibapp/shared/widget/image_with_name.dart';
 import 'package:flutter/material.dart';
@@ -33,13 +35,18 @@ class HomePage extends StatefulWidget{
   State<HomePage> createState()=>_HomePageState();
 }
 
-class _HomePageState extends State<HomePage>{
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
 
   late RecoBooksPaneController2 controller;
   final RefreshController refreshController = RefreshController();
 
   Future? _future;
   bool canFlip = true;
+
+
+  @override
+  // wantKeepAlive
+  bool get wantKeepAlive => true;
 
   // 获取新推荐书籍卡片
   Future<List<Widget>> getNewRecoBookCards() async{
@@ -56,7 +63,7 @@ class _HomePageState extends State<HomePage>{
     for (int i = 0; i < recoBooks.length -1; i++){
       res.add(
         InkWell(
-          onTap: (){},
+          onTap: ()=>NavigationHelper.toBookView(isbn: recoBooks[i].isbn, coverUrl: recoBooks[i].coverMUrl),
           child: Card(
             elevation: 0,
             surfaceTintColor: Colors.transparent,
@@ -76,7 +83,7 @@ class _HomePageState extends State<HomePage>{
     res.add(
       DetailBookRecoCard(
         book: recoBooks.last,
-        onTap: (){},
+        onTap: ()=>NavigationHelper.toBookView(isbn: recoBooks.last.isbn, coverUrl: recoBooks.last.coverMUrl),
       )
     );
     return res;
@@ -165,9 +172,7 @@ class _HomePageState extends State<HomePage>{
                             Padding(
                               padding:const EdgeInsets.symmetric(horizontal: 8,vertical: 0),
                               child: IconButton(
-                                onPressed: () {
-                                  //NavigationHelper.pushNamed(RouteCollector.notification_page);
-                                },
+                                onPressed: ()=>NavigationHelper.toAnnounList(),
                                 icon: Icon(
                                   Icons.notifications_active_outlined,
                                   color: Theme.of(context).colorScheme.onSurface,
@@ -194,6 +199,7 @@ class _HomePageState extends State<HomePage>{
                               padding: const EdgeInsets.symmetric(horizontal: 15),
                               child: ForwardTitle(
                                 title: AppStrs.recomend,
+                                size: 18,
                                 onTap: (){},
                               ),
                             )
@@ -256,12 +262,12 @@ class _HomePageState extends State<HomePage>{
       padding: const EdgeInsets.only(left:10),
       child: BoxGroove(
         title: AppStrs.recentlyViewed,
-        titleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
+        titleFontSize: 18,
         titleOnTap: (){},
         widgets: List.generate(
           viewingHistory.length,
           (i) => ImageWithNameCard(
-            onTap: ()=> {},
+            onTap: () => NavigationHelper.toBookView(isbn: viewingHistory[i].isbn, coverUrl: viewingHistory[i].coverMUrl),
             image: getCustomCachedImage(
               url: viewingHistory[i].coverMUrl,
               width: 140,
@@ -281,8 +287,8 @@ class _HomePageState extends State<HomePage>{
       padding: const EdgeInsets.only(left:14),
       child: BoxGroove(
         title: "图书趋势榜",
-        titleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
-        titleOnTap: (){},
+        titleFontSize: 18,
+        titleOnTap: ()=>NavigationHelper.toBookChart(ChartType.Trending),
         widgets:List.generate(
           books.length,
           (i) => ImageInfoBox(
@@ -294,7 +300,7 @@ class _HomePageState extends State<HomePage>{
             title: books[i].title,
             fontSize: 12,
             maxWidth: 110,
-            onTap: (){},
+            onTap: ()=>NavigationHelper.toBookView(isbn: books[i].isbn, coverUrl: books[i].coverMUrl),
           ),
         ),
       ),
@@ -309,7 +315,7 @@ class _HomePageState extends State<HomePage>{
               text: '查看更多',
               backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               textColor: Theme.of(context).colorScheme.tertiary,
-              onPressed: () {},
+              onPressed: ()=>NavigationHelper.toBookChart(ChartType.Trending),
             ),
           ),
         ),
@@ -323,9 +329,9 @@ class _HomePageState extends State<HomePage>{
     Widget groove = Padding(
       padding: const EdgeInsets.only(left:14),
       child: BoxGroove(
+        titleFontSize: 18,
         title: "高分图书榜",
-        titleStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 22,fontWeight: FontWeight.w500),
-        titleOnTap: () {},
+        titleOnTap: ()=>NavigationHelper.toBookChart(ChartType.HighlyRated),
         widgets:List.generate(
           books.length,
            (i) => ImageInfoBox(
@@ -337,7 +343,7 @@ class _HomePageState extends State<HomePage>{
             title: FormatTool.trimText(books[i].title,maxLength: 15),
             fontSize: 16,
             maxWidth: 110,
-            onTap: (){},
+            onTap: ()=>NavigationHelper.toBookView(isbn: books[i].isbn, coverUrl: books[i].coverMUrl),
           ),
         ),
       ),
@@ -352,7 +358,7 @@ class _HomePageState extends State<HomePage>{
               text: '查看更多',
               backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               textColor: Theme.of(context).colorScheme.tertiary,
-              onPressed: () {},
+              onPressed: ()=>NavigationHelper.toBookChart(ChartType.HighlyRated),
             ),
           ),
         ),

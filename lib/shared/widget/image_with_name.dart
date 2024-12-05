@@ -52,7 +52,7 @@ class ImageWithNameCard extends StatelessWidget {
                         text,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: UiColor.bwChooseUsingRGB(nameBarColor),
+                          color: UiColor.bwChooseUsingRGB(color: nameBarColor),
                           fontWeight: FontWeight.w500,
                           fontSize: fontSize,
                           overflow: TextOverflow.ellipsis,

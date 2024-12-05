@@ -31,14 +31,14 @@ class TBChartDataImpl implements ChartData {
     DBManager.db.writeTxn(
       () async {
         // 清除现有数据
-        await DBManager.db.bookBriefTBs.putAll(chartEntityList);
+        DBManager.db.bookBriefTBs.putAll(chartEntityList);
       },
     );
   }
 
   @override
   Future<Res<List<BookBriefTB>>> getChartDataRemote(int pageNum, int pageSize) async {
-    Res<Resp?> res = await _requester.standardRequestNoAuth(
+    Res<Resp> res = await _requester.standardRequestNoAuth(
       NetworkPathCollector.bookChart.trendingBooks,
       HttpMethod.GET,
       {

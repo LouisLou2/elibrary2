@@ -38,7 +38,7 @@ class DetailBookRecoCard extends StatelessWidget{
     Color backColorDown = domColor.withOpacity(0.5);
     Color backColorUpper = domColor.withOpacity(0.15);
 
-    Color foreColorDom = UiColor.bwChooseUsingRGB(domColor);
+    Color foreColorDom = UiColor.bwChooseUsingRGB(color: domColor);
     Color backgColor = backColor ?? Theme.of(context).colorScheme.surface;
     Color foreColorDown = UiColor.bwChooseUsingARGB(backColorDown,backgColor);
     Color foreColorUpper = UiColor.bwChooseUsingARGB(backColorUpper,backgColor);

@@ -90,4 +90,9 @@ class AppStrs{
   // onboarding page
   static const logInToEnjoy='登录以畅享';
   static const bookResources='图书资源';
+
+  // for error
+  static const youOffline='你已离线';
+  static const tryReconnect='请尝试接入互联网后重试';
+  static const retryLoad='重试';
 }

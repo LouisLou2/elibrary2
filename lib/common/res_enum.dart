@@ -51,6 +51,8 @@ enum ResCodeEnum {
   // Resource
   ResourceNotFound(601, "resource not found", ToastificationType.warning),
 
+  /*----Announcement------------------------*/
+  AnnouncementNotFound(701, "announcement not found", ToastificationType.warning),
 
   /*------------------客户端的一些错误定义-----------------------------*/
   ServiceRefused(5001, "服务拒绝", ToastificationType.warning);

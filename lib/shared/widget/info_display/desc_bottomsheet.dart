@@ -4,10 +4,10 @@ void showDescBottomSheet({required BuildContext context,required String title,St
   showModalBottomSheet(
     showDragHandle: true,
     context: context,
-    builder: (context){
+    builder: (sheetContext){
       return SizedBox(
-        height: MediaQuery.of(context).size.height * 0.4,
-        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(sheetContext).size.height * 0.4,
+        width: MediaQuery.of(sheetContext).size.width,
         child:  SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -17,14 +17,14 @@ void showDescBottomSheet({required BuildContext context,required String title,St
                 children:[
                   Text(
                     title,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    style: Theme.of(sheetContext).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   const SizedBox(height: 10,),
                   Text(
                     desc??'暂无',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    style: Theme.of(sheetContext).textTheme.bodyMedium?.copyWith(
                       fontSize: 16,
                       letterSpacing: -0.5,
                     ),

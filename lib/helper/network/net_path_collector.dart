@@ -1,61 +1,23 @@
 // 这些route是需要持久化保存的，以应对后端api的变化,但是目前先不做这些了
+import 'package:elibapp/helper/network/path_collect/aggregated_path.dart';
+import 'package:elibapp/helper/network/path_collect/announ_path.dart';
+import 'package:elibapp/helper/network/path_collect/auth_path.dart';
+import 'package:elibapp/helper/network/path_collect/book_cate_path.dart';
+import 'package:elibapp/helper/network/path_collect/book_chart_path.dart';
+import 'package:elibapp/helper/network/path_collect/book_info_path.dart';
+import 'package:elibapp/helper/network/path_collect/book_reco_path.dart';
+
 import '../../config/network_config.dart';
-
-class AuthPath{
-  late final String base;
-  late final String loginPwd;
-  late final String loginCode;
-  late final String sendCode;
-  late final String retrieveAt;
-
-  AuthPath(){
-    base = "/auth";
-    loginPwd = "$base/login/email_pwd";
-    loginCode = "$base/login/email_code";
-    sendCode = "$base/send_verify_code";
-    retrieveAt = "$base/token/refresh_at";
-  }
-}
-
-class AggregatedPath{
-  late final String base;
-  late final String getHomeData;
-
-  AggregatedPath(){
-    base = "/aggregated";
-    getHomeData = "$base/home_data";
-  }
-}
-
-class BookRecoPath{
-  late final String base;
-  late final String getRecommend;
-
-  BookRecoPath(){
-    base = "/book_reco";
-    getRecommend = "$base/by_user";
-  }
-}
-
-class BookChartPath{
-  late final String base;
-  late final String trendingBooks;
-  late final String highRatingBooks;
-
-  BookChartPath(){
-    base = "/book_chart";
-    trendingBooks = "$base/trending";
-    highRatingBooks = "$base/high_rating";
-  }
-}
-
 
 class NetworkPathCollector {
   static const String host = Configs.HOST;// server host
   static const String userApi = "$host/api/user";// dio的baseUrl，客户端一切请求都是基于这个baseUrl的
 
-  static AuthPath auth = AuthPath();
-  static BookRecoPath bookReco = BookRecoPath();
-  static AggregatedPath aggregated = AggregatedPath();
-  static BookChartPath bookChart = BookChartPath();
+  static final AuthPath auth = AuthPath();
+  static final BookRecoPath bookReco = BookRecoPath();
+  static final AggregatedPath aggregated = AggregatedPath();
+  static final BookChartPath bookChart = BookChartPath();
+  static final BookInfoPath bookInfo = BookInfoPath();
+  static final AnnounPath announce = AnnounPath();
+  static final BookCatePath bookCate = BookCatePath();
 }

@@ -30,7 +30,7 @@ Widget getCustomFadeInImage({
   return FadeInImage.assetNetwork(
     fadeInDuration: const Duration(milliseconds: 150),
     fadeOutDuration: const Duration(milliseconds: 150),
-    placeholder: UIConst.defImageHolder,
+    placeholder: UiConst.defImageHolder,
     image: url,
     fit: BoxFit.cover,
     width: width,

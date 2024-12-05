@@ -16,9 +16,20 @@ class UiSizeBorder {
   const UiSizeBorder._();
 }
 
+class UISizePadding {
+  final double tinyPadding=2;
+  final double smallPadding=4;
+  final double normalPadding=8;
+  final double mediumPadding=12;
+  final double largePadding=16;
+  final double largerPadding=20;
+
+  const UISizePadding._();
+}
 
 
 class UiSize {
   static const UiSizeGap gap = UiSizeGap._();
   static const UiSizeBorder border = UiSizeBorder._();
+  static const UISizePadding padding = UISizePadding._();
 }

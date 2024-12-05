@@ -1,7 +1,9 @@
 import 'package:elibapp/base_manager/path_manager.dart';
+import 'package:elibapp/entity/book/book_brief_from_author.dart';
 import 'package:elibapp/entity/book/book_brief_hr.dart';
 import 'package:elibapp/entity/book/book_brief_reco.dart';
 import 'package:elibapp/entity/book/book_brief_tb.dart';
+import 'package:elibapp/entity/book/book_info.dart';
 import 'package:elibapp/entity/book/book_viewing_history.dart';
 import 'package:isar/isar.dart';
 
@@ -21,6 +23,8 @@ class DBManager{
         BookBriefTBSchema,
         BookBriefHRSchema,
         BookViewingHistorySchema,
+        BookInfoSchema,
+        BookBriefFromAuthorSchema,
       ],
       directory: PathManager.dbDir.path,
       inspector: true,

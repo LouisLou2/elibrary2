@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SpecTextWidget {
   static Widget mediumTitle({required String text,required BuildContext context, Color? color})=>Text(
     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w600,
       letterSpacing: -0.7,
       color: color,
     ),

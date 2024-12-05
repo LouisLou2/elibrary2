@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 class GradientImageCard extends StatelessWidget {
   final Widget image;
   final String? text;
+  final double? textSize;
   final VoidCallback? onTap;
-  const GradientImageCard({super.key, required this.image, this.text, this.onTap});
+  final Color color;
+  const GradientImageCard({super.key, required this.image, this.text, this.onTap, required this.color, this.textSize});
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -27,9 +30,10 @@ class GradientImageCard extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
-                  stops: const [0.1, 0.55],
+                  stops: const [0, 0.3, 1],
                   colors: [
-                    UiColor.deepBlue.withOpacity(0.9), // 渐变颜色的起始颜色，这里是半透明黑色
+                    color,
+                    color.withOpacity(0.9),
                     Colors.transparent, // 渐变颜色的结束颜色，这里是完全透明
                   ],
                 ),
@@ -41,9 +45,9 @@ class GradientImageCard extends StatelessWidget {
               left: 10,
               child: Text(
                 text ?? '',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
+                style: TextStyle(
+                  color: UiColor.bwChooseUsingRGB(color: color,threshold: 0.7),
+                  fontSize: textSize ?? 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),

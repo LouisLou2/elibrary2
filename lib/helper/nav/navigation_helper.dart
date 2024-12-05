@@ -1,3 +1,6 @@
+import 'package:elibapp/entity/book/book_signal.dart';
+import 'package:elibapp/features/chart/const/chart_type.dart';
+import 'package:elibapp/helper/nav/route_generator.dart';
 import 'package:flutter/material.dart';
 
 import 'navigation_observer.dart';
@@ -8,6 +11,49 @@ class NavigationHelper{
   static final _key = GlobalKey<NavigatorState>();
   static GlobalKey<NavigatorState> get key =>_key;
   static final observer = MyObserver();
+
+
+
+  static bool _setted = false;
+  static late String mainPageNav;
+  static late String announListPageNav;
+  static late String bookViewPageNav;
+  static late String announDetailNav;
+  static late String bookChartPageNav;
+  static late Map<String, WidgetBuilder> _routes;
+
+  static void init({
+    required String mainPageNav,
+    required WidgetBuilder mainPageBuilder,
+
+    required String announListPageNav,
+    required WidgetBuilder announListPageBuilder,
+
+    required String bookViewPageNav,
+    required WidgetBuilder bookViewPageBuilder,
+
+    required String announDetailNav,
+    required WidgetBuilder announDetailBuilder,
+
+    required String bookChartPageNav,
+    required WidgetBuilder bookChartPageBuilder,
+  }) {
+    assert(!_setted);
+    NavigationHelper.mainPageNav = mainPageNav;
+    NavigationHelper.announListPageNav = announListPageNav;
+    NavigationHelper.bookViewPageNav = bookViewPageNav;
+    NavigationHelper.announDetailNav = announDetailNav;
+    NavigationHelper.bookChartPageNav = bookChartPageNav;
+    _routes = {
+      mainPageNav: mainPageBuilder,
+      announListPageNav: announListPageBuilder,
+      bookViewPageNav: bookViewPageBuilder,
+      announDetailNav: announDetailBuilder,
+      bookChartPageNav: bookChartPageBuilder,
+    };
+    _setted = true;
+    RouteGenerator.init(_routes);
+  }
 
   static Future<T?>? pushNamed<T extends Object>(String routeName,{Object? arguments,}){
     return _key.currentState?.pushNamed<T?>(
@@ -41,4 +87,25 @@ class NavigationHelper{
   // static Future<Object?>? popAllAndFirstSetPwd(){
   //   return popAllAndPushNamed(RouteCollector.set_pwd);
   // }
+
+  static Future<Object?>? toAnnounList(){
+    return pushNamed(announListPageNav);
+  }
+
+  static Future<Object?>? toAnnounDetail({
+    required int id,
+  }){
+    return pushNamed(announDetailNav, arguments: id);
+  }
+
+  static Future<Object?>? toBookView({
+    required String isbn,
+    String? coverUrl,
+  }){
+    return pushNamed(bookViewPageNav, arguments: BookSignal(isbn: isbn, coverUrl: coverUrl));
+  }
+
+  static Future<Object?>? toBookChart(ChartType type){
+    return pushNamed(bookChartPageNav, arguments: type);
+  }
 }

@@ -13,9 +13,9 @@ class FormatTool {
   }
 
   // 将0-99的数字转换为两位字符串
-  static String _twoDigit(int num) {
-    assert(num >= 0 && num < 100, 'num must be in [0,100)');
-    return num < 10 ? '0$num' : '$num';
+  static String _twoDigit(int n) {
+    if (n >= 10) return "$n";
+    return "0$n";
   }
 
   /*   2024.4.5   */
@@ -57,13 +57,11 @@ class FormatTool {
       return '即将到期';
     }
   }
-  // 用于传输(都是utc时间,数字不足两位会补全)
-  // static String utcDateScaleStr(DateTime date){
-  //   return dateScaleStr(date.toUtc());
-  // }
-  // static String utcSecScaleStr(DateTime date){
-  //   return secScaleStr(date.toUtc());
-  // }
+
+  static String ymdhmsStr(DateTime time){
+    return '${time.year}.${_twoDigit(time.month)}.${_twoDigit(time.day)} ${_twoDigit(time.hour)}:${_twoDigit(time.minute)}:${_twoDigit(time.second)}';
+  }
+
   static String transferTimeStr(DateTime time){
     return time.toIso8601String();
   }

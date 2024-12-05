@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 class ForwardTitle extends StatelessWidget {
   final String title;
-  final double size;
-  final VoidCallback onTap;
+  final double? size;
+  final VoidCallback? onTap;
   final Color? color;
 
   const ForwardTitle({
     super.key,
     required this.title,
-    required this.onTap,
+    this.onTap,
     this.color,
-    this.size = 20,
+    this.size,
   });
 
   @override

@@ -34,8 +34,9 @@ class UiColor{
     );
   }
 
-  static Color bwChooseUsingRGB(Color color){
-    return color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+  static Color bwChooseUsingRGB({required Color color, double threshold = 0.5}){
+    assert(threshold<1 || threshold>0);
+    return color.computeLuminance() > threshold ? Colors.black : Colors.white;
   }
 
   static Color bwChooseUsingARGB(Color color, Color back){

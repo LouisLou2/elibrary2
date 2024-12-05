@@ -1,6 +1,4 @@
 import 'package:elibapp/features/auth/page/entrance_page.dart';
-import 'package:elibapp/helper/nav/route_collector.dart';
-import 'package:elibapp/helper/nav/route_generator.dart';
 import 'package:elibapp/init/init_affairs.dart';
 import 'package:elibapp/style/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -47,12 +45,6 @@ class App extends StatelessWidget {
               themeMode: mode,
               darkTheme: AppTheme.dark,
               theme: AppTheme.light,
-              // navigation
-              routes: RouteCollector.routes,
-              initialRoute: null,
-              navigatorKey: NavigationHelper.key,
-              onGenerateRoute: RouteGenerator.generateRoute,
-              navigatorObservers: [NavigationHelper.observer],
               // initial page
               home: const EntrancePage(),
               // ui tools:

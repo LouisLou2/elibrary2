@@ -29,14 +29,14 @@ class ReqProxy extends Requester{
     enableProxy = true;
   }
 
-  Future<Res<Resp?>> req({
+  Future<Res<Resp>> req({
     required String path,
     required HttpMethod method,
     required Map<String,dynamic> data,
     int tryTimes = 1
   }) async {
     assert (enableProxy);
-    Res<Resp?> result;
+    Res<Resp> result;
     try {
       Response resp = await NetManager.normalDio.request(
         path,
@@ -94,7 +94,7 @@ class ReqProxy extends Requester{
   }
 
   @override
-  Future<Res<Resp?>> standardRequestNoAuth(String path, HttpMethod method, Map<String, dynamic> data) async {
+  Future<Res<Resp>> standardRequestNoAuth(String path, HttpMethod method, Map<String, dynamic> data) async {
     try{
       Response resp = await NetManager.normalDio.request(
         path,

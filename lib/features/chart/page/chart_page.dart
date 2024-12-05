@@ -2,6 +2,7 @@ import 'package:elibapp/features/chart/const/chart_type.dart';
 import 'package:elibapp/features/chart/repo/chart_repo.dart';
 import 'package:elibapp/features/chart/widget/artwork_title.dart';
 import 'package:elibapp/features/global_aggreement/const/const_shared_widget.dart';
+import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:elibapp/shared/widget/book_brief_tile.dart';
 import 'package:elibapp/shared/widget/spec/image_widget.dart';
 import 'package:flutter/material.dart';
@@ -103,8 +104,8 @@ class _ChartPageState extends State<ChartPage> {
   Widget build(BuildContext context) {
     if (!_gotChartTypeFromNav){
       print('@@@@@@@@@@@@@@@@@get chart type from nav');
-      // ChartType chartType = ModalRoute.of(context)!.settings.arguments as ChartType; // 从路由参数中获取chart type
-      ChartType chartType = ChartType.Trending;
+      ChartType chartType = ModalRoute.of(context)!.settings.arguments as ChartType; // 从路由参数中获取chart type
+      // ChartType chartType = ChartType.Trending;
       _chartTypeNotifier = ValueNotifier<ChartType>(chartType);
       _gotChartTypeFromNav = true;
     }
@@ -120,9 +121,7 @@ class _ChartPageState extends State<ChartPage> {
           children: <Widget>[
             IconButton(
               padding: EdgeInsets.zero,
-              onPressed: () {
-                // Navigator.of(context).pop();
-              },
+              onPressed: () => NavigationHelper.pop(),
               icon: const Icon(
                 Icons.arrow_back_ios_new_rounded,
                 size: 24,
@@ -200,7 +199,7 @@ class _ChartPageState extends State<ChartPage> {
                                   titleSize: 16,
                                   image: getCustomCachedImage(url: book.coverSUrl, width: 70, height: 100),
                                   authors: book.authorNames,
-                                  onTap: () {},
+                                  onTap: () => NavigationHelper.toBookView(isbn: book.isbn, coverUrl: book.coverMUrl),
                                 );
                               },
                               itemCount: _chartRepo.lengthInMemCount(_chartTypeNotifier.value),
