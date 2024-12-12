@@ -5,6 +5,7 @@ import 'package:elibapp/entity/book/book_brief_reco.dart';
 import 'package:elibapp/entity/book/book_brief_tb.dart';
 import 'package:elibapp/entity/book/book_info.dart';
 import 'package:elibapp/entity/book/book_viewing_history.dart';
+import 'package:elibapp/entity/book/simple_user_owned_book.dart';
 import 'package:isar/isar.dart';
 
 import '../entity/user/user_auth_params.dart';
@@ -25,6 +26,7 @@ class DBManager{
         BookViewingHistorySchema,
         BookInfoSchema,
         BookBriefFromAuthorSchema,
+        SimpleUserOwnedBookSchema,
       ],
       directory: PathManager.dbDir.path,
       inspector: true,

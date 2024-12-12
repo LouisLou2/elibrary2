@@ -27,9 +27,16 @@ class UISizePadding {
   const UISizePadding._();
 }
 
+class UiSizeIconText{
+  final double iconSmall = 10;
+
+  const UiSizeIconText._();
+}
+
 
 class UiSize {
   static const UiSizeGap gap = UiSizeGap._();
   static const UiSizeBorder border = UiSizeBorder._();
   static const UISizePadding padding = UISizePadding._();
+  static const UiSizeIconText iconText = UiSizeIconText._();
 }

@@ -6,6 +6,7 @@ import 'package:elibapp/helper/network/path_collect/book_cate_path.dart';
 import 'package:elibapp/helper/network/path_collect/book_chart_path.dart';
 import 'package:elibapp/helper/network/path_collect/book_info_path.dart';
 import 'package:elibapp/helper/network/path_collect/book_reco_path.dart';
+import 'package:elibapp/helper/network/path_collect/book_shelf.dart';
 
 import '../../config/network_config.dart';
 
@@ -20,4 +21,5 @@ class NetworkPathCollector {
   static final BookInfoPath bookInfo = BookInfoPath();
   static final AnnounPath announce = AnnounPath();
   static final BookCatePath bookCate = BookCatePath();
+  static final BookShelfPath bookShelf = BookShelfPath();
 }

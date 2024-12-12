@@ -4,6 +4,9 @@ part '../../generated/book/book_cate.g.dart'; // 生成的文件
 
 @JsonSerializable()
 class BookCate {
+  @JsonKey(name: "parent_id")
+  int parentId;
+
   @JsonKey(name: 'cate_id')
   final int cateId;
 
@@ -20,6 +23,7 @@ class BookCate {
   final int domColor; // long 类型的值在 Dart 中用 int 表示
 
   BookCate({
+    required this.parentId,
     required this.cateId,
     required this.cateName,
     required this.coverUrl,

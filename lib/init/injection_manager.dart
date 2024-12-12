@@ -6,6 +6,7 @@ import 'package:elibapp/features/book_view/book_view_feature.dart';
 import 'package:elibapp/features/browse/browse_feature.dart';
 import 'package:elibapp/features/chart/chart_feature.dart';
 import 'package:elibapp/features/home/home_feature.dart';
+import 'package:elibapp/features/shelf/shelf_feature.dart';
 import 'package:elibapp/features/viewing_history/viewing_history_feature.dart';
 import 'package:get_it/get_it.dart';
 
@@ -27,6 +28,7 @@ class InjectionManager{
     AnnounFeature.inject();
     AnnounContentFeature.inject();
     BrowseFeature.inject();
+    ShelfFeature.inject();
   }
 
   // 此函数必须在AuthFeature.inject();之后调用
