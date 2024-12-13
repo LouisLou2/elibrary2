@@ -2,8 +2,10 @@ import 'package:elibapp/features/announ/page/announce_list_page.dart';
 import 'package:elibapp/features/announ_content/page/announ_content_page.dart';
 import 'package:elibapp/features/auth/bloc/auth_bloc.dart';
 import 'package:elibapp/features/book_view/page/book_view_page.dart';
+import 'package:elibapp/features/categories/page/cate_page.dart';
 import 'package:elibapp/features/chart/page/chart_page.dart';
 import 'package:elibapp/features/main_tab/page/main_tab_page.dart';
+import 'package:elibapp/features/reserve_borrow_record/page/rb_record_page.dart';
 import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:elibapp/helper/nav/route_generator.dart';
 import 'package:elibapp/init/injection_manager.dart';
@@ -35,7 +37,7 @@ Future<void> initBeforeRunApp() async {
 void setRouteCollection() {
   NavigationHelper.init(
       mainPageNav: '/main',
-      mainPageBuilder: (context) => const MainTabPage(),
+      mainPageBuilder: (context) => const RBRecordPage(),
 
       announListPageNav: '/announ/list',
       announListPageBuilder: (context) => const AnnounListPage(),
@@ -48,6 +50,9 @@ void setRouteCollection() {
 
       bookChartPageNav: '/chart/list',
       bookChartPageBuilder: (context) => const ChartPage(),
+
+      categoryPage: '/category',
+      categoryPageBuilder: (context) => const CategoryPage(),
   );
 }
 

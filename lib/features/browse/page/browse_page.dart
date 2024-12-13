@@ -1,3 +1,4 @@
+import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:elibapp/shared/widget/spec/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -156,8 +157,8 @@ class _BrowsePageState extends State<BrowsePage> with AutomaticKeepAliveClientMi
                           child: SectionWindow(
                             title:  AppStrs.hotKind,
                             fontSize: 22,
-                            titleOnTap:() {},
-                            actionOnTap: null,
+                            titleOnTap: NavigationHelper.toCategoryPage,
+                            actionOnTap: NavigationHelper.toCategoryPage,
                             actionText: AppStrs.viewAll,
                             widgets: List.generate(hitSubcates.length,
                                 (i) {

@@ -1,13 +1,20 @@
+import 'package:isar/isar.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part '../../generated/book/book_cate.g.dart'; // 生成的文件
 
+@collection
 @JsonSerializable()
 class BookCate {
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  Id id = Isar.autoIncrement;
+
   @JsonKey(name: "parent_id")
   int parentId;
 
   @JsonKey(name: 'cate_id')
+  @Index(unique: true, replace: true)
   final int cateId;
 
   @JsonKey(name: 'cate_name')

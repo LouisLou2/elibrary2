@@ -20,6 +20,7 @@ class NavigationHelper{
   static late String bookViewPageNav;
   static late String announDetailNav;
   static late String bookChartPageNav;
+  static late String categoryPageNav;
   static late Map<String, WidgetBuilder> _routes;
 
   static void init({
@@ -37,6 +38,9 @@ class NavigationHelper{
 
     required String bookChartPageNav,
     required WidgetBuilder bookChartPageBuilder,
+
+    required String categoryPage,
+    required WidgetBuilder categoryPageBuilder,
   }) {
     assert(!_setted);
     NavigationHelper.mainPageNav = mainPageNav;
@@ -44,12 +48,14 @@ class NavigationHelper{
     NavigationHelper.bookViewPageNav = bookViewPageNav;
     NavigationHelper.announDetailNav = announDetailNav;
     NavigationHelper.bookChartPageNav = bookChartPageNav;
+    NavigationHelper.categoryPageNav = categoryPage;
     _routes = {
       mainPageNav: mainPageBuilder,
       announListPageNav: announListPageBuilder,
       bookViewPageNav: bookViewPageBuilder,
       announDetailNav: announDetailBuilder,
       bookChartPageNav: bookChartPageBuilder,
+      categoryPage: categoryPageBuilder,
     };
     _setted = true;
     RouteGenerator.init(_routes);
@@ -107,5 +113,9 @@ class NavigationHelper{
 
   static Future<Object?>? toBookChart(ChartType type){
     return pushNamed(bookChartPageNav, arguments: type);
+  }
+
+  static Future<Object?>? toCategoryPage(){
+    return pushNamed(categoryPageNav);
   }
 }
