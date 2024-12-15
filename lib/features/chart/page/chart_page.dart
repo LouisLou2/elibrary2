@@ -115,6 +115,7 @@ class _ChartPageState extends State<ChartPage> {
         surfaceTintColor: Colors.transparent,
         toolbarHeight: 70,
         titleSpacing: 0,
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).bottomSheetTheme.backgroundColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,

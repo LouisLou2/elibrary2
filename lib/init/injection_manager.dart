@@ -1,3 +1,4 @@
+import 'package:elibapp/entity/reserve_borrow/rb_detail.dart';
 import 'package:elibapp/features/announ/announ_feature.dart';
 import 'package:elibapp/features/announ_content/announ_content_feature.dart';
 import 'package:elibapp/features/auth/export/auth_export_api.dart';
@@ -13,6 +14,7 @@ import 'package:elibapp/features/viewing_history/viewing_history_feature.dart';
 import 'package:get_it/get_it.dart';
 
 import '../features/auth/auth_feature.dart';
+import '../features/rb_detail/rb_detail_feature.dart';
 import '../features/sign_in/sign_in_feature.dart';
 import '../service/req/req_proxy.dart';
 import '../service/req/requester.dart';
@@ -33,6 +35,7 @@ class InjectionManager{
     ShelfFeature.inject();
     CategoriesFeature.inject();
     RBRecordFeature.inject();
+    RBDetailFeature.inject();
   }
 
   // 此函数必须在AuthFeature.inject();之后调用

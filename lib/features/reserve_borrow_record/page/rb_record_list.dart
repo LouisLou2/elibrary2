@@ -1,6 +1,7 @@
 import 'package:elibapp/common/rb_record_type.dart';
 import 'package:elibapp/features/reserve_borrow_record/bloc/rb_bloc.dart';
 import 'package:elibapp/features/reserve_borrow_record/repo/rb_record_repo.dart';
+import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:elibapp/shared/widget/custom_image_tile.dart';
 import 'package:elibapp/shared/widget/error/reload_widget.dart';
 import 'package:elibapp/shared/widget/spec/image_widget.dart';
@@ -132,9 +133,7 @@ class _RBRecordListPageState extends State<RBRecordListPage> {
                           ),
                         ],
                       ),
-                      onTap: () {
-                        // do something
-                      },
+                      onTap: () => NavigationHelper.toRBDetailPage(records[i].reserveId),
                     );
                   },
                 ),

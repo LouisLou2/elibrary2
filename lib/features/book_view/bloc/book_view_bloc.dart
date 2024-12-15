@@ -1,26 +1,24 @@
 import 'package:elibapp/features/book_view/const/book_view_ui_strategy.dart';
 import 'package:elibapp/features/book_view/repo/book_view_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 import 'book_view_event.dart';
 import 'book_view_state.dart';
 
 class BookViewBloc extends Bloc<BookViewEvent, BookViewState> {
-
-  final BookViewRepo _bookViewRepo = GetIt.I<BookViewRepo>();
+  final BookViewRepo _bookViewRepo;
   String isbn;
   String? coverUrl;
 
-  BookViewBloc(this.isbn, String? coverUrl) : super(resolveInitialState(isbn, coverUrl)) {
+  BookViewBloc(this.isbn, String? coverUrl, this._bookViewRepo) : super(resolveInitialState(_bookViewRepo, isbn, coverUrl)) {
 
     on<BookViewReqNet>((event, emit) async{
       print('@@@@@@@@@@@@@on BookViewReqNet, state is $state');
       bool res = await _bookViewRepo.tryResetFromNetAndPersist(isbn, BookViewUiStrategy.bookFromAuthorReqNum);
       emit(res ?
       BookViewState.refresh : (
-          state is BookViewInitNoData ? BookViewState.retry : BookViewState.retrievedNoData
-        )
+        state is BookViewInitNoData ? BookViewState.retry : BookViewState.retrievedNoData
+       )
       );
     });
     // 只有状态是retry的时候才会触发这个事件
@@ -35,9 +33,8 @@ class BookViewBloc extends Bloc<BookViewEvent, BookViewState> {
     });
   }
 
-  static BookViewState resolveInitialState(String isbn, String? coverUrl){
-    final BookViewRepo repo = GetIt.I<BookViewRepo>();
-    bool has = repo.trySetBookInfoFromLocal(isbn, BookViewUiStrategy.bookFromAuthorReqNum);
+  static BookViewState resolveInitialState(BookViewRepo theRepo, String isbn, String? coverUrl){
+    bool has = theRepo.trySetBookInfoFromLocal(isbn, BookViewUiStrategy.bookFromAuthorReqNum);
     if (has){
       return BookViewState.initWithLocalHasData;
     } else {

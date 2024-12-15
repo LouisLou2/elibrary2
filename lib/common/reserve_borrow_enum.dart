@@ -7,7 +7,8 @@ enum ReserveBorrowStatus {
   Cancelled(2, '用户取消'),
   WaitingReturn(3, '待还书'),
   Returned(4, '已还书'),
-  OverdueReturn(5, '已逾期');
+  OverdueReturn(5, '已逾期'),
+  CantReturn(6, '无法还书');
 
   const ReserveBorrowStatus(this.code, this.str);
 

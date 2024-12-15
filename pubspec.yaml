@@ -59,6 +59,7 @@ dependencies:
   image_card: ^0.0.4
   flutter_markdown: ^0.7.4+3
   pull_down_button: ^0.10.2
+  qr_flutter: ^4.1.0
 
 
 dev_dependencies:

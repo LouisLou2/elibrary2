@@ -53,4 +53,7 @@ class UserStateRepoImpl extends UserStateRepo{
     _auth.clearPersistedUser(userAuthParams!.userId); // async
     userAuthParams = null;
   }
+
+  @override
+  String get userName => userAuthParams!.name;
 }

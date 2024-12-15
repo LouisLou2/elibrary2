@@ -12,6 +12,7 @@ class UiSizeBorder {
   final double tinyBorderR=2;
   final double smallBorderR=4;
   final double normalBorderR=6;
+  final double mediumBorderR=8;
 
   const UiSizeBorder._();
 }

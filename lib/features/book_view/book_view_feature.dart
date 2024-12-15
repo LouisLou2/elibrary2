@@ -8,6 +8,6 @@ import 'data/impl/book_view_data_impl.dart';
 class BookViewFeature {
   static void inject(){
     GetIt.I.registerLazySingleton<BookViewData>(() => BookViewDataImpl());
-    GetIt.I.registerLazySingleton<BookViewRepo>(() => BookViewRepoImpl());
+    // GetIt.I.registerLazySingleton<BookViewRepo>(() => BookViewRepoImpl());
   }
 }

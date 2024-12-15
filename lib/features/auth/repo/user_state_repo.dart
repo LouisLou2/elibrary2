@@ -4,6 +4,7 @@ abstract class UserStateRepo {
   void setAndPersistUser(UserAuthParams params);
   void setUser(UserAuthParams params);
   bool get isLogin;
+  String get userName;
   int get userId;
   // void setUserAt(String at);
   String getUserAt();

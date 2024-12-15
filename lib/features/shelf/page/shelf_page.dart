@@ -25,13 +25,16 @@ class ShelfPage extends StatefulWidget {
   State<ShelfPage> createState() => _ShelfPageState();
 }
 
-class _ShelfPageState extends State<ShelfPage> {
+class _ShelfPageState extends State<ShelfPage> with AutomaticKeepAliveClientMixin {
 
   final RefreshController _refreshController = RefreshController();
   final GlobalKey<TooltipState> tooltipkey=GlobalKey<TooltipState>();
 
   bool isSelecting = false;
   List<bool> selectedItems = List.generate(100, (index) => false); // 初始每个项都未选中
+
+  @override
+  bool get wantKeepAlive => true;
 
   void toggleSelection(int index) {
     setState(() {

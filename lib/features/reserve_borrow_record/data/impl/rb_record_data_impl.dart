@@ -25,7 +25,6 @@ class RBRecordDataImpl extends RBRecordData {
       path: NetworkPathCollector.rbRecord.records,
       method: HttpMethod.GET,
       data: {
-        "userId": userId,
         "status": status?.code,
         "offset": offset,
         "num": num,

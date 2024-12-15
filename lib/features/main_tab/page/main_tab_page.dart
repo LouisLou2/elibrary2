@@ -1,6 +1,7 @@
 import 'package:elibapp/features/auth/bloc/auth_bloc.dart';
 import 'package:elibapp/features/browse/page/browse_page.dart';
 import 'package:elibapp/features/home/page/home_page.dart';
+import 'package:elibapp/features/profile/page/profile_page.dart';
 import 'package:elibapp/features/shelf/page/shelf_page.dart';
 import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:flutter/material.dart';
@@ -51,11 +52,7 @@ class _MainTabPageState extends State<MainTabPage> {
             case 2:
               return const ShelfPage();
             case 3:
-              return const Center(
-                child: Text(
-                    'WAITING'
-                ),
-              );
+              return const ProfilePage();
             default:
               return const Center(
                 child: Text(

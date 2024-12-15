@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../shared/page/error_page.dart';
 
@@ -12,11 +13,11 @@ class RouteGenerator {
     _setted = true;
   }
 
-  static MaterialPageRoute<void> getRoute({
+  static CupertinoPageRoute<void> getRoute({
     required WidgetBuilder builder,
     required RouteSettings settings,
     bool fullscreenDialog = false,
-  })=>MaterialPageRoute<void>(
+  })=>CupertinoPageRoute<void>(
     builder: builder,
     settings: settings,
     fullscreenDialog: fullscreenDialog,

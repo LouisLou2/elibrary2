@@ -17,7 +17,7 @@ class RBRecordPage extends StatefulWidget {
 class _RBRecordPageState extends State<RBRecordPage> {
 
   late ValueNotifier<RBRecordType> _selectedSegment;
-  final _pageController = PageController();
+  late PageController _pageController;
 
   @override
   void initState() {
@@ -26,8 +26,10 @@ class _RBRecordPageState extends State<RBRecordPage> {
 
   @override
   Widget build(BuildContext context) {
-    RBRecordType _recordType = RBRecordType.All;
+    // from page arguments
+    RBRecordType _recordType = ModalRoute.of(context)!.settings.arguments as RBRecordType;
     _selectedSegment = ValueNotifier<RBRecordType>(_recordType);
+    _pageController = PageController(initialPage: _recordType.index);
 
     return Scaffold(
       appBar: AppBar(

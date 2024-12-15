@@ -10,6 +10,7 @@ class BookViewRepoImpl extends BookViewRepo {
   final BookViewData _bookViewData = GetIt.I<BookViewData>();
 
   BookInfo? _bookInfo;
+
   @override
   BookInfo? getCurrentBookInfo() {
     return _bookInfo!;
@@ -18,7 +19,10 @@ class BookViewRepoImpl extends BookViewRepo {
   @override
   bool trySetBookInfoFromLocal(String isbn, int relatedBookNum) {
     _bookInfo = _bookViewData.getBookInfoLocal(isbn,relatedBookNum);
-    return _bookInfo != null;
+    if (_bookInfo == null) return false;
+    // 从_bookInfo.relatedBooks剔除自身
+    _bookInfo!.relatedBooks?.removeWhere((element) => element.isbn == isbn);
+    return true;
   }
 
   @override

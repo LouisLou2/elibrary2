@@ -1,3 +1,4 @@
+import 'package:elibapp/common/rb_record_type.dart';
 import 'package:elibapp/entity/book/book_signal.dart';
 import 'package:elibapp/features/chart/const/chart_type.dart';
 import 'package:elibapp/helper/nav/route_generator.dart';
@@ -16,11 +17,18 @@ class NavigationHelper{
 
   static bool _setted = false;
   static late String mainPageNav;
+
   static late String announListPageNav;
-  static late String bookViewPageNav;
   static late String announDetailNav;
+
+  static late String bookViewPageNav;
   static late String bookChartPageNav;
+
   static late String categoryPageNav;
+
+  static late String rbRecordPageNav;
+  static late String rbDetailPageNav;
+
   static late Map<String, WidgetBuilder> _routes;
 
   static void init({
@@ -41,6 +49,12 @@ class NavigationHelper{
 
     required String categoryPage,
     required WidgetBuilder categoryPageBuilder,
+
+    required String rbRecordPageNav,
+    required WidgetBuilder rbRecordPageBuilder,
+
+    required String rbDetailPageNav,
+    required WidgetBuilder rbDetailPageBuilder,
   }) {
     assert(!_setted);
     NavigationHelper.mainPageNav = mainPageNav;
@@ -49,13 +63,21 @@ class NavigationHelper{
     NavigationHelper.announDetailNav = announDetailNav;
     NavigationHelper.bookChartPageNav = bookChartPageNav;
     NavigationHelper.categoryPageNav = categoryPage;
+    NavigationHelper.rbRecordPageNav = rbRecordPageNav;
+    NavigationHelper.rbDetailPageNav = rbDetailPageNav;
     _routes = {
       mainPageNav: mainPageBuilder,
+
       announListPageNav: announListPageBuilder,
-      bookViewPageNav: bookViewPageBuilder,
       announDetailNav: announDetailBuilder,
+
+      bookViewPageNav: bookViewPageBuilder,
+
       bookChartPageNav: bookChartPageBuilder,
       categoryPage: categoryPageBuilder,
+
+      rbRecordPageNav: rbRecordPageBuilder,
+      rbDetailPageNav: rbDetailPageBuilder,
     };
     _setted = true;
     RouteGenerator.init(_routes);
@@ -79,20 +101,6 @@ class NavigationHelper{
   static Future<Object?>? popAllAndPushNamed(String routeName){
     return _key.currentState?.pushNamedAndRemoveUntil(routeName, (route) => false);
   }
-  // /*---------自定义页面跳转封装----------*/
-  // static Future<Object?>? popAllAndBoard(){
-  //   return popAllAndPushNamed(RouteCollector.onboarding,);
-  // }
-  // // 一些封装好的方法
-  // static Future<Object?>? popAllAndAuth(){
-  //   return popAllAndPushNamed(RouteCollector.auth_pages);
-  // }
-  // static Future<Object?>? popAllAndMainPage(){
-  //   return popAllAndPushNamed(RouteCollector.main_page);
-  // }
-  // static Future<Object?>? popAllAndFirstSetPwd(){
-  //   return popAllAndPushNamed(RouteCollector.set_pwd);
-  // }
 
   static Future<Object?>? toAnnounList(){
     return pushNamed(announListPageNav);
@@ -117,5 +125,13 @@ class NavigationHelper{
 
   static Future<Object?>? toCategoryPage(){
     return pushNamed(categoryPageNav);
+  }
+
+  static Future<Object?>? toRBDetailPage(int reserveId){
+    return pushNamed(rbDetailPageNav, arguments: reserveId);
+  }
+
+  static Future<Object?>? toRBRecordPage(RBRecordType type){
+    return pushNamed(rbRecordPageNav, arguments: type);
   }
 }

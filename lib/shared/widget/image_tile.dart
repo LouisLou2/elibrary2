@@ -1,4 +1,4 @@
-import 'package:elibapp/style/widget_detail.dart';
+import 'package:elibapp/style/ui_size.dart';
 import 'package:flutter/material.dart';
 
 class ImageTile extends StatelessWidget{
@@ -8,7 +8,7 @@ class ImageTile extends StatelessWidget{
   final String? subTitle;
   final String? thirdTitle;
   final Widget image;
-  final circleImage;
+  final bool circleImage;
   final Color? surfaceColor;
   final Color? subtitleColor;
   final Color? backgroundColor;
@@ -43,7 +43,7 @@ class ImageTile extends StatelessWidget{
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: padding??const EdgeInsets.all(0),
+        padding: padding ?? const EdgeInsets.all(0),
         child: Row(
           children: [
             Card(
@@ -52,8 +52,8 @@ class ImageTile extends StatelessWidget{
               elevation: 0,
               surfaceTintColor: Colors.transparent,
               clipBehavior: Clip.antiAlias,
-              shape: circleImage?const CircleBorder():RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(WidgetDetail.tinyBorderR),
+              shape: circleImage ? const CircleBorder() : RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(UiSize.border.tinyBorderR),
               ),
               child: image,
             ),
