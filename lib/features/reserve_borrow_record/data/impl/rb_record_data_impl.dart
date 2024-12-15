@@ -22,7 +22,7 @@ class RBRecordDataImpl extends RBRecordData {
   Future<Res<List<ReserveBorrowBrief>>> getRBRecordsNet(int userId, int offset, int num, {ReserveBorrowStatus? status}) async {
     // 默认是请求那个考虑用户行为的(也就是需要身份认证的)
     Res<Resp> res = await _requester.req(
-      path: NetworkPathCollector.rbRecord.records,
+      path: NetworkPathCollector.rb.records,
       method: HttpMethod.GET,
       data: {
         "status": status?.code,

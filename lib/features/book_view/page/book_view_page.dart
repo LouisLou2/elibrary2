@@ -144,7 +144,9 @@ class _BookDetailState extends State<BookViewPage>{
                           textColor: bookInfo.libAvailable ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
                           vPadding: 10,
                           backgroundColor: bookInfo.libAvailable ? Theme.of(context).focusColor : Theme.of(context).disabledColor,
-                          onPressed: bookInfo.libAvailable ? (){} : null,
+                          onPressed: bookInfo.libAvailable ? (){
+                            NavigationHelper.toBookingPage(bookInfo);
+                          } : null,
                         ),
                       ),
                     ],

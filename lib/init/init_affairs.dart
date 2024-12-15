@@ -56,6 +56,9 @@ void setRouteCollection() {
       rbRecordPageBuilder: (context) => const RBRecordPage(),
       rbDetailPageNav: '/rb/detail',
       rbDetailPageBuilder: (context) => const RBDetailPage(),
+
+      bookingPageNav: '/booking',
+      bookingPageBuilder: (context) => const BookingPage(),
   );
 }
 

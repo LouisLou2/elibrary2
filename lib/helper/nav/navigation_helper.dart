@@ -1,9 +1,12 @@
 import 'package:elibapp/common/rb_record_type.dart';
+import 'package:elibapp/entity/book/book_info.dart';
 import 'package:elibapp/entity/book/book_signal.dart';
+import 'package:elibapp/entity/struct/rb_detail_signal.dart';
 import 'package:elibapp/features/chart/const/chart_type.dart';
 import 'package:elibapp/helper/nav/route_generator.dart';
 import 'package:flutter/material.dart';
 
+import '../../entity/reserve_borrow/rb_detail.dart';
 import 'navigation_observer.dart';
 
 class NavigationHelper{
@@ -28,6 +31,8 @@ class NavigationHelper{
 
   static late String rbRecordPageNav;
   static late String rbDetailPageNav;
+
+  static late String bookingPageNav;
 
   static late Map<String, WidgetBuilder> _routes;
 
@@ -55,6 +60,9 @@ class NavigationHelper{
 
     required String rbDetailPageNav,
     required WidgetBuilder rbDetailPageBuilder,
+
+    required String bookingPageNav,
+    required WidgetBuilder bookingPageBuilder,
   }) {
     assert(!_setted);
     NavigationHelper.mainPageNav = mainPageNav;
@@ -65,6 +73,7 @@ class NavigationHelper{
     NavigationHelper.categoryPageNav = categoryPage;
     NavigationHelper.rbRecordPageNav = rbRecordPageNav;
     NavigationHelper.rbDetailPageNav = rbDetailPageNav;
+    NavigationHelper.bookingPageNav = bookingPageNav;
     _routes = {
       mainPageNav: mainPageBuilder,
 
@@ -78,6 +87,8 @@ class NavigationHelper{
 
       rbRecordPageNav: rbRecordPageBuilder,
       rbDetailPageNav: rbDetailPageBuilder,
+
+      bookingPageNav: bookingPageBuilder,
     };
     _setted = true;
     RouteGenerator.init(_routes);
@@ -128,10 +139,17 @@ class NavigationHelper{
   }
 
   static Future<Object?>? toRBDetailPage(int reserveId){
-    return pushNamed(rbDetailPageNav, arguments: reserveId);
+    return pushNamed(rbDetailPageNav, arguments: RBDetailSignal(reserveId));
+  }
+
+  static Future<Object?>? replaceToRBDetailPage(RBDetail detail){
+    return pushReplacementNamed(rbDetailPageNav, arguments: RBDetailSignal.useDetail(detail));
   }
 
   static Future<Object?>? toRBRecordPage(RBRecordType type){
     return pushNamed(rbRecordPageNav, arguments: type);
+  }
+  static Future<Object?>? toBookingPage(BookInfo info){
+    return pushNamed(bookingPageNav, arguments: info);
   }
 }

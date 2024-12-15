@@ -1,9 +1,9 @@
-import 'package:elibapp/entity/reserve_borrow/rb_detail.dart';
 import 'package:elibapp/features/announ/announ_feature.dart';
 import 'package:elibapp/features/announ_content/announ_content_feature.dart';
 import 'package:elibapp/features/auth/export/auth_export_api.dart';
 import 'package:elibapp/features/author/author_fearure.dart';
 import 'package:elibapp/features/book_view/book_view_feature.dart';
+import 'package:elibapp/features/booking/booking_feature.dart';
 import 'package:elibapp/features/browse/browse_feature.dart';
 import 'package:elibapp/features/categories/categories_feature.dart';
 import 'package:elibapp/features/chart/chart_feature.dart';
@@ -36,6 +36,7 @@ class InjectionManager{
     CategoriesFeature.inject();
     RBRecordFeature.inject();
     RBDetailFeature.inject();
+    BookingFeature.inject();
   }
 
   // 此函数必须在AuthFeature.inject();之后调用

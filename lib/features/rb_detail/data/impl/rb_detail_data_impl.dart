@@ -16,7 +16,7 @@ class RBDetailDataImpl implements RBDetailData {
   Future<Res<RBDetail>> getRBDetail(int reserveId) async{
     // 默认是请求那个考虑用户行为的(也就是需要身份认证的)
     Res<Resp> res = await _requester.req(
-      path: '${NetworkPathCollector.rbRecord.record}/$reserveId',
+      path: '${NetworkPathCollector.rb.record}/$reserveId',
       method: HttpMethod.GET,
       data: {},
     );

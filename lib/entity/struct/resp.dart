@@ -1,7 +1,5 @@
 import 'package:elibapp/common/res_enum.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-@JsonSerializable()
 class Resp {
   final ResCodeEnum code;
   final String? message;

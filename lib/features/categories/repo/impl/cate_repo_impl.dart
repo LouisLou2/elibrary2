@@ -23,7 +23,7 @@ class CateRepoImpl implements CateRepo{
 
   @override
   Future<ResCodeEnum> getFromNetAndPersist() async{
-    Res<List<BookCate>> res = await _cateData.getBookcates();
+    Res<List<BookCate>> res = await _cateData.getBookCates();
     if (!res.isSuccess) return res.code;
     // 清空原来的
     bookCates1.clear();
@@ -40,9 +40,9 @@ class CateRepoImpl implements CateRepo{
         bookCates2Map[bookCate.parentId]!.add(bookCate);
       }
     }
-    bookCates.sort();
+    bookCates1.sort();
     // persist
-    _cateData.saveBookcates(bookCates);
+    _cateData.saveBookCates(bookCates);
     return res.code;
   }
 
@@ -63,6 +63,7 @@ class CateRepoImpl implements CateRepo{
         bookCates2Map[bookCate.parentId]!.add(bookCate);
       }
     }
+    bookCates1.sort();
     return true;
   }
 }

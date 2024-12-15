@@ -63,43 +63,47 @@ class CustomImageTile extends StatelessWidget{
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 13),
-                child:Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title!,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: -0.6,
-                        color: surfaceColor,
-                        fontSize: fontSize,
-                      ),
-                    ),
-                    if(subTitle!=null)
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 13),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        subTitle!,
+                        title!,
                         style: TextStyle(
-                          color: surfaceColor2 ?? Theme.of(context).hintColor,
-                          fontSize: fontSize2 ?? fontSize!*0.85,
+                          fontWeight: FontWeight.w600,
                           letterSpacing: -0.6,
-                          fontWeight: FontWeight.w500,
+                          color: surfaceColor,
+                          fontSize: fontSize,
                         ),
                       ),
-                    SizedBox(height: fontSize!*0.5,),
-                    if(thirdTitle!=null)
-                      Text(
-                        thirdTitle!,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontSize: fontSize3 ?? fontSize!*0.75,
+                      if(subTitle!=null)
+                        Text(
+                          subTitle!,
+                          style: TextStyle(
+                            color: surfaceColor2 ?? Theme.of(context).hintColor,
+                            fontSize: fontSize2 ?? fontSize!*0.85,
+                            letterSpacing: -0.6,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                    if(customTitleWidget!=null)
-                      customTitleWidget!,
-                  ],
+                      SizedBox(height: fontSize!*0.5,),
+                      if(thirdTitle!=null)
+                        Text(
+                          thirdTitle!,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontSize: fontSize3 ?? fontSize!*0.75,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      if(customTitleWidget!=null)
+                        customTitleWidget!,
+                    ],
+                  ),
                 ),
               ),
               Card(

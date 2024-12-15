@@ -22,4 +22,9 @@ class RBDetailRepoImpl extends RBDetailRepo {
   @override
   RBDetail get currentDetail => detail;
 
+  @override
+  void setDetail(RBDetail detail) {
+    this.detail = detail;
+  }
+
 }

@@ -5,7 +5,7 @@ part '../../generated/book/book_cate.g.dart'; // 生成的文件
 
 @collection
 @JsonSerializable()
-class BookCate {
+class BookCate implements Comparable<BookCate>{
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   Id id = Isar.autoIncrement;
@@ -41,4 +41,10 @@ class BookCate {
   // 生成 JSON 序列化相关方法
   factory BookCate.fromJson(Map<String, dynamic> json) => _$BookCateFromJson(json);
   Map<String, dynamic> toJson() => _$BookCateToJson(this);
+
+  @override
+  int compareTo(BookCate other) {
+    // use cateId to compare
+    return cateId - other.cateId;
+  }
 }

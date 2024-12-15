@@ -1,4 +1,5 @@
 import 'package:elibapp/entity/reserve_borrow/rb_detail.dart';
+import 'package:elibapp/entity/struct/rb_detail_signal.dart';
 import 'package:elibapp/features/rb_detail/bloc/rb_detail_bloc.dart';
 import 'package:elibapp/features/rb_detail/const/rb_detail_ui_strategy.dart';
 import 'package:elibapp/features/rb_detail/repo/rb_detail_repo.dart';
@@ -25,16 +26,15 @@ class _RBDetailPageState extends State<RBDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-
     // 从路径参数中获取reserveId
-    final int reserveId = ModalRoute.of(context)!.settings.arguments as int;
+    final RBDetailSignal signal = ModalRoute.of(context)!.settings.arguments as RBDetailSignal;
 
     return Scaffold(
       appBar: null,
       body: RepositoryProvider.value(
         value: GetIt.I.get<RBDetailRepo>(),
         child: BlocProvider(
-          create: (context) => RBDetailBloc(reserveId),
+          create: (context) => signal.directlyUseDetail ? RBDetailBloc.useDetail(signal.detail!) : RBDetailBloc(signal.reserveId),
           child: BlocBuilder<RBDetailBloc, RBDetailState>(
             buildWhen: (previous, current) {
               return current != RBDetailState.refreshedNet ||
@@ -97,7 +97,7 @@ class _RBDetailPageState extends State<RBDetailPage> {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                padding: const EdgeInsets.only(left: 20,top: 20),
                                 child: Text(
                                   detail.status.str,
                                   style: const TextStyle(
@@ -107,7 +107,7 @@ class _RBDetailPageState extends State<RBDetailPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: UiSize.gap.largeGap,),
+                              SizedBox(height: UiSize.gap.mediumGap,),
                               // Text(
                               //   '剩余${FormatTool.timeLeftStr(de)}',
                               //   style: const TextStyle(

@@ -6,7 +6,6 @@ import 'package:isar/isar.dart';
 import '../../../../base_manager/db_manager.dart';
 import '../../../../common/http_method.dart';
 import '../../../../common/res_enum.dart';
-import '../../../../entity/book/simple_user_owned_book.dart';
 import '../../../../entity/struct/res.dart';
 import '../../../../entity/struct/resp.dart';
 import '../../../../helper/network/net_path_collector.dart';
@@ -17,7 +16,7 @@ class CateDataImpl implements CateData {
   final Requester _requester = GetIt.I<Requester>();
 
   @override
-  Future<Res<List<BookCate>>> getBookcates() async{
+  Future<Res<List<BookCate>>> getBookCates() async{
     // 默认是请求那个考虑用户行为的(也就是需要身份认证的)
     Res<Resp> res = await _requester.req(
       path: NetworkPathCollector.bookCate.allCates,
@@ -35,9 +34,9 @@ class CateDataImpl implements CateData {
   }
 
   @override
-  void saveBookcates(List<BookCate> bookCates) {
+  void saveBookCates(List<BookCate> bookCates) {
     DBManager.db.writeTxn(
-      () async{
+      () async {
         DBManager.db.bookCates.putAll(bookCates);
       }
     );
