@@ -58,13 +58,12 @@ class ImageTile extends StatelessWidget{
               child: image,
             ),
             const SizedBox(width: 10,),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*0.5,
-                  child:Text(
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
                     title!,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
@@ -75,11 +74,8 @@ class ImageTile extends StatelessWidget{
                       fontSize: fontSize,
                     ),
                   ),
-                ),
-                if(subTitle!=null)
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width*0.5,
-                    child: Text(
+                  if(subTitle!=null)
+                    Text(
                       subTitle!,
                       overflow: TextOverflow.ellipsis,
                       softWrap: true,
@@ -89,28 +85,20 @@ class ImageTile extends StatelessWidget{
                         letterSpacing: -0.6,
                       ),
                     ),
-                  ),
-                if(thirdTitle!=null)
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width*0.5,
-                    child: Text(
+                  if(thirdTitle!=null)
+                    Text(
                       thirdTitle!,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: subtitleColor ?? Theme.of(context).colorScheme.secondary,
                         fontSize: fontSize3??(fontSize!=null?fontSize!*0.6:null),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
             if(actionWidget!=null)
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: actionWidget,
-                ),
-              ),
+              actionWidget!,
           ],
         ),
       ),

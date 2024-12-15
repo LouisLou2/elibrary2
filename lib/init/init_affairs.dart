@@ -1,6 +1,7 @@
 import 'package:elibapp/features/announ/page/announce_list_page.dart';
 import 'package:elibapp/features/announ_content/page/announ_content_page.dart';
 import 'package:elibapp/features/auth/bloc/auth_bloc.dart';
+import 'package:elibapp/features/book_preview/page/book_viewer.dart';
 import 'package:elibapp/features/book_view/page/book_view_page.dart';
 import 'package:elibapp/features/categories/page/cate_page.dart';
 import 'package:elibapp/features/chart/page/chart_page.dart';
@@ -17,6 +18,7 @@ import '../base_manager/path_manager.dart';
 import '../features/auth/bloc/auth_state.dart';
 import '../features/auth/datasource/auth_data.dart';
 import '../features/booking/page/booking_page.dart';
+import '../features/sub_cate_book/page/sub_cate_book_page.dart';
 
 GetIt getIt = GetIt.I;
 
@@ -59,6 +61,12 @@ void setRouteCollection() {
 
       bookingPageNav: '/booking',
       bookingPageBuilder: (context) => const BookingPage(),
+
+      bookPreviewPageNav: '/book/preview',
+      bookPreviewPageBuilder: (context) => const EbookPreviewPage(),
+
+      subCateBooksPageNav: '/cates/sub_cate_books',
+      subCateBooksPageBuilder: (context) => const SubCateBooksPage(),
   );
 }
 

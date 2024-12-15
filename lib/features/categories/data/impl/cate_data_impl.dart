@@ -51,4 +51,45 @@ class CateDataImpl implements CateData {
         .findAllSync();
     return bookCates;
   }
+
+  @override
+  List<BookCate> getSubCatesLocal(int parentId) {
+    List<BookCate> bookCates = DBManager.db
+        .bookCates
+        .where()
+        .filter()
+        .parentIdEqualTo(parentId)
+        .sortByCateId()
+        .findAllSync();
+    return bookCates;
+  }
+
+  @override
+  Future<Res<List<BookCate>>> getSubCatesNet(int parentId) async {
+    Res<Resp> res = await _requester.req(
+      path: NetworkPathCollector.bookCate.subCates,
+      method: HttpMethod.GET,
+      data: {
+        'parentId': parentId,
+      },
+    );
+    if (!res.isSuccess) return res.to<List<BookCate>>();
+    Resp resp = res.data!;
+    if (resp.code == ResCodeEnum.Success) {
+      List<BookCate> bookCates = (resp.data as List<dynamic>).map((e) => BookCate.fromJson(e)).toList();
+      return Res.successWithData(bookCates);
+    }else {
+      return Res.failedMayWithMsg(resp.code, resp.message);
+    }
+  }
+
+  @override
+  BookCate? getBookCateLocal(int cateId) {
+    BookCate? bookCate = DBManager.db
+        .bookCates
+        .where()
+        .cateIdEqualTo(cateId)
+        .findFirstSync();
+    return bookCate;
+  }
 }

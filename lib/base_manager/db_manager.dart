@@ -2,6 +2,7 @@ import 'package:elibapp/base_manager/path_manager.dart';
 import 'package:elibapp/entity/book/book_brief_from_author.dart';
 import 'package:elibapp/entity/book/book_brief_hr.dart';
 import 'package:elibapp/entity/book/book_brief_reco.dart';
+import 'package:elibapp/entity/book/book_brief_sub_cate.dart';
 import 'package:elibapp/entity/book/book_brief_tb.dart';
 import 'package:elibapp/entity/book/book_cate.dart';
 import 'package:elibapp/entity/book/book_info.dart';
@@ -31,6 +32,7 @@ class DBManager{
         SimpleUserOwnedBookSchema,
         BookCateSchema,
         ReserveBorrowBriefSchema,
+        BookBriefSCSchema,
       ],
       directory: PathManager.dbDir.path,
       inspector: true,

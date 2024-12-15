@@ -1,5 +1,7 @@
 import 'package:elibapp/entity/book/book_cate.dart';
+import 'package:elibapp/entity/struct/sub_cate_book_signal.dart';
 import 'package:elibapp/features/categories/repo/cate_repo.dart';
+import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:elibapp/shared/widget/spec/image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,10 +70,16 @@ class CategoryPage extends StatelessWidget {
                     itemCount: cateList.length,
                     itemBuilder: (BuildContext context, int i) {
                       BookCate cate = cateList[i];
+                      List<BookCate> subCates = repo.getCurrentSubCates(cate.cateId);
                       return CustomImageTile(
                         title: cate.cateName,
                         subTitle: '${cate.bookNum}本书',
-                        onTap: () {},
+                        onTap: () => NavigationHelper.toSubCateBooksPage(
+                          SubCateBookSignal(
+                            cate,
+                            subCates
+                          ),
+                        ),
                         image: getCustomCachedImage(
                           url: cate.coverUrl,
                           width: 60,

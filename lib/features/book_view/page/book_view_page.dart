@@ -133,7 +133,8 @@ class _BookDetailState extends State<BookViewPage>{
                           textColor: bookInfo.hasEbook ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
                           vPadding: 10,
                           backgroundColor: bookInfo.hasEbook ? Theme.of(context).focusColor : Theme.of(context).disabledColor,
-                          onPressed: bookInfo.hasEbook ? (){} : null,
+                          onPressed: bookInfo.hasEbook ? () => NavigationHelper.toBookPreviewPage(bookInfo.ebookUrl!)
+                              : null,
                         ),
                       ),
                       const SizedBox(width: 20),

@@ -10,6 +10,7 @@ import 'package:elibapp/features/chart/chart_feature.dart';
 import 'package:elibapp/features/home/home_feature.dart';
 import 'package:elibapp/features/reserve_borrow_record/rb_record_feature.dart';
 import 'package:elibapp/features/shelf/shelf_feature.dart';
+import 'package:elibapp/features/sub_cate_book/sub_cate_book_load_feature.dart';
 import 'package:elibapp/features/viewing_history/viewing_history_feature.dart';
 import 'package:get_it/get_it.dart';
 
@@ -37,6 +38,7 @@ class InjectionManager{
     RBRecordFeature.inject();
     RBDetailFeature.inject();
     BookingFeature.inject();
+    SubCateBookLoadFeature.inject();
   }
 
   // 此函数必须在AuthFeature.inject();之后调用

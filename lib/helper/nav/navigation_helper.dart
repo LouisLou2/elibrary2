@@ -7,6 +7,7 @@ import 'package:elibapp/helper/nav/route_generator.dart';
 import 'package:flutter/material.dart';
 
 import '../../entity/reserve_borrow/rb_detail.dart';
+import '../../entity/struct/sub_cate_book_signal.dart';
 import 'navigation_observer.dart';
 
 class NavigationHelper{
@@ -16,8 +17,6 @@ class NavigationHelper{
   static GlobalKey<NavigatorState> get key =>_key;
   static final observer = MyObserver();
 
-
-
   static bool _setted = false;
   static late String mainPageNav;
 
@@ -25,6 +24,7 @@ class NavigationHelper{
   static late String announDetailNav;
 
   static late String bookViewPageNav;
+  static late String bookPreviewPageNav;
   static late String bookChartPageNav;
 
   static late String categoryPageNav;
@@ -33,6 +33,9 @@ class NavigationHelper{
   static late String rbDetailPageNav;
 
   static late String bookingPageNav;
+
+  static late String subCateBooksPageNav;
+
 
   static late Map<String, WidgetBuilder> _routes;
 
@@ -63,6 +66,12 @@ class NavigationHelper{
 
     required String bookingPageNav,
     required WidgetBuilder bookingPageBuilder,
+
+    required String bookPreviewPageNav,
+    required WidgetBuilder bookPreviewPageBuilder,
+
+    required String subCateBooksPageNav,
+    required WidgetBuilder subCateBooksPageBuilder,
   }) {
     assert(!_setted);
     NavigationHelper.mainPageNav = mainPageNav;
@@ -74,6 +83,8 @@ class NavigationHelper{
     NavigationHelper.rbRecordPageNav = rbRecordPageNav;
     NavigationHelper.rbDetailPageNav = rbDetailPageNav;
     NavigationHelper.bookingPageNav = bookingPageNav;
+    NavigationHelper.bookPreviewPageNav = bookPreviewPageNav;
+    NavigationHelper.subCateBooksPageNav = subCateBooksPageNav;
     _routes = {
       mainPageNav: mainPageBuilder,
 
@@ -89,6 +100,9 @@ class NavigationHelper{
       rbDetailPageNav: rbDetailPageBuilder,
 
       bookingPageNav: bookingPageBuilder,
+      bookPreviewPageNav: bookPreviewPageBuilder,
+
+      subCateBooksPageNav: subCateBooksPageBuilder,
     };
     _setted = true;
     RouteGenerator.init(_routes);
@@ -151,5 +165,13 @@ class NavigationHelper{
   }
   static Future<Object?>? toBookingPage(BookInfo info){
     return pushNamed(bookingPageNav, arguments: info);
+  }
+
+  static Future<Object?>? toBookPreviewPage(String ebookUrl){
+    return pushNamed(bookPreviewPageNav, arguments: ebookUrl);
+  }
+
+  static Future<Object?>? toSubCateBooksPage(SubCateBookSignal signal){
+    return pushNamed(subCateBooksPageNav, arguments: signal);
   }
 }
