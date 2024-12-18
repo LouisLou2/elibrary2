@@ -109,7 +109,7 @@ class _BrowsePageState extends State<BrowsePage> with AutomaticKeepAliveClientMi
                       ),
                     ),
                     onTap: (){
-                      // SearchHandler.enterSearchPage();
+                      NavigationHelper.toSearchPage();
                       _focusNode.unfocus();
                     },
                     leading: const Icon(Icons.search),

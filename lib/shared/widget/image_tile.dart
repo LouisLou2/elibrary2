@@ -18,6 +18,7 @@ class ImageTile extends StatelessWidget{
   final FontWeight? titleWeight;
   final double? actionSize;
   final VoidCallback? onTap;
+  final bool withDivider;
 
   const ImageTile({
     super.key,
@@ -36,13 +37,22 @@ class ImageTile extends StatelessWidget{
     this.titleWeight,
     this.fontSize3,
     this.padding,
+    this.withDivider=false,
   });
 
   @override
   Widget build(BuildContext context){
     return InkWell(
       onTap: onTap,
-      child: Padding(
+      child: Container(
+        decoration: BoxDecoration(
+          border: withDivider?Border(
+            bottom: BorderSide(
+              color: Theme.of(context).dividerColor,
+              width: 1,
+            ),
+          ):null,
+        ),
         padding: padding ?? const EdgeInsets.all(0),
         child: Row(
           children: [
@@ -80,7 +90,7 @@ class ImageTile extends StatelessWidget{
                       overflow: TextOverflow.ellipsis,
                       softWrap: true,
                       style: TextStyle(
-                        color: subtitleColor ?? Theme.of(context).colorScheme.secondary,
+                        color: subtitleColor ?? Theme.of(context).hintColor,
                         fontSize: fontSize!=null?fontSize!*0.8:null,
                         letterSpacing: -0.6,
                       ),

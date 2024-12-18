@@ -9,6 +9,7 @@ import 'package:elibapp/entity/book/book_info.dart';
 import 'package:elibapp/entity/book/book_viewing_history.dart';
 import 'package:elibapp/entity/book/simple_user_owned_book.dart';
 import 'package:elibapp/entity/reserve_borrow/reserve_borrow_brief.dart';
+import 'package:elibapp/entity/search/search_hist.dart';
 import 'package:isar/isar.dart';
 
 import '../entity/user/user_auth_params.dart';
@@ -33,6 +34,7 @@ class DBManager{
         BookCateSchema,
         ReserveBorrowBriefSchema,
         BookBriefSCSchema,
+        SearchHistSchema,
       ],
       directory: PathManager.dbDir.path,
       inspector: true,

@@ -36,6 +36,8 @@ class NavigationHelper{
 
   static late String subCateBooksPageNav;
 
+  static late String searchPageNav;
+
 
   static late Map<String, WidgetBuilder> _routes;
 
@@ -72,6 +74,9 @@ class NavigationHelper{
 
     required String subCateBooksPageNav,
     required WidgetBuilder subCateBooksPageBuilder,
+
+    required String searchPageNav,
+    required WidgetBuilder searchPageBuilder,
   }) {
     assert(!_setted);
     NavigationHelper.mainPageNav = mainPageNav;
@@ -85,6 +90,7 @@ class NavigationHelper{
     NavigationHelper.bookingPageNav = bookingPageNav;
     NavigationHelper.bookPreviewPageNav = bookPreviewPageNav;
     NavigationHelper.subCateBooksPageNav = subCateBooksPageNav;
+    NavigationHelper.searchPageNav = searchPageNav;
     _routes = {
       mainPageNav: mainPageBuilder,
 
@@ -103,6 +109,8 @@ class NavigationHelper{
       bookPreviewPageNav: bookPreviewPageBuilder,
 
       subCateBooksPageNav: subCateBooksPageBuilder,
+
+      searchPageNav: searchPageBuilder,
     };
     _setted = true;
     RouteGenerator.init(_routes);
@@ -173,5 +181,9 @@ class NavigationHelper{
 
   static Future<Object?>? toSubCateBooksPage(SubCateBookSignal signal){
     return pushNamed(subCateBooksPageNav, arguments: signal);
+  }
+
+  static Future<Object?>? toSearchPage(){
+    return pushNamed(searchPageNav);
   }
 }

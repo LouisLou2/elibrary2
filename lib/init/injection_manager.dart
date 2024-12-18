@@ -1,3 +1,4 @@
+import 'package:elibapp/config/app_properties.dart';
 import 'package:elibapp/features/announ/announ_feature.dart';
 import 'package:elibapp/features/announ_content/announ_content_feature.dart';
 import 'package:elibapp/features/auth/export/auth_export_api.dart';
@@ -9,6 +10,7 @@ import 'package:elibapp/features/categories/categories_feature.dart';
 import 'package:elibapp/features/chart/chart_feature.dart';
 import 'package:elibapp/features/home/home_feature.dart';
 import 'package:elibapp/features/reserve_borrow_record/rb_record_feature.dart';
+import 'package:elibapp/features/search/search_feature.dart';
 import 'package:elibapp/features/shelf/shelf_feature.dart';
 import 'package:elibapp/features/sub_cate_book/sub_cate_book_load_feature.dart';
 import 'package:elibapp/features/viewing_history/viewing_history_feature.dart';
@@ -39,6 +41,7 @@ class InjectionManager{
     RBDetailFeature.inject();
     BookingFeature.inject();
     SubCateBookLoadFeature.inject();
+    SearchFeature.inject();
   }
 
   // 此函数必须在AuthFeature.inject();之后调用

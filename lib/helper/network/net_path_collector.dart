@@ -8,6 +8,7 @@ import 'package:elibapp/helper/network/path_collect/book_info_path.dart';
 import 'package:elibapp/helper/network/path_collect/book_reco_path.dart';
 import 'package:elibapp/helper/network/path_collect/book_shelf.dart';
 import 'package:elibapp/helper/network/path_collect/rb_path.dart';
+import 'package:elibapp/helper/network/path_collect/search_path.dart';
 
 import '../../config/network_config.dart';
 
@@ -24,4 +25,5 @@ class NetworkPathCollector {
   static final BookCatePath bookCate = BookCatePath();
   static final BookShelfPath bookShelf = BookShelfPath();
   static final RBPath rb = RBPath();
+  static final SearchPath search = SearchPath();
 }
