@@ -22,12 +22,17 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   String keyword = '';
 
   SearchBloc(this.inType, this.keyword) : super(SearchState.loadingRes) {
-    on<ReqSearchAgain>((event, emit) async{
-      if (event.withNewWord) {
-        assert(event.keyword.isNotEmpty);
-        keyword = event.keyword;
-        pageNum = 0;
+    on<ReqSearch>((event, emit) async{
+      assert(event.keyword.isNotEmpty);
+      if (event.ignoreIfSame && keyword==event.keyword) {
+        return;
       }
+      keyword = event.keyword;
+      pageNum = 0;
+      _doFirstSearch(keyword);
+    });
+
+    on<ReqSearchAgain>((event, emit) async {
       _doFirstSearch(keyword);
     });
 
@@ -51,6 +56,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     } else {
       emit(SearchState.retry);
     }
+  }
+
+  bool notSame(String keyword) {
+    return this.keyword != keyword;
   }
 
   Future<ResCodeEnum> _search(String keyword, bool refreshOrAdd, reqPageNum) async {

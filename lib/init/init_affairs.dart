@@ -17,6 +17,7 @@ import '../base_manager/db_manager.dart';
 import '../base_manager/path_manager.dart';
 import '../features/auth/bloc/auth_state.dart';
 import '../features/auth/datasource/auth_data.dart';
+import '../features/author_info/page/author_info_page.dart';
 import '../features/booking/page/booking_page.dart';
 import '../features/search/page/search_page.dart';
 import '../features/sub_cate_book/page/sub_cate_book_page.dart';
@@ -70,7 +71,10 @@ void setRouteCollection() {
       subCateBooksPageBuilder: (context) => const SubCateBooksPage(),
 
       searchPageNav: '/search',
-      searchPageBuilder: (context) => const SearchPage()
+      searchPageBuilder: (context) => const SearchPage(),
+
+      authorInfoPageNav: '/author/info',
+      authorInfoPageBuilder: (context) => const AuthorInfoPage(),
   );
 }
 

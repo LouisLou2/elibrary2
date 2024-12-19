@@ -27,11 +27,12 @@ class SearchControlBloc extends Bloc<SearchControlEvent, SearchControlState> {
         return;
       }
       _storeSearchHist(keyword);
-      emit(InputChanged(keyword));
+      emit(InputChanged(keyword,inType));
     });
 
     on<SearchInTypeChanged>((event, emit) async {
       inType = event.type;
+      emit(InputChanged(keyword,inType));
     });
 
     on<SearchHistClear>((event, emit) async {

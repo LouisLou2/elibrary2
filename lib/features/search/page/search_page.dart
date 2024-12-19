@@ -138,6 +138,7 @@ class _SearchPageState extends State<SearchPage> {
                                           },
                                           onValueChanged: (value){
                                             _searchInType.value = value;
+                                            context.read<SearchControlBloc?>()?.add(SearchInTypeChanged(value));
                                             _pageController.jumpToPage(value.index);
                                           },
                                           groupValue: value,

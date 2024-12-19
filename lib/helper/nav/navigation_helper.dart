@@ -38,6 +38,8 @@ class NavigationHelper{
 
   static late String searchPageNav;
 
+  static late String authorInfoPageNav;
+
 
   static late Map<String, WidgetBuilder> _routes;
 
@@ -77,6 +79,9 @@ class NavigationHelper{
 
     required String searchPageNav,
     required WidgetBuilder searchPageBuilder,
+
+    required String authorInfoPageNav,
+    required WidgetBuilder authorInfoPageBuilder,
   }) {
     assert(!_setted);
     NavigationHelper.mainPageNav = mainPageNav;
@@ -91,6 +96,7 @@ class NavigationHelper{
     NavigationHelper.bookPreviewPageNav = bookPreviewPageNav;
     NavigationHelper.subCateBooksPageNav = subCateBooksPageNav;
     NavigationHelper.searchPageNav = searchPageNav;
+    NavigationHelper.authorInfoPageNav = authorInfoPageNav;
     _routes = {
       mainPageNav: mainPageBuilder,
 
@@ -111,6 +117,8 @@ class NavigationHelper{
       subCateBooksPageNav: subCateBooksPageBuilder,
 
       searchPageNav: searchPageBuilder,
+
+      authorInfoPageNav: authorInfoPageBuilder,
     };
     _setted = true;
     RouteGenerator.init(_routes);
@@ -185,5 +193,9 @@ class NavigationHelper{
 
   static Future<Object?>? toSearchPage(){
     return pushNamed(searchPageNav);
+  }
+
+  static Future<Object?>? toAuthorInfoPage(int authorId){
+    return pushNamed(authorInfoPageNav, arguments: authorId);
   }
 }

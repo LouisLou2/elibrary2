@@ -27,10 +27,17 @@ class SearchedPubListPage extends StatefulWidget {
 
 class _SearchedPubListPageState extends State<SearchedPubListPage> with AutomaticKeepAliveClientMixin{
 
+  bool firstLoad = true;
   final RefreshController _refreshController = RefreshController();
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    firstLoad = widget.forceSearch;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +46,12 @@ class _SearchedPubListPageState extends State<SearchedPubListPage> with Automati
       create: (context) => SearchBloc(SearchInType.publishers,widget.keyword),
       child: BlocListener<SearchControlBloc, SearchControlState>(
         listenWhen: (previous, current){
-          return current is InputChanged;
+          return current is InputChanged && current.inType == SearchInType.publishers;
         },
         listener: (context, state) {
           if (state is InputChanged) {
-            context.read<SearchBloc>().add(
-                ReqSearchAgain(state.keyword)
-            );
+            SearchBloc sb = context.read<SearchBloc>();
+            sb.add(ReqSearch(state.keyword, ignoreIfSame: true));
           }
         },
         child: BlocConsumer<SearchBloc, SearchState>(
@@ -76,15 +82,16 @@ class _SearchedPubListPageState extends State<SearchedPubListPage> with Automati
             }
           },
           builder: (context, state) {
+            if (firstLoad) {
+              firstLoad = false;
+              // 这里是初始加载的功能
+              String word = context.read<SearchControlBloc>().keyword;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.read<SearchBloc?>()?.add(ReqSearch(word, ignoreIfSame: false));
+              });
+            }
             switch (state){
               case SearchState.loadingRes:
-                // 这里是初始加载的功能
-                String word = context.read<SearchControlBloc>().keyword;
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (widget.forceSearch) {
-                    context.read<SearchBloc?>()?.add(ReqSearchAgain(word, withNewWord: true));
-                  }
-                });
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -93,7 +100,7 @@ class _SearchedPubListPageState extends State<SearchedPubListPage> with Automati
                   tile: AppStrs.youOffline,
                   subtitle: AppStrs.tryReconnect,
                   onReload: (){
-                    context.read<SearchBloc?>()?.add(const ReqSearchAgain('', withNewWord: false));
+                    context.read<SearchBloc?>()?.add(SearchEvent.searchAgain);
                   },
                 );
               case SearchState.loadedRes:

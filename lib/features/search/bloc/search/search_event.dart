@@ -3,18 +3,23 @@ import 'package:equatable/equatable.dart';
 
 sealed class SearchEvent extends Equatable{
   static const ReqLoadMore loadMore = ReqLoadMore();
+  static const SearchEvent searchAgain = ReqSearchAgain();
 
   const SearchEvent();
   @override
   List<Object> get props => [];
 }
 
-class ReqSearchAgain extends SearchEvent{
-  final bool withNewWord;
+class ReqSearch extends SearchEvent{
   final String keyword;
-  const ReqSearchAgain(this.keyword, {this.withNewWord = true});
+  final bool ignoreIfSame;
+  const ReqSearch(this.keyword, {this.ignoreIfSame = true});
   @override
-  List<Object> get props => [keyword, withNewWord];
+  List<Object> get props => [keyword,ignoreIfSame];
+}
+
+class ReqSearchAgain extends SearchEvent{
+  const ReqSearchAgain();
 }
 
 class ReqLoadMore extends SearchEvent{

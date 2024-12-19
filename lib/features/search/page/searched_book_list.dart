@@ -31,6 +31,14 @@ class _SearchedBookListPageState extends State<SearchedBookListPage> with Automa
   @override
   bool get wantKeepAlive => true;
 
+  bool firstLoad = true;
+
+  @override
+  void initState() {
+    firstLoad = widget.forceSearch;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -38,13 +46,12 @@ class _SearchedBookListPageState extends State<SearchedBookListPage> with Automa
       create: (context) => SearchBloc(SearchInType.books,widget.keyword),
       child: BlocListener<SearchControlBloc, SearchControlState>(
         listenWhen: (previous, current){
-          return current is InputChanged;
+          return current is InputChanged && current.inType == SearchInType.books;
         },
         listener: (context, state) {
           if (state is InputChanged) {
-            context.read<SearchBloc>().add(
-                ReqSearchAgain(state.keyword)
-            );
+            SearchBloc sb = context.read<SearchBloc>();
+            sb.add(ReqSearch(state.keyword, ignoreIfSame: true));
           }
         },
         child: BlocConsumer<SearchBloc, SearchState>(
@@ -75,15 +82,16 @@ class _SearchedBookListPageState extends State<SearchedBookListPage> with Automa
             }
           },
           builder: (context, state) {
+            if (firstLoad){
+              // 这里是初始加载的状态
+              firstLoad = false;
+              String word = context.read<SearchControlBloc>().keyword;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.read<SearchBloc?>()?.add(ReqSearch(word, ignoreIfSame: false));
+              });
+            }
             switch (state){
               case SearchState.loadingRes:
-                // 这里是初始加载的状态
-                String word = context.read<SearchControlBloc>().keyword;
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (widget.forceSearch) {
-                    context.read<SearchBloc?>()?.add(ReqSearchAgain(word, withNewWord: true));
-                  }
-                });
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -92,7 +100,7 @@ class _SearchedBookListPageState extends State<SearchedBookListPage> with Automa
                   tile: AppStrs.youOffline,
                   subtitle: AppStrs.tryReconnect,
                   onReload: (){
-                    context.read<SearchBloc?>()?.add(const ReqSearchAgain('', withNewWord: false));
+                    context.read<SearchBloc?>()?.add(SearchEvent.searchAgain);
                   },
                 );
               case SearchState.loadedRes:

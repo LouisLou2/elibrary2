@@ -28,10 +28,17 @@ class SearchedAuthorListPage extends StatefulWidget {
 
 class _SearchedAuthorListPageState extends State<SearchedAuthorListPage> with AutomaticKeepAliveClientMixin{
 
+  bool firstLoad = true;
   final RefreshController _refreshController = RefreshController();
 
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    firstLoad = widget.forceSearch;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +47,12 @@ class _SearchedAuthorListPageState extends State<SearchedAuthorListPage> with Au
       create: (context) => SearchBloc(SearchInType.authors,widget.keyword),
       child: BlocListener<SearchControlBloc, SearchControlState>(
         listenWhen: (previous, current){
-          return current is InputChanged;
+          return current is InputChanged && current.inType == SearchInType.authors;
         },
         listener: (context, state) {
           if (state is InputChanged) {
-            context.read<SearchBloc>().add(
-              ReqSearchAgain(state.keyword)
-            );
+            SearchBloc sb = context.read<SearchBloc>();
+            sb.add(ReqSearch(state.keyword, ignoreIfSame: true));
           }
         },
         child: BlocConsumer<SearchBloc, SearchState>(
@@ -77,15 +83,16 @@ class _SearchedAuthorListPageState extends State<SearchedAuthorListPage> with Au
             }
           },
           builder: (context, state) {
+            if (firstLoad){
+              firstLoad = false;
+              // 这里是初始加载的状态
+              String word = context.read<SearchControlBloc>().keyword;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.read<SearchBloc?>()?.add(ReqSearch(word, ignoreIfSame: false));
+              });
+            }
             switch (state){
               case SearchState.loadingRes:
-                // 这里是初始加载的状态
-                String word = context.read<SearchControlBloc>().keyword;
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (widget.forceSearch) {
-                    context.read<SearchBloc?>()?.add(ReqSearchAgain(word, withNewWord: true));
-                  }
-                });
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -94,7 +101,7 @@ class _SearchedAuthorListPageState extends State<SearchedAuthorListPage> with Au
                   tile: AppStrs.youOffline,
                   subtitle: AppStrs.tryReconnect,
                   onReload: (){
-                    context.read<SearchBloc?>()?.add(const ReqSearchAgain('', withNewWord: false));
+                    context.read<SearchBloc?>()?.add(SearchEvent.searchAgain);
                   },
                 );
               case SearchState.loadedRes:
@@ -132,7 +139,7 @@ class _SearchedAuthorListPageState extends State<SearchedAuthorListPage> with Au
                           titleWeight: FontWeight.w500,
                           withDivider: true,
                           subTitle: '${authors[i].bookCount}本书',
-                          onTap: (){},
+                          onTap: ()=>NavigationHelper.toAuthorInfoPage(authors[i].authorId),
                           actionWidget: Icon(
                             CupertinoIcons.forward,
                             color: Theme.of(context).colorScheme.onSurface,

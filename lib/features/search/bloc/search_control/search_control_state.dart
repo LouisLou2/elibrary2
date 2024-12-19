@@ -1,3 +1,4 @@
+import 'package:elibapp/common/search_type.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class SearchControlState extends Equatable{
@@ -15,8 +16,9 @@ class WaitTypingNowNoInput extends SearchControlState{
 
 class InputChanged extends SearchControlState{
   final String keyword;
-  const InputChanged(this.keyword);
+  final SearchInType inType;
+  const InputChanged(this.keyword, this.inType);
 
   @override
-  List<Object> get props => [keyword];
+  List<Object> get props => [keyword, inType];
 }

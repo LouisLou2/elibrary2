@@ -1,8 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 
-abstract class BookBriefAbs{
-  // 注意：这 order 需要从json解析后手动赋值
+part '../../generated/book/book_brief_abs.g.dart';
 
+@JsonSerializable()
+class BookBriefAbs{
+  // 注意：这 order 需要从json解析后手动赋值
   String isbn;
 
   String title;
@@ -45,4 +47,8 @@ abstract class BookBriefAbs{
   });
 
   String get authorNamesStr => authorNames.join('/');
+
+  factory BookBriefAbs.fromJson(Map<String, dynamic> json) => _$BookBriefAbsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BookBriefAbsToJson(this);
 }
