@@ -19,6 +19,7 @@ class ImageTile extends StatelessWidget{
   final double? actionSize;
   final VoidCallback? onTap;
   final bool withDivider;
+  final double? borderR;
 
   const ImageTile({
     super.key,
@@ -38,6 +39,7 @@ class ImageTile extends StatelessWidget{
     this.fontSize3,
     this.padding,
     this.withDivider=false,
+    this.borderR,
   });
 
   @override
@@ -46,12 +48,14 @@ class ImageTile extends StatelessWidget{
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
+          color: backgroundColor,
           border: withDivider?Border(
             bottom: BorderSide(
               color: Theme.of(context).dividerColor,
               width: 1,
             ),
           ):null,
+          borderRadius: borderR == null ? null : BorderRadius.circular(borderR!),
         ),
         padding: padding ?? const EdgeInsets.all(0),
         child: Row(
@@ -100,7 +104,7 @@ class ImageTile extends StatelessWidget{
                       thirdTitle!,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: subtitleColor ?? Theme.of(context).colorScheme.secondary,
+                        color: subtitleColor ?? Theme.of(context).hintColor,
                         fontSize: fontSize3??(fontSize!=null?fontSize!*0.6:null),
                       ),
                     ),

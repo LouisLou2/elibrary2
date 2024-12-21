@@ -1,4 +1,5 @@
 import 'package:elibapp/entity/book/book_brief_abs.dart';
+import 'package:elibapp/entity/publisher/publisher.dart';
 import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:elibapp/shared/page/try_reload_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,21 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
-import '../../../entity/author/author.dart';
 import '../../../shared/widget/image_tile.dart';
 import '../../../shared/widget/info_display/desc_bottomsheet.dart';
 import '../../../shared/widget/spec/image_widget.dart';
 import '../../../style/ui_size.dart';
-import '../bloc/author_info_bloc.dart';
+import '../bloc/pub_info_bloc.dart';
 
-class AuthorInfoPage extends StatefulWidget{
-  const AuthorInfoPage({super.key});
+class PubInfoPage extends StatefulWidget{
+  const PubInfoPage({super.key});
 
   @override
-  State<StatefulWidget> createState()=>_AuthorPageState();
+  State<StatefulWidget> createState()=>_PubPageState();
 }
 
-class _AuthorPageState extends State<AuthorInfoPage>{
+class _PubPageState extends State<PubInfoPage>{
 
   late final RefreshController _refreshController;
 
@@ -39,17 +39,17 @@ class _AuthorPageState extends State<AuthorInfoPage>{
   @override
   Widget build(BuildContext context){
     // 从路由中获取参数
-    int authorId = ModalRoute.of(context)?.settings.arguments as int;
+    int pubId = ModalRoute.of(context)?.settings.arguments as int;
     return BlocProvider(
-      create: (context) => AuthorInfoBloc(authorId),
-      child: BlocBuilder<AuthorInfoBloc, AuthorInfoState>(
+      create: (context) => PubInfoBloc(pubId),
+      child: BlocBuilder<PubInfoBloc, PubInfoState>(
         buildWhen: (previous, current){
-          return current == AuthorInfoState.retry
-              || current == AuthorInfoState.loading
-              || current == AuthorInfoState.loaded;
+          return current == PubInfoState.retry
+              || current == PubInfoState.loading
+              || current == PubInfoState.loaded;
         },
         builder: (context, state){
-          if(state == AuthorInfoState.loading){
+          if(state == PubInfoState.loading){
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
@@ -65,50 +65,50 @@ class _AuthorPageState extends State<AuthorInfoPage>{
               resizeToAvoidBottomInset: false,
               body: const Center(child: CircularProgressIndicator()),
             );
-          }else if(state == AuthorInfoState.retry){
+          }else if(state == PubInfoState.retry){
             return TryReloadPage(
-              onReload: (BuildContext con) => context.read<AuthorInfoBloc?>()?.add(AuthorInfoEvent.reqReloadNowNoData),
+              onReload: (BuildContext con) => context.read<PubInfoBloc?>()?.add(PubInfoEvent.reqReloadNowNoData),
             );
-          }else if(state == AuthorInfoState.loaded){
-            Author author = context.read<AuthorInfoBloc>().author;
+          }else if(state == PubInfoState.loaded){
+            Publisher pub = context.read<PubInfoBloc>().pub;
             return Scaffold(
               backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
               appBar: AppBar(
-                backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
-                leading: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios_rounded,
+                  backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+                  leading: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios_rounded,
+                    ),
+                    onPressed: ()=>NavigationHelper.pop(context),
                   ),
-                  onPressed: ()=>NavigationHelper.pop(context),
-                ),
-                toolbarHeight: 50,
-                surfaceTintColor: Colors.transparent,
-                title: Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: SearchBar(
-                    hintText: '搜索${author.name}的作品',
-                    hintStyle: WidgetStateProperty.all(
-                      Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).disabledColor,
+                  toolbarHeight: 50,
+                  surfaceTintColor: Colors.transparent,
+                  title: Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: SearchBar(
+                      hintText: '搜索${pub.publisherName}的作品',
+                      hintStyle: WidgetStateProperty.all(
+                        Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Theme.of(context).disabledColor,
+                        ),
                       ),
+                      constraints: const BoxConstraints(
+                        maxHeight: 50,
+                        minHeight: 40,
+                      ),
+                      backgroundColor: WidgetStateProperty.all(Theme.of(context).hoverColor),
+                      elevation: WidgetStateProperty.all(0),
                     ),
-                    constraints: const BoxConstraints(
-                      maxHeight: 50,
-                      minHeight: 40,
-                    ),
-                    backgroundColor: WidgetStateProperty.all(Theme.of(context).hoverColor),
-                    elevation: WidgetStateProperty.all(0),
-                  ),
-                ),
+                  )
               ),
               body: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: SmartRefresher(
                     physics: const BouncingScrollPhysics(),
                     controller: _refreshController,
-                    onLoading: ()=>context.read<AuthorInfoBloc?>()?.add(AuthorInfoEvent.reqLoadMore),
+                    onLoading: ()=>context.read<PubInfoBloc?>()?.add(PubInfoEvent.reqLoadMore),
                     enablePullDown: false,
-                    enablePullUp: context.read<AuthorInfoBloc>().hasMore,
+                    enablePullUp: true,
                     header: const ClassicHeader(),
                     footer: const ClassicFooter(),
                     child: ListView(
@@ -122,7 +122,7 @@ class _AuthorPageState extends State<AuthorInfoPage>{
                               borderRadius: BorderRadius.circular(UiSize.border.largeBorderR),
                             ),
                             child: InkWell(
-                              onTap: ()=>onTapAuthorTile(author.desc),
+                              onTap: ()=>onTapPubTile(pub.desc),
                               child: Padding(
                                 padding: const EdgeInsets.all(4),
                                 child: Column(
@@ -134,18 +134,18 @@ class _AuthorPageState extends State<AuthorInfoPage>{
                                         radius: 25,
                                         backgroundColor: Theme.of(context).colorScheme.outlineVariant,
                                         child: Text(
-                                          author.name,
+                                          pub.publisherName,
                                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                             color: Theme.of(context).colorScheme.surface,
                                           ),
                                         ),
                                       ),
                                       title: Text(
-                                        author.name,
+                                        pub.publisherName,
                                         style: Theme.of(context).textTheme.titleMedium,
                                       ),
                                       subtitle: const Text(
-                                        '作者',
+                                        '版权方',
                                         style: TextStyle(
                                           color: Colors.grey,
                                         ),
@@ -172,7 +172,7 @@ class _AuthorPageState extends State<AuthorInfoPage>{
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                                       child: Text(
-                                        author.desc.isEmpty ? '暂无简介' : author.desc,
+                                        pub.desc.isEmpty ? '暂无简介' : pub.desc,
                                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                           color: Theme.of(context).colorScheme.outline,
                                         ),
@@ -194,25 +194,25 @@ class _AuthorPageState extends State<AuthorInfoPage>{
                             color: Theme.of(context).colorScheme.surface,
                             borderRadius: BorderRadius.circular(UiSize.border.largeBorderR),
                           ),
-                          child: BlocConsumer<AuthorInfoBloc, AuthorInfoState>(
+                          child: BlocConsumer<PubInfoBloc, PubInfoState>(
                             listenWhen: (previous, current){
-                              return current == AuthorInfoState.loadingMore
-                                  || current == AuthorInfoState.loadedMore
-                                  || current == AuthorInfoState.loadMoreError
-                                  || current == AuthorInfoState.loadNoMore;
+                              return current == PubInfoState.loadingMore
+                                  || current == PubInfoState.loadedMore
+                                  || current == PubInfoState.loadMoreError
+                                  || current == PubInfoState.loadNoMore;
                             },
                             listener: (context, state){
                               switch(state){
-                                case AuthorInfoState.loadingMore:
+                                case PubInfoState.loadingMore:
                                   _refreshController.requestLoading(needMove: true, needCallback: false);
                                   break;
-                                case AuthorInfoState.loadedMore:
+                                case PubInfoState.loadedMore:
                                   _refreshController.loadComplete();
                                   break;
-                                case AuthorInfoState.loadMoreError:
+                                case PubInfoState.loadMoreError:
                                   _refreshController.loadFailed();
                                   break;
-                                case AuthorInfoState.loadNoMore:
+                                case PubInfoState.loadNoMore:
                                   _refreshController.loadNoData();
                                   break;
                                 default:
@@ -220,10 +220,10 @@ class _AuthorPageState extends State<AuthorInfoPage>{
                               }
                             },
                             buildWhen: (previous, current){
-                              return current == AuthorInfoState.loadedMore || current == AuthorInfoState.loadNoMore;
+                              return current == PubInfoState.loadedMore || current == PubInfoState.loadNoMore;
                             },
                             builder: (context, state){
-                              List<BookBriefAbs> books = context.read<AuthorInfoBloc>().books;
+                              List<BookBriefAbs> books = context.read<PubInfoBloc>().books;
                               return books.isEmpty? Align(
                                 alignment: Alignment.center,
                                 child: Text(
@@ -250,7 +250,7 @@ class _AuthorPageState extends State<AuthorInfoPage>{
                                   return ImageTile(
                                     padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
                                     title: books[i-1].title,
-                                    subTitle: '作者 | ${books[i-1].authorNamesStr}',
+                                    subTitle: '作者 | ${books[i-1].publisherName}',
                                     thirdTitle: '评分 | ${books[i-1].rating}',
                                     image: getCustomCachedImage(
                                       url: books[i-1].coverSUrl,
@@ -303,7 +303,7 @@ class _AuthorPageState extends State<AuthorInfoPage>{
     );
   }
 
-  void onTapAuthorTile(String desc){
+  void onTapPubTile(String desc){
     showDescBottomSheet(
       context: context,
       title: '作者简介',

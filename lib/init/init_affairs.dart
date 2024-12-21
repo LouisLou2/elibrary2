@@ -6,8 +6,11 @@ import 'package:elibapp/features/book_view/page/book_view_page.dart';
 import 'package:elibapp/features/categories/page/cate_page.dart';
 import 'package:elibapp/features/chart/page/chart_page.dart';
 import 'package:elibapp/features/main_tab/page/main_tab_page.dart';
+import 'package:elibapp/features/publisher_info/page/pub_info_page.dart';
 import 'package:elibapp/features/rb_detail/page/rb_detail_page.dart';
 import 'package:elibapp/features/reserve_borrow_record/page/rb_record_page.dart';
+import 'package:elibapp/features/viewing_history/page/viewing_hist_time.dart';
+import 'package:elibapp/features/viewing_history/page/viewing_history_page.dart';
 import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:elibapp/init/injection_manager.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +78,12 @@ void setRouteCollection() {
 
       authorInfoPageNav: '/author/info',
       authorInfoPageBuilder: (context) => const AuthorInfoPage(),
+
+      pubInfoPageNav: '/pub/info',
+      pubInfoPageBuilder: (context) => const PubInfoPage(),
+
+      bookViewingHistoryPageNav: '/viewing/history',
+      bookViewingHistoryPageBuilder: (context) => const ViewingHistoryPage(),
   );
 }
 

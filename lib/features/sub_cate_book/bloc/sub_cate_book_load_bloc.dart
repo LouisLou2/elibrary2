@@ -35,6 +35,7 @@ class SubCateBookLoadBloc extends Bloc<SubCateBookLoadEvent, SubCateBookLoadStat
   final int subCateId;
 
   SubCateBookLoadBloc._({required this.subCateId, required this.bookBriefs}) : super(_resolveFirstState(subCateId, bookBriefs)){
+    print('@@@@@@@@@@@@@@@[construct]SubCateBookLoadBloc: $subCateId');
     _prepareLoad();
     on<SubCateBookLoadEvent>((event, emit) async {
       switch (event) {
@@ -81,6 +82,7 @@ class SubCateBookLoadBloc extends Bloc<SubCateBookLoadEvent, SubCateBookLoadStat
   }
 
   void _prepareLoad() async {
+    print('@@@@@@@@@@@@@@@[prepareLoad]SubCateBookLoadBloc: $subCateId');
     Res<List<BookBriefSC>> res = await _subCateBookData.getBookBriefsNet(subCateId, 0, SubCateBookUiStrategy.pageSize);
     Future.delayed(const Duration(milliseconds: 500), (){
       if (res.isSuccess) {

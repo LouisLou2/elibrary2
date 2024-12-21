@@ -11,6 +11,7 @@ class BookViewingHistory {
 
   @JsonKey(name: 'user_id')
   @Index(composite: [CompositeIndex('isbn')],unique: true, replace: true)
+  @Index(composite: [CompositeIndex('viewingTime')])
   @Index()
   int userId;
 
@@ -24,7 +25,6 @@ class BookViewingHistory {
   @JsonKey(name: 'publisher_name')
   String publisherName;
 
-  @Index(composite: [CompositeIndex('userId')])
   @JsonKey(name: 'viewing_time')
   DateTime viewingTime;
 
@@ -49,4 +49,6 @@ class BookViewingHistory {
       _$BookViewingHistoryFromJson(json);
 
   Map<String, dynamic> toJson() => _$BookViewingHistoryToJson(this);
+
+  String get authorNamesStr => authorNames.join("、");
 }

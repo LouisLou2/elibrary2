@@ -206,8 +206,18 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisExtent: 80,
                       ),
                       children: [
-                        _gridItem(icon: Icons.star, iconColor: Colors.orange,title: '我的收藏',onTap: (){}),
-                        _gridItem(icon: Icons.history, iconColor: Colors.blue,title: '浏览记录',onTap: (){}),
+                        _gridItem(
+                          icon: Icons.star,
+                          iconColor: Colors.orange,
+                          title: '我的收藏',
+                          onTap: (){},
+                        ),
+                        _gridItem(
+                          icon: Icons.history,
+                          iconColor: Colors.blue,
+                          title: '浏览记录',
+                          onTap: NavigationHelper.toBookViewingHistoryPage,
+                        ),
                       ],
                     ),
                     Align(

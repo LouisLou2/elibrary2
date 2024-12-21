@@ -23,38 +23,43 @@ const BookViewingHistorySchema = CollectionSchema(
       name: r'authorNames',
       type: IsarType.stringList,
     ),
-    r'coverDomColor': PropertySchema(
+    r'authorNamesStr': PropertySchema(
       id: 1,
+      name: r'authorNamesStr',
+      type: IsarType.string,
+    ),
+    r'coverDomColor': PropertySchema(
+      id: 2,
       name: r'coverDomColor',
       type: IsarType.long,
     ),
     r'coverMUrl': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'coverMUrl',
       type: IsarType.string,
     ),
     r'isbn': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'isbn',
       type: IsarType.string,
     ),
     r'publisherName': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'publisherName',
       type: IsarType.string,
     ),
     r'title': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'title',
       type: IsarType.string,
     ),
     r'userId': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'userId',
       type: IsarType.long,
     ),
     r'viewingTime': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'viewingTime',
       type: IsarType.dateTime,
     )
@@ -83,9 +88,9 @@ const BookViewingHistorySchema = CollectionSchema(
         )
       ],
     ),
-    r'userId': IndexSchema(
-      id: -2005826577402374815,
-      name: r'userId',
+    r'userId_viewingTime': IndexSchema(
+      id: -4538547466720279798,
+      name: r'userId_viewingTime',
       unique: false,
       replace: false,
       properties: [
@@ -93,20 +98,20 @@ const BookViewingHistorySchema = CollectionSchema(
           name: r'userId',
           type: IndexType.value,
           caseSensitive: false,
-        )
-      ],
-    ),
-    r'viewingTime_userId': IndexSchema(
-      id: -2422404039214617324,
-      name: r'viewingTime_userId',
-      unique: false,
-      replace: false,
-      properties: [
+        ),
         IndexPropertySchema(
           name: r'viewingTime',
           type: IndexType.value,
           caseSensitive: false,
-        ),
+        )
+      ],
+    ),
+    r'userId': IndexSchema(
+      id: -2005826577402374815,
+      name: r'userId',
+      unique: false,
+      replace: false,
+      properties: [
         IndexPropertySchema(
           name: r'userId',
           type: IndexType.value,
@@ -136,6 +141,7 @@ int _bookViewingHistoryEstimateSize(
       bytesCount += value.length * 3;
     }
   }
+  bytesCount += 3 + object.authorNamesStr.length * 3;
   bytesCount += 3 + object.coverMUrl.length * 3;
   bytesCount += 3 + object.isbn.length * 3;
   bytesCount += 3 + object.publisherName.length * 3;
@@ -150,13 +156,14 @@ void _bookViewingHistorySerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeStringList(offsets[0], object.authorNames);
-  writer.writeLong(offsets[1], object.coverDomColor);
-  writer.writeString(offsets[2], object.coverMUrl);
-  writer.writeString(offsets[3], object.isbn);
-  writer.writeString(offsets[4], object.publisherName);
-  writer.writeString(offsets[5], object.title);
-  writer.writeLong(offsets[6], object.userId);
-  writer.writeDateTime(offsets[7], object.viewingTime);
+  writer.writeString(offsets[1], object.authorNamesStr);
+  writer.writeLong(offsets[2], object.coverDomColor);
+  writer.writeString(offsets[3], object.coverMUrl);
+  writer.writeString(offsets[4], object.isbn);
+  writer.writeString(offsets[5], object.publisherName);
+  writer.writeString(offsets[6], object.title);
+  writer.writeLong(offsets[7], object.userId);
+  writer.writeDateTime(offsets[8], object.viewingTime);
 }
 
 BookViewingHistory _bookViewingHistoryDeserialize(
@@ -167,13 +174,13 @@ BookViewingHistory _bookViewingHistoryDeserialize(
 ) {
   final object = BookViewingHistory(
     authorNames: reader.readStringList(offsets[0]) ?? [],
-    coverDomColor: reader.readLong(offsets[1]),
-    coverMUrl: reader.readString(offsets[2]),
-    isbn: reader.readString(offsets[3]),
-    publisherName: reader.readString(offsets[4]),
-    title: reader.readString(offsets[5]),
-    userId: reader.readLong(offsets[6]),
-    viewingTime: reader.readDateTime(offsets[7]),
+    coverDomColor: reader.readLong(offsets[2]),
+    coverMUrl: reader.readString(offsets[3]),
+    isbn: reader.readString(offsets[4]),
+    publisherName: reader.readString(offsets[5]),
+    title: reader.readString(offsets[6]),
+    userId: reader.readLong(offsets[7]),
+    viewingTime: reader.readDateTime(offsets[8]),
   );
   object.id = id;
   return object;
@@ -189,9 +196,9 @@ P _bookViewingHistoryDeserializeProp<P>(
     case 0:
       return (reader.readStringList(offset) ?? []) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
-    case 2:
       return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readLong(offset)) as P;
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
@@ -199,8 +206,10 @@ P _bookViewingHistoryDeserializeProp<P>(
     case 5:
       return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 7:
+      return (reader.readLong(offset)) as P;
+    case 8:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -317,19 +326,19 @@ extension BookViewingHistoryQueryWhereSort
   }
 
   QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhere>
-      anyUserId() {
+      anyUserIdViewingTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'userId'),
+        const IndexWhereClause.any(indexName: r'userId_viewingTime'),
       );
     });
   }
 
   QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhere>
-      anyViewingTimeUserId() {
+      anyUserId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'viewingTime_userId'),
+        const IndexWhereClause.any(indexName: r'userId'),
       );
     });
   }
@@ -544,6 +553,195 @@ extension BookViewingHistoryQueryWhere
   }
 
   QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
+      userIdEqualToAnyViewingTime(int userId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'userId_viewingTime',
+        value: [userId],
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
+      userIdNotEqualToAnyViewingTime(int userId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId_viewingTime',
+              lower: [],
+              upper: [userId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId_viewingTime',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId_viewingTime',
+              lower: [userId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId_viewingTime',
+              lower: [],
+              upper: [userId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
+      userIdGreaterThanAnyViewingTime(
+    int userId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId_viewingTime',
+        lower: [userId],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
+      userIdLessThanAnyViewingTime(
+    int userId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId_viewingTime',
+        lower: [],
+        upper: [userId],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
+      userIdBetweenAnyViewingTime(
+    int lowerUserId,
+    int upperUserId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId_viewingTime',
+        lower: [lowerUserId],
+        includeLower: includeLower,
+        upper: [upperUserId],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
+      userIdViewingTimeEqualTo(int userId, DateTime viewingTime) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'userId_viewingTime',
+        value: [userId, viewingTime],
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
+      userIdEqualToViewingTimeNotEqualTo(int userId, DateTime viewingTime) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId_viewingTime',
+              lower: [userId],
+              upper: [userId, viewingTime],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId_viewingTime',
+              lower: [userId, viewingTime],
+              includeLower: false,
+              upper: [userId],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId_viewingTime',
+              lower: [userId, viewingTime],
+              includeLower: false,
+              upper: [userId],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'userId_viewingTime',
+              lower: [userId],
+              upper: [userId, viewingTime],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
+      userIdEqualToViewingTimeGreaterThan(
+    int userId,
+    DateTime viewingTime, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId_viewingTime',
+        lower: [userId, viewingTime],
+        includeLower: include,
+        upper: [userId],
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
+      userIdEqualToViewingTimeLessThan(
+    int userId,
+    DateTime viewingTime, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId_viewingTime',
+        lower: [userId],
+        upper: [userId, viewingTime],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
+      userIdEqualToViewingTimeBetween(
+    int userId,
+    DateTime lowerViewingTime,
+    DateTime upperViewingTime, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'userId_viewingTime',
+        lower: [userId, lowerViewingTime],
+        includeLower: includeLower,
+        upper: [userId, upperViewingTime],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
       userIdEqualTo(int userId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
@@ -631,195 +829,6 @@ extension BookViewingHistoryQueryWhere
         lower: [lowerUserId],
         includeLower: includeLower,
         upper: [upperUserId],
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
-      viewingTimeEqualToAnyUserId(DateTime viewingTime) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'viewingTime_userId',
-        value: [viewingTime],
-      ));
-    });
-  }
-
-  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
-      viewingTimeNotEqualToAnyUserId(DateTime viewingTime) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'viewingTime_userId',
-              lower: [],
-              upper: [viewingTime],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'viewingTime_userId',
-              lower: [viewingTime],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'viewingTime_userId',
-              lower: [viewingTime],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'viewingTime_userId',
-              lower: [],
-              upper: [viewingTime],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
-      viewingTimeGreaterThanAnyUserId(
-    DateTime viewingTime, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'viewingTime_userId',
-        lower: [viewingTime],
-        includeLower: include,
-        upper: [],
-      ));
-    });
-  }
-
-  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
-      viewingTimeLessThanAnyUserId(
-    DateTime viewingTime, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'viewingTime_userId',
-        lower: [],
-        upper: [viewingTime],
-        includeUpper: include,
-      ));
-    });
-  }
-
-  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
-      viewingTimeBetweenAnyUserId(
-    DateTime lowerViewingTime,
-    DateTime upperViewingTime, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'viewingTime_userId',
-        lower: [lowerViewingTime],
-        includeLower: includeLower,
-        upper: [upperViewingTime],
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
-      viewingTimeUserIdEqualTo(DateTime viewingTime, int userId) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'viewingTime_userId',
-        value: [viewingTime, userId],
-      ));
-    });
-  }
-
-  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
-      viewingTimeEqualToUserIdNotEqualTo(DateTime viewingTime, int userId) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'viewingTime_userId',
-              lower: [viewingTime],
-              upper: [viewingTime, userId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'viewingTime_userId',
-              lower: [viewingTime, userId],
-              includeLower: false,
-              upper: [viewingTime],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'viewingTime_userId',
-              lower: [viewingTime, userId],
-              includeLower: false,
-              upper: [viewingTime],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'viewingTime_userId',
-              lower: [viewingTime],
-              upper: [viewingTime, userId],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
-      viewingTimeEqualToUserIdGreaterThan(
-    DateTime viewingTime,
-    int userId, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'viewingTime_userId',
-        lower: [viewingTime, userId],
-        includeLower: include,
-        upper: [viewingTime],
-      ));
-    });
-  }
-
-  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
-      viewingTimeEqualToUserIdLessThan(
-    DateTime viewingTime,
-    int userId, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'viewingTime_userId',
-        lower: [viewingTime],
-        upper: [viewingTime, userId],
-        includeUpper: include,
-      ));
-    });
-  }
-
-  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterWhereClause>
-      viewingTimeEqualToUserIdBetween(
-    DateTime viewingTime,
-    int lowerUserId,
-    int upperUserId, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'viewingTime_userId',
-        lower: [viewingTime, lowerUserId],
-        includeLower: includeLower,
-        upper: [viewingTime, upperUserId],
         includeUpper: includeUpper,
       ));
     });
@@ -1050,6 +1059,142 @@ extension BookViewingHistoryQueryFilter
         upper,
         includeUpper,
       );
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      authorNamesStrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'authorNamesStr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      authorNamesStrGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'authorNamesStr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      authorNamesStrLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'authorNamesStr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      authorNamesStrBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'authorNamesStr',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      authorNamesStrStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'authorNamesStr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      authorNamesStrEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'authorNamesStr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      authorNamesStrContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'authorNamesStr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      authorNamesStrMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'authorNamesStr',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      authorNamesStrIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'authorNamesStr',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterFilterCondition>
+      authorNamesStrIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'authorNamesStr',
+        value: '',
+      ));
     });
   }
 
@@ -1831,6 +1976,20 @@ extension BookViewingHistoryQueryLinks
 extension BookViewingHistoryQuerySortBy
     on QueryBuilder<BookViewingHistory, BookViewingHistory, QSortBy> {
   QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
+      sortByAuthorNamesStr() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'authorNamesStr', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
+      sortByAuthorNamesStrDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'authorNamesStr', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
       sortByCoverDomColor() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverDomColor', Sort.asc);
@@ -1931,6 +2090,20 @@ extension BookViewingHistoryQuerySortBy
 
 extension BookViewingHistoryQuerySortThenBy
     on QueryBuilder<BookViewingHistory, BookViewingHistory, QSortThenBy> {
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
+      thenByAuthorNamesStr() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'authorNamesStr', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
+      thenByAuthorNamesStrDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'authorNamesStr', Sort.desc);
+    });
+  }
+
   QueryBuilder<BookViewingHistory, BookViewingHistory, QAfterSortBy>
       thenByCoverDomColor() {
     return QueryBuilder.apply(this, (query) {
@@ -2054,6 +2227,14 @@ extension BookViewingHistoryQueryWhereDistinct
   }
 
   QueryBuilder<BookViewingHistory, BookViewingHistory, QDistinct>
+      distinctByAuthorNamesStr({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'authorNamesStr',
+          caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, BookViewingHistory, QDistinct>
       distinctByCoverDomColor() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'coverDomColor');
@@ -2116,6 +2297,13 @@ extension BookViewingHistoryQueryProperty
       authorNamesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'authorNames');
+    });
+  }
+
+  QueryBuilder<BookViewingHistory, String, QQueryOperations>
+      authorNamesStrProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'authorNamesStr');
     });
   }
 

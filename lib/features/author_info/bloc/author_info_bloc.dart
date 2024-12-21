@@ -21,6 +21,7 @@ enum AuthorInfoState{
   loadingMore,
   loadedMore,
   loadMoreError,
+  loadNoMore,
 }
 
 class AuthorInfoBloc extends Bloc<AuthorInfoEvent, AuthorInfoState> {
@@ -29,6 +30,7 @@ class AuthorInfoBloc extends Bloc<AuthorInfoEvent, AuthorInfoState> {
   List<BookBriefAbs> books = [];
   late Author author;
   int authorId;
+  bool hasMore = true;
 
   AuthorInfoBloc(this.authorId) : super(AuthorInfoState.loading) {
     _doFirstSearch();
@@ -45,7 +47,8 @@ class AuthorInfoBloc extends Bloc<AuthorInfoEvent, AuthorInfoState> {
             return;
           }
           books.addAll(res.data!);
-          emit(AuthorInfoState.loadedMore);
+          hasMore = res.data!.length >= AuthorInfoUiStrategy.pageSize;
+          emit(hasMore ? AuthorInfoState.loadedMore : AuthorInfoState.loadNoMore);
           break;
       }
     });
@@ -60,6 +63,7 @@ class AuthorInfoBloc extends Bloc<AuthorInfoEvent, AuthorInfoState> {
     }
     author = res.data!.author;
     books = res.data!.books;
+    hasMore = books.length >= AuthorInfoUiStrategy.pageSize;
     emit(AuthorInfoState.loaded);
   }
 }

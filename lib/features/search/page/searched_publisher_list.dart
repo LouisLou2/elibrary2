@@ -1,5 +1,4 @@
 import 'package:elibapp/common/search_type.dart';
-import 'package:elibapp/entity/search/searched_book.dart';
 import 'package:elibapp/entity/search/searched_publisher.dart';
 import 'package:elibapp/features/search/bloc/search/search_event.dart';
 import 'package:elibapp/helper/nav/navigation_helper.dart';
@@ -75,7 +74,7 @@ class _SearchedPubListPageState extends State<SearchedPubListPage> with Automati
                 _refreshController.loadComplete();
                 break;
               case SearchState.loadingMore:
-                _refreshController.requestLoading(needMove: true,needCallback: false);
+                //_refreshController.requestLoading(needMove: true,needCallback: false);
                 break;
               default:
                 throw Exception('Unknown state: $state');
@@ -135,7 +134,7 @@ class _SearchedPubListPageState extends State<SearchedPubListPage> with Automati
                           titleWeight: FontWeight.w500,
                           subTitle: '${pubs[i].bookCount}本书',
                           withDivider: true,
-                          onTap: (){},
+                          onTap: ()=>NavigationHelper.toPubInfoPage(pubs[i].publisherId),
                           actionWidget: Icon(
                             CupertinoIcons.forward,
                             color: Theme.of(context).colorScheme.onSurface,

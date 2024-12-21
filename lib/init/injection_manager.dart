@@ -1,4 +1,5 @@
 import 'package:elibapp/config/app_properties.dart';
+import 'package:elibapp/entity/publisher/publisher.dart';
 import 'package:elibapp/features/announ/announ_feature.dart';
 import 'package:elibapp/features/announ_content/announ_content_feature.dart';
 import 'package:elibapp/features/auth/export/auth_export_api.dart';
@@ -10,6 +11,7 @@ import 'package:elibapp/features/browse/browse_feature.dart';
 import 'package:elibapp/features/categories/categories_feature.dart';
 import 'package:elibapp/features/chart/chart_feature.dart';
 import 'package:elibapp/features/home/home_feature.dart';
+import 'package:elibapp/features/publisher_info/pub_info_feature.dart';
 import 'package:elibapp/features/reserve_borrow_record/rb_record_feature.dart';
 import 'package:elibapp/features/search/search_feature.dart';
 import 'package:elibapp/features/shelf/shelf_feature.dart';
@@ -44,6 +46,7 @@ class InjectionManager{
     SubCateBookLoadFeature.inject();
     SearchFeature.inject();
     AuthorInfoFeature.inject();
+    PubInfoFeature.inject();
   }
 
   // 此函数必须在AuthFeature.inject();之后调用

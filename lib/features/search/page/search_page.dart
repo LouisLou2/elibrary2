@@ -5,15 +5,12 @@ import 'package:elibapp/features/search/bloc/search_control/search_control_event
 import 'package:elibapp/features/search/page/searched_author_list.dart';
 import 'package:elibapp/features/search/page/searched_book_list.dart';
 import 'package:elibapp/features/search/page/searched_publisher_list.dart';
-import 'package:elibapp/shared/widget/error/reload_widget.dart';
 import 'package:elibapp/style/ui_size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/app_strings.dart';
-import '../../../shared/widget/image_tile.dart';
-import '../../../shared/widget/spec/image_widget.dart';
 import '../bloc/search_control/search_control_bloc.dart';
 import '../bloc/search_control/search_control_state.dart';
 

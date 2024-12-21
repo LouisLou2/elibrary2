@@ -29,6 +29,8 @@ class BookCate implements Comparable<BookCate>{
   @JsonKey(name: 'dom_color')
   final int domColor; // long 类型的值在 Dart 中用 int 表示
 
+  final String desc;
+
   BookCate({
     required this.parentId,
     required this.cateId,
@@ -36,6 +38,7 @@ class BookCate implements Comparable<BookCate>{
     required this.coverUrl,
     required this.bookNum,
     required this.domColor,
+    required this.desc,
   });
 
   // 生成 JSON 序列化相关方法

@@ -61,6 +61,7 @@ dependencies:
   pull_down_button: ^0.10.2
   qr_flutter: ^4.1.0
   syncfusion_flutter_pdfviewer: ^28.1.33
+  flutter_sticky_header: ^0.7.0
 
 
 dev_dependencies:

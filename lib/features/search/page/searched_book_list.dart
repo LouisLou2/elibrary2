@@ -75,7 +75,7 @@ class _SearchedBookListPageState extends State<SearchedBookListPage> with Automa
                 _refreshController.loadComplete();
                 break;
               case SearchState.loadingMore:
-                _refreshController.requestLoading(needMove: true,needCallback: false);
+                // _refreshController.requestLoading(needMove: true,needCallback: false);
                 break;
               default:
                 throw Exception('Unknown state: $state');

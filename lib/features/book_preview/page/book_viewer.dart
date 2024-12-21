@@ -14,9 +14,8 @@ class _FilePreviewPageState extends State<EbookPreviewPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_rounded,
-            color: Theme.of(context).colorScheme.secondary,
           ),
           onPressed: () {
             NavigationHelper.pop();

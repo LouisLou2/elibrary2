@@ -40,6 +40,10 @@ class NavigationHelper{
 
   static late String authorInfoPageNav;
 
+  static late String pubInfoPageNav;
+
+  static late String bookViewingHistoryPageNav;
+
 
   static late Map<String, WidgetBuilder> _routes;
 
@@ -82,6 +86,12 @@ class NavigationHelper{
 
     required String authorInfoPageNav,
     required WidgetBuilder authorInfoPageBuilder,
+
+    required String pubInfoPageNav,
+    required WidgetBuilder pubInfoPageBuilder,
+
+    required String bookViewingHistoryPageNav,
+    required WidgetBuilder bookViewingHistoryPageBuilder,
   }) {
     assert(!_setted);
     NavigationHelper.mainPageNav = mainPageNav;
@@ -97,6 +107,8 @@ class NavigationHelper{
     NavigationHelper.subCateBooksPageNav = subCateBooksPageNav;
     NavigationHelper.searchPageNav = searchPageNav;
     NavigationHelper.authorInfoPageNav = authorInfoPageNav;
+    NavigationHelper.pubInfoPageNav = pubInfoPageNav;
+    NavigationHelper.bookViewingHistoryPageNav = bookViewingHistoryPageNav;
     _routes = {
       mainPageNav: mainPageBuilder,
 
@@ -119,6 +131,10 @@ class NavigationHelper{
       searchPageNav: searchPageBuilder,
 
       authorInfoPageNav: authorInfoPageBuilder,
+
+      pubInfoPageNav: pubInfoPageBuilder,
+
+      bookViewingHistoryPageNav: bookViewingHistoryPageBuilder,
     };
     _setted = true;
     RouteGenerator.init(_routes);
@@ -197,5 +213,13 @@ class NavigationHelper{
 
   static Future<Object?>? toAuthorInfoPage(int authorId){
     return pushNamed(authorInfoPageNav, arguments: authorId);
+  }
+
+  static Future<Object?>? toPubInfoPage(int pubId){
+    return pushNamed(pubInfoPageNav, arguments: pubId);
+  }
+
+  static Future<Object?>? toBookViewingHistoryPage(){
+    return pushNamed(bookViewingHistoryPageNav);
   }
 }
