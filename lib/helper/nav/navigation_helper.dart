@@ -20,6 +20,8 @@ class NavigationHelper{
   static bool _setted = false;
   static late String mainPageNav;
 
+  static late String authPageNav;
+
   static late String announListPageNav;
   static late String announDetailNav;
 
@@ -44,12 +46,19 @@ class NavigationHelper{
 
   static late String bookViewingHistoryPageNav;
 
+  static late String hitCateDetailPageNav;
+
+  static late String settingPageNav;
+
 
   static late Map<String, WidgetBuilder> _routes;
 
   static void init({
     required String mainPageNav,
     required WidgetBuilder mainPageBuilder,
+
+    required String authPageNav,
+    required WidgetBuilder authPageBuilder,
 
     required String announListPageNav,
     required WidgetBuilder announListPageBuilder,
@@ -92,9 +101,16 @@ class NavigationHelper{
 
     required String bookViewingHistoryPageNav,
     required WidgetBuilder bookViewingHistoryPageBuilder,
+
+    required String hitCateDetailPageNav,
+    required WidgetBuilder hitCateDetailPageBuilder,
+
+    required String settingPageNav,
+    required WidgetBuilder settingPageBuilder,
   }) {
     assert(!_setted);
     NavigationHelper.mainPageNav = mainPageNav;
+    NavigationHelper.authPageNav = authPageNav;
     NavigationHelper.announListPageNav = announListPageNav;
     NavigationHelper.bookViewPageNav = bookViewPageNav;
     NavigationHelper.announDetailNav = announDetailNav;
@@ -109,8 +125,12 @@ class NavigationHelper{
     NavigationHelper.authorInfoPageNav = authorInfoPageNav;
     NavigationHelper.pubInfoPageNav = pubInfoPageNav;
     NavigationHelper.bookViewingHistoryPageNav = bookViewingHistoryPageNav;
+    NavigationHelper.hitCateDetailPageNav = hitCateDetailPageNav;
+    NavigationHelper.settingPageNav = settingPageNav;
     _routes = {
       mainPageNav: mainPageBuilder,
+
+      authPageNav: authPageBuilder,
 
       announListPageNav: announListPageBuilder,
       announDetailNav: announDetailBuilder,
@@ -135,6 +155,10 @@ class NavigationHelper{
       pubInfoPageNav: pubInfoPageBuilder,
 
       bookViewingHistoryPageNav: bookViewingHistoryPageBuilder,
+
+      hitCateDetailPageNav: hitCateDetailPageBuilder,
+
+      settingPageNav: settingPageBuilder,
     };
     _setted = true;
     RouteGenerator.init(_routes);
@@ -157,6 +181,10 @@ class NavigationHelper{
   }
   static Future<Object?>? popAllAndPushNamed(String routeName){
     return _key.currentState?.pushNamedAndRemoveUntil(routeName, (route) => false);
+  }
+
+  static Future<Object?>? toAuthPage(){
+    return pushNamed(authPageNav);
   }
 
   static Future<Object?>? toAnnounList(){
@@ -221,5 +249,13 @@ class NavigationHelper{
 
   static Future<Object?>? toBookViewingHistoryPage(){
     return pushNamed(bookViewingHistoryPageNav);
+  }
+
+  static Future<Object?>? toHitCateDetailPage(int cateId){
+    return pushNamed(hitCateDetailPageNav, arguments: cateId);
+  }
+
+  static Future<Object?>? toSettingPage(){
+    return pushNamed(settingPageNav);
   }
 }

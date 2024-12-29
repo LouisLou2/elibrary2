@@ -8,7 +8,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:toastification/toastification.dart';
 import 'features/theme/bloc/theme_bloc.dart';
 import 'features/theme/bloc/theme_state.dart';
-import 'helper/nav/navigation_helper.dart';
 
 
 void main() async{
@@ -38,6 +37,7 @@ class App extends StatelessWidget {
               AppTheme.getSystemUiOverlayStyle(mode, mode == ThemeMode.dark? AppTheme.dark : AppTheme.light),
             );
             return MaterialApp(
+              showPerformanceOverlay: false,
               // base appearance
               title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,

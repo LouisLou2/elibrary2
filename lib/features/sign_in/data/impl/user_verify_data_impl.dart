@@ -38,7 +38,7 @@ class UserVerifyDataImpl implements UserVerifyData {
   @override
   Future<Res<AuthedUserWithData>> verifyEmailCode(String email, String code, HomeDataReq homeDataReq) async{
     Res<Resp?> res = await requester.standardRequestNoAuth(
-      NetworkPathCollector.auth.loginPwd,
+      NetworkPathCollector.auth.loginCode,
       HttpMethod.POST,
       {
         ...{

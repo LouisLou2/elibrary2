@@ -67,7 +67,7 @@ class _BookDetailState extends State<BookViewPage>{
             if (state is BookViewInitNoData) return BookViewLoadingPage(coverUrl: state.cover);
             if (state is BookViewRetry) {
               return TryReloadPage(
-                 onReload: (BuildContext con) => con.read<BookViewBloc?>()?.add(BookViewEvent.reqBeginFromNoData),
+                 onReload: () => context.read<BookViewBloc?>()?.add(BookViewEvent.reqBeginFromNoData),
               );
             }
             if (state is BookViewRefresh || state is BookViewInitWithLocal) {

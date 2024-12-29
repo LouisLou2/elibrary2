@@ -3,18 +3,22 @@ import 'package:elibapp/entity/user/user_auth_params.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class AuthState extends Equatable{
-  static const UserLoggedOut userLoggedOut = UserLoggedOut();
-
   const AuthState();
+
+  static const UserNowAuthing userNowAuthing = UserNowAuthing();
+  static const UserOnBoard userOnBoard = UserOnBoard();
 
   @override
   List<Object> get props => [];
 }
 
+class UserOnBoard extends AuthState {
+  const UserOnBoard();
+}
 
 // 本地没有了用户信息记录，比如：本地本来就没有用户信息记录，或者用户主动退出登录，或者与服务器交互后发现登录过期
-class UserLoggedOut extends AuthState {
-  const UserLoggedOut();
+class UserNowAuthing extends AuthState {
+  const UserNowAuthing();
 }
 
 class UserLoadedLocal extends AuthState {

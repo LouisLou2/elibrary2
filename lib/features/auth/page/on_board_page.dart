@@ -1,8 +1,12 @@
 import 'package:cupertino_onboarding/cupertino_onboarding.dart';
 import 'package:dio/dio.dart';
 import 'package:elibapp/entity/user/authed_user.dart';
+import 'package:elibapp/features/auth/bloc/auth_bloc.dart';
+import 'package:elibapp/features/auth/bloc/auth_event.dart';
+import 'package:elibapp/features/auth/bloc/auth_state.dart';
 import 'package:elibapp/features/theme/bloc/theme_bloc.dart';
 import 'package:elibapp/features/theme/bloc/theme_event.dart';
+import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,21 +68,8 @@ class _OnBoardPageState extends State<OnBoardPage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       //bottomButtonColor: AppColors.discoBallBlue,
       bottomButtonBorderRadius: BorderRadius.circular(8),
-      onPressed: ()=>{},
-      onPressedOnLastPage: () async {
-        Response r = await Dio().post(
-          'http://localhost:9021/auth/login/email_pwd',
-          data: {
-            'email': 'lskleo@163.com',
-            'password': 'abc123456',
-            'device_type':1,
-          }
-        );
-        Resp resp = Resp.fromJson(r.data);
-        AuthedUser authedUser = AuthedUser.fromJson(resp.data);
-        print(authedUser);
-        context.read<ThemeBloc>().add(ThemeEvent.toggleThemeEvent);
-      },
+      onPressed: () => context.read<AuthBloc?>()?.add(AuthEvent.reqToAuth),
+      onPressedOnLastPage: () => context.read<AuthBloc?>()?.add(AuthEvent.reqToAuth),
       bottomButtonColor: CupertinoColors.activeBlue.resolveFrom(context),
       bottomButtonChild: Text(
         AppStrs.signIn,

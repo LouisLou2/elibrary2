@@ -171,7 +171,7 @@ class _BrowsePageState extends State<BrowsePage> with AutomaticKeepAliveClientMi
                                   height: 300,
                                 ),
                                 text: cate.cateName,
-                                onTap: () {},
+                                onTap: ()=>NavigationHelper.toHitCateDetailPage(cate.cateId),
                               );
                             }
                             ),

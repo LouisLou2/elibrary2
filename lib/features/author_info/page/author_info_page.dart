@@ -67,7 +67,7 @@ class _AuthorPageState extends State<AuthorInfoPage>{
             );
           }else if(state == AuthorInfoState.retry){
             return TryReloadPage(
-              onReload: (BuildContext con) => context.read<AuthorInfoBloc?>()?.add(AuthorInfoEvent.reqReloadNowNoData),
+              onReload: () => context.read<AuthorInfoBloc?>()?.add(AuthorInfoEvent.reqReloadNowNoData),
             );
           }else if(state == AuthorInfoState.loaded){
             Author author = context.read<AuthorInfoBloc>().author;

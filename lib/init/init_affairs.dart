@@ -9,7 +9,7 @@ import 'package:elibapp/features/main_tab/page/main_tab_page.dart';
 import 'package:elibapp/features/publisher_info/page/pub_info_page.dart';
 import 'package:elibapp/features/rb_detail/page/rb_detail_page.dart';
 import 'package:elibapp/features/reserve_borrow_record/page/rb_record_page.dart';
-import 'package:elibapp/features/viewing_history/page/viewing_hist_time.dart';
+import 'package:elibapp/features/setting/page/setting_page.dart';
 import 'package:elibapp/features/viewing_history/page/viewing_history_page.dart';
 import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:elibapp/init/injection_manager.dart';
@@ -22,7 +22,9 @@ import '../features/auth/bloc/auth_state.dart';
 import '../features/auth/datasource/auth_data.dart';
 import '../features/author_info/page/author_info_page.dart';
 import '../features/booking/page/booking_page.dart';
+import '../features/hit_cate_detail/page/hit_cate_detail_page.dart';
 import '../features/search/page/search_page.dart';
+import '../features/sign_in/page/auth_page.dart';
 import '../features/sub_cate_book/page/sub_cate_book_page.dart';
 
 GetIt getIt = GetIt.I;
@@ -45,6 +47,9 @@ void setRouteCollection() {
   NavigationHelper.init(
       mainPageNav: '/main',
       mainPageBuilder: (context) => const MainTabPage(),
+
+      authPageNav: '/auth',
+      authPageBuilder: (context) => const AuthPages(),
 
       announListPageNav: '/announ/list',
       announListPageBuilder: (context) => const AnnounListPage(),
@@ -84,6 +89,12 @@ void setRouteCollection() {
 
       bookViewingHistoryPageNav: '/viewing/history',
       bookViewingHistoryPageBuilder: (context) => const ViewingHistoryPage(),
+
+      hitCateDetailPageNav: '/cates/hit_cate_detail',
+      hitCateDetailPageBuilder: (context) => const HitCateDetail(),
+
+      settingPageNav: '/setting',
+      settingPageBuilder: (context) => const SettingPage(),
   );
 }
 
@@ -92,6 +103,6 @@ void detectUserLocal(){
   if (userAuthParams != null) {
     AuthBloc.initialState = UserLoadedLocal(userAuthParams);
   } else {
-    AuthBloc.initialState = AuthState.userLoggedOut;
+    AuthBloc.initialState = AuthState.userOnBoard;
   }
 }

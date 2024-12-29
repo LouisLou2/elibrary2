@@ -67,7 +67,7 @@ class _PubPageState extends State<PubInfoPage>{
             );
           }else if(state == PubInfoState.retry){
             return TryReloadPage(
-              onReload: (BuildContext con) => context.read<PubInfoBloc?>()?.add(PubInfoEvent.reqReloadNowNoData),
+              onReload: () => context.read<PubInfoBloc?>()?.add(PubInfoEvent.reqReloadNowNoData),
             );
           }else if(state == PubInfoState.loaded){
             Publisher pub = context.read<PubInfoBloc>().pub;

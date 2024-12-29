@@ -1,5 +1,4 @@
 import 'package:elibapp/common/rb_record_type.dart';
-import 'package:elibapp/entity/user/user_auth_params.dart';
 import 'package:elibapp/features/auth/repo/user_state_repo.dart';
 import 'package:elibapp/helper/nav/navigation_helper.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/app_strings.dart';
 import '../../../shared/widget/image_tile.dart';
 import '../../../shared/widget/info_display/headline2.dart';
-import '../../../shared/widget/setting_section.dart';
 import '../../../style/ui_color.dart';
 import '../../../style/ui_size.dart';
 
@@ -39,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    onPressed: (){},
+                    onPressed: ()=> NavigationHelper.toSettingPage(),
                     icon: Icon(
                       Icons.more_vert,
                       color: Theme.of(context).colorScheme.onSurface,

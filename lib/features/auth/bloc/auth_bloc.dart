@@ -1,4 +1,5 @@
 import 'package:elibapp/features/auth/repo/user_state_repo.dart';
+import 'package:elibapp/helper/toast/toast_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -24,10 +25,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<LogoutEvent>((event, emit) {
+      // 使用toast提示用户登录状态已过期
+      ToastHelper.warn(title: '登录状态已过期');
       _userStateRepo.clearUser();
-      emit(AuthState.userLoggedOut);
+      emit(AuthState.userOnBoard);
     });
 
+    on<reqToAuthEvent>((event, emit) {
+      emit(AuthState.userNowAuthing);
+    });
   }
 
 

@@ -1,28 +1,61 @@
 import 'package:flutter/material.dart';
 
 import '../../common/app_strings.dart';
+import '../../style/ui_size.dart';
 
 class TryReloadPage extends StatelessWidget {
-  final void Function(BuildContext con) onReload;
+
+  final String? title;
+  final String? subtitle;
+  final void Function() onReload;
 
   const TryReloadPage({
     super.key,
-    required this.onReload
+    required this.onReload,
+    this.title,
+    this.subtitle,
   });
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Scaffold(
       body: Center(
-        child: FilledButton(
-          onPressed: () => onReload(context),
-          style: FilledButton.styleFrom(
-            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-          ),
-          child: Text(
-            AppStrs.retry,
-            style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (title != null)
+              Text(
+                title!,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontSize: 22,
+                ),
+              ),
+            SizedBox(height: UiSize.gap.smallGap),
+            if (subtitle != null)
+              Text(
+                subtitle!,
+                style: theme.textTheme.labelLarge?.copyWith(
+                  color: theme.hintColor,
+                  fontSize: 16,
+                ),
+              ),
+            SizedBox(height: UiSize.gap.mediumGap),
+            FilledButton(
+              onPressed: onReload,
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+              ),
+              child: Text(
+                AppStrs.retry,
+                style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(

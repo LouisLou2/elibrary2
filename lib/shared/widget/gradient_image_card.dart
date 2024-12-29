@@ -7,7 +7,8 @@ class GradientImageCard extends StatelessWidget {
   final double? textSize;
   final VoidCallback? onTap;
   final Color color;
-  const GradientImageCard({super.key, required this.image, this.text, this.onTap, required this.color, this.textSize});
+  final double? borderRadius;
+  const GradientImageCard({super.key, required this.image, this.text, this.onTap, required this.color, this.textSize, this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class GradientImageCard extends StatelessWidget {
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(borderRadius ?? 10),
       ),
       child: GestureDetector(
         onTap: onTap,
